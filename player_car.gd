@@ -1,15 +1,18 @@
 extends CharacterBody2D
 
 @export var wheel_base = 250 # How apart are wheels from each other
-@export var steering_angle = 25.0
-@export var engine_power = 2000
-@export var friction = -0.9 # Based on velocity (Important when slow)
-@export var drag = -0.001 # Based on square of velocity (Important when fast)
+@export var steering_angle = 50
+@export var engine_power = 10000
+@export var friction = -2 # Based on velocity (Important when slow)
+@export var drag = -0.0001 # Based on square of velocity (Important when fast)
 @export var braking = -1000
 @export var max_speed_reverse = 500
-@export var slip_speed = 400
-@export var traction_fast = 0.1
-@export var traction_slow = 0.7
+@export var slip_speed = 4000
+@export var traction_fast = 0.2
+@export var traction_slow = 0.9
+@export var min_steering_factor = 0.15 # Minimalny współczynnik skrętu przy max prędkości
+@export var steering_curve_speed = 1500.0 # Prędkość, przy której zaczyna się znacząca redukcja
+
 
 var acceleration = Vector2.ZERO
 var steer_direction
@@ -39,6 +42,11 @@ func get_input():
 		turn -=1
 	steer_direction = turn * deg_to_rad(steering_angle)
 	
+		# Nieliniowa redukcja skrętu
+	var speed_ratio = velocity.length() / steering_curve_speed
+	var speed_factor = lerp(1.0, min_steering_factor, clamp(speed_ratio, 0.0, 1.0))
+	steer_direction = turn * deg_to_rad(steering_angle) * speed_factor
+	
 	if Input.is_action_pressed("Throttle"):
 		acceleration = transform.x * engine_power
 		
@@ -64,6 +72,9 @@ func calculate_steering(delta):
 		velocity = velocity.lerp(new_heading * velocity.length(), traction)
 	if d < 0:
 		velocity = - new_heading * min(velocity.length(),max_speed_reverse)
+	
+	print(velocity.length())	
+	
 
 	rotation = new_heading.angle()
 	
