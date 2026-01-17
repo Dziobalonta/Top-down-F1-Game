@@ -98,5 +98,4 @@ func lap_completed() -> void:
 func hit_verfication(sector_id: int ) -> void:
 	if sector_id not in sectors_passed:
 		sectors_passed.append(sector_id)
-		pass
 	
