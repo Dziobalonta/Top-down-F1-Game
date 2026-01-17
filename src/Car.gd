@@ -1,7 +1,8 @@
 extends CharacterBody2D
 class_name Car
 
-
+@export var car_number: int = 0
+@export var car_name: String = "Car"
 
 @export var wheel_base = 250 # How apart are wheels from each other
 @export var steering_angle = 50
@@ -16,12 +17,12 @@ class_name Car
 @export var min_steering_factor = 0.15 # Minimalny współczynnik skrętu przy max prędkości
 @export var steering_curve_speed = 1500.0 # Prędkość, przy której zaczyna się znacząca redukcja
 
-
 var acceleration = Vector2.ZERO
 var steer_direction
 
 var sectors_count: int = 0
 var sectors_passed: Array[int] = []
+var lap_time: float = 0.0
 
 
 func _physics_process(delta: float) -> void:
@@ -31,6 +32,9 @@ func _physics_process(delta: float) -> void:
 	calculate_steering(delta)
 	velocity += acceleration * delta
 	move_and_slide()
+	
+func _process(delta: float) -> void:
+	lap_time += delta
 	
 #region SteeringPhysics
 
@@ -92,8 +96,11 @@ func setup(sc: int) -> void:
 
 func lap_completed() -> void:
 	if sectors_count == sectors_passed.size():
-		print("lap_completed")
+		var lcd: LapCompleteData = LapCompleteData.new(self, lap_time)
+		print("lap_completed %s" % lcd)
+		EventHub.emit_on_lap_completed(lcd)
 	sectors_passed.clear()
+	lap_time = 0.0
 	
 func hit_verfication(sector_id: int ) -> void:
 	if sector_id not in sectors_passed:
