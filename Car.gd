@@ -1,4 +1,7 @@
 extends CharacterBody2D
+class_name Car
+
+
 
 @export var wheel_base = 250 # How apart are wheels from each other
 @export var steering_angle = 50
@@ -17,6 +20,9 @@ extends CharacterBody2D
 var acceleration = Vector2.ZERO
 var steer_direction
 
+var sectors_count: int = 0
+var sectors_passed: Array[int] = []
+
 
 func _physics_process(delta: float) -> void:
 	acceleration = Vector2.ZERO
@@ -26,6 +32,8 @@ func _physics_process(delta: float) -> void:
 	velocity += acceleration * delta
 	move_and_slide()
 	
+#region SteeringPhysics
+
 func apply_friction():
 	if velocity.length() < 5:
 		velocity = Vector2.ZERO
@@ -73,8 +81,22 @@ func calculate_steering(delta):
 	if d < 0:
 		velocity = - new_heading * min(velocity.length(),max_speed_reverse)
 	
-	print(velocity.length())	
+	#print(velocity.length())
 	
-
 	rotation = new_heading.angle()
+	
+	#endregion
+	
+func setup(sc: int) -> void:	
+	sectors_count = sc
+
+func lap_completed() -> void:
+	if sectors_count == sectors_passed.size():
+		print("lap_completed")
+	sectors_passed.clear()
+	
+func hit_verfication(sector_id: int ) -> void:
+	if sector_id not in sectors_passed:
+		sectors_passed.append(sector_id)
+		pass
 	

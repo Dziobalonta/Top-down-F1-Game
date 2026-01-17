@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1enoovrlhmsa"
-path="res://.godot/imported/Part3-dry-blocks.excalidraw.png-10cabba4704302c7a644c052287608c4.ctex"
+uid="uid://btg1htq4cenma"
+path="res://.godot/imported/RaceCircuitSpa_detailed.svg-7cba67007402a75102ee24b97147d0b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/curved_lines_2d/video_thumbnails/Part3-dry-blocks.excalidraw.png"
-dest_files=["res://.godot/imported/Part3-dry-blocks.excalidraw.png-10cabba4704302c7a644c052287608c4.ctex"]
+source_file="res://assets/textures/RaceCircuitSpa_detailed.svg"
+dest_files=["res://.godot/imported/RaceCircuitSpa_detailed.svg-7cba67007402a75102ee24b97147d0b6.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

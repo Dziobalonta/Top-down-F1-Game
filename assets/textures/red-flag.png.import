@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvubevn3e1ax2"
-path="res://.godot/imported/part-7.png-ee2cbbb0938afb880cd5b8e2d1110fee.ctex"
+uid="uid://c6525nj1g65f0"
+path="res://.godot/imported/red-flag.png-115cff4a0af39458952469c60bc800e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/curved_lines_2d/video_thumbnails/part-7.png"
-dest_files=["res://.godot/imported/part-7.png-ee2cbbb0938afb880cd5b8e2d1110fee.ctex"]
+source_file="res://assets/textures/red-flag.png"
+dest_files=["res://.godot/imported/red-flag.png-115cff4a0af39458952469c60bc800e6.ctex"]
 
 [params]
 
