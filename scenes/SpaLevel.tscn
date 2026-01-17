@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://di80rky40ky77"]
+[gd_scene load_steps=15 format=3 uid="uid://di80rky40ky77"]
 
 [ext_resource type="PackedScene" uid="uid://csry2506k7k3a" path="res://scenes/Car.tscn" id="1_s33ym"]
 [ext_resource type="Texture2D" uid="uid://dg3r7rttqas0n" path="res://assets/textures/grass/ground_grass_gen_04.png" id="1_wc4ky"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b78w13u5xjaj5" path="res://scenes/Sector.tscn" id="8_chhoc"]
 [ext_resource type="Texture2D" uid="uid://c6525nj1g65f0" path="res://assets/textures/red-flag.png" id="8_trk6v"]
 [ext_resource type="PackedScene" uid="uid://utawede35f45" path="res://scenes/RaceController.tscn" id="10_op70l"]
+[ext_resource type="PackedScene" uid="uid://c3l1upilw3eu5" path="res://scenes/Countdown.tscn" id="11_wbtv6"]
 
 [sub_resource type="Curve2D" id="Curve2D_e4u8j"]
 resource_local_to_scene = true
@@ -105,9 +106,17 @@ position = Vector2(17648, 32109.002)
 rotation = 2.4847872
 
 [node name="Camera2D" type="Camera2D" parent="CarsHolder/Car"]
-position = Vector2(1, 1)
+position = Vector2(0.17951775, 1.404778)
+rotation = -2.4847872
 zoom = Vector2(0.235, 0.235)
 
 [node name="RaceController" parent="." instance=ExtResource("10_op70l")]
+
+[node name="Ui" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Countdown" parent="Ui" instance=ExtResource("11_wbtv6")]
+scale = Vector2(0.192, 0.192)
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="StartLine" to="." method="_on_start_line_body_entered"]

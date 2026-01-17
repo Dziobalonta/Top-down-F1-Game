@@ -1,8 +1,11 @@
 extends CharacterBody2D
 class_name Car
 
+enum CarState {WAITING, DRIVING}
+
 @export var car_number: int = 0
 @export var car_name: String = "Car"
+var state: CarState = CarState.WAITING
 
 @export var wheel_base = 250 # How apart are wheels from each other
 @export var steering_angle = 50
@@ -36,6 +39,21 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	lap_time += delta
 	
+func _ready() -> void:
+	EventHub.on_race_start.connect(on_race_start)
+	set_physics_process(false)
+
+#region state
+func change_state(new_state: CarState) -> void:
+	if new_state == state: return
+	state = new_state
+	
+	match new_state:
+		CarState.DRIVING:
+			set_physics_process(true)
+
+#endregion
+
 #region SteeringPhysics
 
 func apply_friction():
@@ -89,8 +107,9 @@ func calculate_steering(delta):
 	
 	rotation = new_heading.angle()
 	
-	#endregion
-	
+#endregion
+
+#region LappingLogic
 func setup(sc: int) -> void:	
 	sectors_count = sc
 
@@ -105,4 +124,7 @@ func lap_completed() -> void:
 func hit_verfication(sector_id: int ) -> void:
 	if sector_id not in sectors_passed:
 		sectors_passed.append(sector_id)
-	
+#endregion
+
+func on_race_start() -> void:
+	change_state(CarState.DRIVING)

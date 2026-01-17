@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3l1upilw3eu5"]
+
+[ext_resource type="Script" uid="uid://03kkoyw8w1k8" path="res://src/Countdown.gd" id="1_vcxug"]
+[ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="2_7wovf"]
+[ext_resource type="AudioStream" uid="uid://bn2ly8hw1d46k" path="res://assets/audio/sfx/391650__jeckkech__beep.wav" id="3_jxnca"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bm8qg"]
+font = ExtResource("2_7wovf")
+font_size = 510
+outline_size = 195
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Countdown" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4848.0
+offset_bottom = 2727.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vcxug")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -181.0
+offset_top = -934.5
+offset_right = 181.0
+offset_bottom = -423.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9802469, 0.9756098)
+text = "3"
+label_settings = SubResource("LabelSettings_bm8qg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Beep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jxnca")
+volume_db = -15.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
