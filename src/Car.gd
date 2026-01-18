@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Car
 
-enum CarState {WAITING, DRIVING}
+enum CarState {WAITING, DRIVING, RACEOVER}
 
 @export var car_number: int = 0
 @export var car_name: String = "Car"
@@ -46,11 +46,15 @@ func _ready() -> void:
 #region state
 func change_state(new_state: CarState) -> void:
 	if new_state == state: return
+	if state == CarState.RACEOVER: return
+	
 	state = new_state
 	
 	match new_state:
 		CarState.DRIVING:
 			set_physics_process(true)
+		CarState.RACEOVER:
+			set_physics_process(false)
 
 #endregion
 
