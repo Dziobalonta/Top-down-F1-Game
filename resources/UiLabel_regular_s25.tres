@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cce2iwhgp4iyd"]
+
+[ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="1_kyo35"]
+
+[resource]
+font = ExtResource("1_kyo35")
+font_size = 25
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.078431375)

@@ -5,6 +5,7 @@ class_name Track
 @onready var CarsHolder: Node = $CarsHolder
 @onready var RacingLine: Path2D  = $TrackStroke/RacingLine
 @onready var race_controller: RaceController = $RaceController
+@onready var game_ui: GameUi = $Ui/GameUi
 
 var racing_line_curve: Curve2D
 
@@ -18,6 +19,7 @@ func _ready() -> void:
 			car.setup(SectionsHolder.get_children().size())
 		
 	race_controller.setup(cars, racing_line_curve)
+	game_ui.setup(cars, race_controller.total_laps)
 
 func get_direction_to_path(from_pos: Vector2) -> Vector2:
 	var closeset_offset: float = racing_line_curve.get_closest_offset(from_pos)

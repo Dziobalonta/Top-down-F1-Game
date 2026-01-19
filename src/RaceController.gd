@@ -41,6 +41,12 @@ func on_lap_completed(info: LapCompleteData) -> void:
 	var car: Car = info.car
 	var rd: CarRaceData = _race_data[car]
 	rd.add_lap_time(info.lap_time)
+	EventHub.emit_on_lap_update(
+		car, 
+		rd.completed_laps,
+		total_laps,
+		info.lap_time
+	)
 	
 	if rd.race_completed:
 		car.change_state(Car.CarState.RACEOVER)
@@ -61,7 +67,11 @@ func finish_race()-> void:
 			var progress: float = offset / total_len
 			rd.force_finish(elapsed, progress)
 			c.change_state(Car.CarState.RACEOVER)
-	pass
+		
+	var results: Array[CarRaceData] = _race_data.values()
+	results.sort_custom(CarRaceData.compare)
+			
+	EventHub.emit_on_race_over(results)
 
 func _on_race_over_timer_timeout() -> void:
 	finish_race()
