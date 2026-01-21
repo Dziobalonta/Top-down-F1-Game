@@ -1,7 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://csry2506k7k3a"]
+[gd_scene load_steps=7 format=3 uid="uid://csry2506k7k3a"]
 
-[ext_resource type="Texture2D" uid="uid://q2hda4xmm6r8" path="res://assets/sprites/f1_car.svg" id="1_dnlqt"]
 [ext_resource type="Script" uid="uid://c42jibati2jer" path="res://src/Car.gd" id="1_kb8hb"]
+[ext_resource type="Texture2D" uid="uid://db4b4g0ck4ihp" path="res://assets/sprites/f1_car_body.svg" id="2_fbyd5"]
+[ext_resource type="Texture2D" uid="uid://shtt1lyxwe32" path="res://assets/sprites/f1_car_wheel.svg" id="3_t6kce"]
+[ext_resource type="Texture2D" uid="uid://c387slcq6ats5" path="res://assets/sprites/f1_car_rear_wing.svg" id="4_vaoqk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ys5ts"]
+radius = 16.0
+height = 64.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kb8hb"]
 size = Vector2(166, 429)
@@ -9,11 +15,80 @@ size = Vector2(166, 429)
 [node name="Car" type="CharacterBody2D"]
 script = ExtResource("1_kb8hb")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CarBody" type="Sprite2D" parent="."]
 rotation = 1.5707964
-texture = ExtResource("1_dnlqt")
+texture = ExtResource("2_fbyd5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="RightRearWheel" type="Sprite2D" parent="."]
+position = Vector2(-151, 58)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_t6kce")
+
+[node name="RightRearWheelArea" type="Area2D" parent="RightRearWheel"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="RightRearWheelCs" type="CollisionShape2D" parent="RightRearWheel/RightRearWheelArea"]
+rotation = -3.1415925
+scale = Vector2(7.4074073, 7.4074073)
+shape = SubResource("CapsuleShape2D_ys5ts")
+debug_color = Color(0.69639224, 0.28142563, 1, 0.41960785)
+
+[node name="LeftRearWheel" type="Sprite2D" parent="."]
+position = Vector2(-151.00002, -58)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_t6kce")
+
+[node name="LeftRearWheelArea" type="Area2D" parent="LeftRearWheel"]
+position = Vector2(859.2592, 0)
+collision_layer = 2
+collision_mask = 4
+
+[node name="LeftRearWheelCs" type="CollisionShape2D" parent="LeftRearWheel/LeftRearWheelArea"]
+position = Vector2(-859.2592, 0)
+scale = Vector2(7.4074073, 7.4074073)
+shape = SubResource("CapsuleShape2D_ys5ts")
+debug_color = Color(0.69639224, 0.28142563, 1, 0.41960785)
+
+[node name="RightFrontWheel" type="Sprite2D" parent="."]
+position = Vector2(105, 63)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_t6kce")
+
+[node name="RightFrontWheelArea" type="Area2D" parent="RightFrontWheel"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="RightFrontWheelCs" type="CollisionShape2D" parent="RightFrontWheel/RightFrontWheelArea"]
+rotation = -3.1415925
+scale = Vector2(7.4074073, 7.4074073)
+shape = SubResource("CapsuleShape2D_ys5ts")
+debug_color = Color(0.69639224, 0.28142563, 1, 0.41960785)
+
+[node name="LeftFrontWheel" type="Sprite2D" parent="."]
+position = Vector2(105, -65)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_t6kce")
+
+[node name="LeftFrontWheelArea" type="Area2D" parent="LeftFrontWheel"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="LeftFrontWheelCs" type="CollisionShape2D" parent="LeftFrontWheel/LeftFrontWheelArea"]
+rotation = -3.1415925
+scale = Vector2(7.4074073, 7.4074073)
+shape = SubResource("CapsuleShape2D_ys5ts")
+debug_color = Color(0.69639224, 0.28142563, 1, 0.41960785)
+
+[node name="RearWing" type="Sprite2D" parent="."]
+rotation = 1.5707964
+texture = ExtResource("4_vaoqk")
+
+[node name="CarCs" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_kb8hb")

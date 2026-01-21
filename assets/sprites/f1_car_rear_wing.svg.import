@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crpmday8flb8b"
-path="res://.godot/imported/F1_tire_Pirelli_PZero_Yellow.svg-dc90e2136ff277a5a8d8af3f83641791.ctex"
+uid="uid://c387slcq6ats5"
+path="res://.godot/imported/f1_car_rear_wing.svg-fe5d326d3ad779e14160465644f87da9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/F1_tire_Pirelli_PZero_Yellow.svg"
-dest_files=["res://.godot/imported/F1_tire_Pirelli_PZero_Yellow.svg-dc90e2136ff277a5a8d8af3f83641791.ctex"]
+source_file="res://assets/sprites/f1_car_rear_wing.svg"
+dest_files=["res://.godot/imported/f1_car_rear_wing.svg-fe5d326d3ad779e14160465644f87da9.ctex"]
 
 [params]
 

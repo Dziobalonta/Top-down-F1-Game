@@ -32,12 +32,12 @@ func add_lap_time(lap_time: float) -> void:
 	_completed_laps += 1
 	_best_lap = min(_best_lap, lap_time)
 	
-func set_total_time(total_time: float) -> void:
-	_total_time = total_time
+func set_total_time(totaltime: float) -> void:
+	_total_time = totaltime
 	
-func force_finish(total_time: float, progres: float) -> void:
-	_partial_progress = progres
-	_total_time = total_time
+func force_finish(totaltime: float, progress: float) -> void:
+	_partial_progress = progress
+	_total_time = totaltime
 	
 func _to_string() -> String:
 	var total_str = "DNF"

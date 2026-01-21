@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmaaar2m2ibsr"
-path="res://.godot/imported/F1_tire_Pirelli_PZero_White.svg-b5b318b20e5296405f9f9071eb2cbe9e.ctex"
+uid="uid://croovc2kre4ww"
+path="res://.godot/imported/RaceCircuitSpa_outer.svg-1bebf74167ca81da119ce8981ac1b85b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/F1_tire_Pirelli_PZero_White.svg"
-dest_files=["res://.godot/imported/F1_tire_Pirelli_PZero_White.svg-b5b318b20e5296405f9f9071eb2cbe9e.ctex"]
+source_file="res://assets/textures/RaceCircuitSpa_outer.svg"
+dest_files=["res://.godot/imported/RaceCircuitSpa_outer.svg-1bebf74167ca81da119ce8981ac1b85b.ctex"]
 
 [params]
 

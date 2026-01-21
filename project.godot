@@ -64,3 +64,5 @@ Brake={
 [layer_names]
 
 2d_physics/layer_1="Car"
+2d_physics/layer_2="Wheels"
+2d_physics/layer_3="Track"

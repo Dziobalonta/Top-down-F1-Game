@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsv4p1lju2613"]
+
+[ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="1_om3bq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tw614"]
+font = ExtResource("1_om3bq")
+font_size = 26
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Waypoint" type="Node2D"]
+
+[node name="LeftCollision" type="RayCast2D" parent="."]
+target_position = Vector2(-150, 0)
+
+[node name="RightCollision" type="RayCast2D" parent="."]
+target_position = Vector2(150, 0)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "00"
+label_settings = SubResource("LabelSettings_tw614")
+horizontal_alignment = 1

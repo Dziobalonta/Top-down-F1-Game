@@ -27,6 +27,20 @@ var sectors_count: int = 0
 var sectors_passed: Array[int] = []
 var lap_time: float = 0.0
 
+@onready var left_front_wheel_area: Area2D = $LeftFrontWheel/LeftFrontWheelArea
+@onready var right_front_wheel_area: Area2D = $RightFrontWheel/RightFrontWheelArea
+@onready var left_rear_wheel_area: Area2D = $LeftRearWheel/LeftRearWheelArea
+@onready var right_rear_wheel_area: Area2D = $RightRearWheel/RightRearWheelArea
+
+var wheels_on_track: Dictionary = {
+	"left_front": false,
+	"right_front": false,
+	"left_rear": false,
+	"right_rear": false
+}
+
+var is_on_track: bool = true
+var off_track_time: float = 0.0  # Track how long car is off track
 
 func _physics_process(delta: float) -> void:
 	acceleration = Vector2.ZERO
@@ -36,14 +50,84 @@ func _physics_process(delta: float) -> void:
 	velocity += acceleration * delta
 	move_and_slide()
 	
+	if not is_on_track:
+		off_track_time += delta
+	
 func _process(delta: float) -> void:
 	lap_time += delta
 	
 func _ready() -> void:
+	left_front_wheel_area.area_entered.connect(_on_wheel_entered.bind("left_front"))
+	left_front_wheel_area.area_exited.connect(_on_wheel_exited.bind("left_front"))
+	
+	right_front_wheel_area.area_entered.connect(_on_wheel_entered.bind("right_front"))
+	right_front_wheel_area.area_exited.connect(_on_wheel_exited.bind("right_front"))
+	
+	left_rear_wheel_area.area_entered.connect(_on_wheel_entered.bind("left_rear"))
+	left_rear_wheel_area.area_exited.connect(_on_wheel_exited.bind("left_rear"))
+	
+	right_rear_wheel_area.area_entered.connect(_on_wheel_entered.bind("right_rear"))
+	right_rear_wheel_area.area_exited.connect(_on_wheel_exited.bind("right_rear"))
+	
 	EventHub.on_race_start.connect(on_race_start)
 	set_physics_process(false)
+	
+#region Wheels Touch Logic
+func _on_wheel_entered(area: Area2D, wheel_name: String):
+	if area.is_in_group("track_collision"):
+		wheels_on_track[wheel_name] = true
+		check_all_wheels_status()
 
-#region state
+func _on_wheel_exited(area: Area2D, wheel_name: String):
+	if area.is_in_group("track_collision"):
+		wheels_on_track[wheel_name] = false
+		check_all_wheels_status()
+	
+func check_all_wheels_status():
+	var all_wheels_off_track = wheels_on_track.values().all(func(x): return x == true)
+	var all_wheels_on_track = wheels_on_track.values().all(func(x): return x == false)
+	
+	# Debug
+	var wheels_count_on = wheels_on_track.values().filter(func(x): return x == false).size()
+	print("Wheels on track: ", wheels_count_on, "/4")
+	
+	# Wszystkie koła wróciły na tor
+	if all_wheels_on_track and not is_on_track:
+		on_all_wheels_on_track()
+		is_on_track = true
+		print("All 4 wheels back on track")
+	
+	# Wszystkie koła zjechały z toru
+	elif all_wheels_off_track and is_on_track:
+		on_wheels_off_track()
+		is_on_track = false
+		print("All 4 wheels off track - START COUNTING!")
+	
+	# Stan pośredni (część kół na torze, część nie)
+	elif not all_wheels_on_track and not all_wheels_off_track:
+		# Jeśli był poza torem i wrócił choć jednym kołem - przestań liczyć
+		if not is_on_track:
+			print("Partial return - stopping timer")
+			on_all_wheels_on_track()  # Zatrzymaj licznik
+			is_on_track = true  # Uznaj że "wrócił"
+
+func on_all_wheels_on_track():
+	print(name + ": Back on track")
+	EventHub.emit_on_all_wheels_on_track(self)
+
+func on_wheels_off_track():
+	print(name + ": LEFT THE TRACK!")
+	EventHub.emit_on_wheels_off_track(self)
+
+func get_off_track_time() -> float:
+	return off_track_time
+
+func reset_off_track_time():
+	off_track_time = 0.0
+	
+#endregion
+
+#region State
 func change_state(new_state: CarState) -> void:
 	if new_state == state: return
 	if state == CarState.RACEOVER: return
@@ -58,7 +142,7 @@ func change_state(new_state: CarState) -> void:
 
 #endregion
 
-#region SteeringPhysics
+#region Steering Physics
 
 func apply_friction():
 	if velocity.length() < 5:
@@ -71,15 +155,16 @@ func apply_friction():
 func get_input():
 	var turn = 0
 	if Input.is_action_pressed("Right"):
-		turn +=1
+		turn += 1
 	if Input.is_action_pressed("Left"):
-		turn -=1
-	steer_direction = turn * deg_to_rad(steering_angle)
+		turn -= 1
 	
-		# Nieliniowa redukcja skrętu
-	var speed_ratio = velocity.length() / steering_curve_speed
-	var speed_factor = lerp(1.0, min_steering_factor, clamp(speed_ratio, 0.0, 1.0))
-	steer_direction = turn * deg_to_rad(steering_angle) * speed_factor
+	if steering_curve_speed > 0:
+		var speed_ratio = velocity.length() / steering_curve_speed
+		var speed_factor = lerp(1.0, min_steering_factor, clamp(speed_ratio, 0.0, 1.0))
+		steer_direction = turn * deg_to_rad(steering_angle) * speed_factor
+	else:
+		steer_direction = turn * deg_to_rad(steering_angle)
 	
 	if Input.is_action_pressed("Throttle"):
 		acceleration = transform.x * engine_power
@@ -110,10 +195,10 @@ func calculate_steering(delta):
 	#print(velocity.length())
 	
 	rotation = new_heading.angle()
-	
+
 #endregion
 
-#region LappingLogic
+#region Lapping Logic
 func setup(sc: int) -> void:	
 	sectors_count = sc
 
