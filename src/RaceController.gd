@@ -39,8 +39,8 @@ func setup(cars: Array[Car], track_curve: Curve2D) -> void:
 		car_currently_off_track[car] = false
 		car_last_penalty_threshold[car] = 0
 	
-	EventHub.wheels_left_track.connect(_on_car_left_track)
-	EventHub.wheels_returned_to_track.connect(_on_car_returned_to_track)
+	EventHub.on_wheels_left_track.connect(_on_car_left_track)
+	EventHub.on_wheels_returned_to_track.connect(_on_car_returned_to_track)
 	EventHub.on_lap_completed.connect(on_lap_completed)
 		
 	print("RaceController init with %d cars" % _cars.size())
@@ -78,13 +78,11 @@ func check_if_exceeded_max_time(car: Car) -> bool:
 		car_currently_off_track[car] = false
 		car.change_state(Car.CarState.RACEOVER)
 		EventHub.emit_penalty_applied(car, 0.0, car_violations[car])  # Notify UI
-		car.reset_off_track_time()
 		return true
 	return false
 
 func _on_car_returned_to_track(car: Car):
 	car_currently_off_track[car] = false
-	car.reset_off_track_time()
 
 func check_penalty_threshold(car: Car, old_time: float, new_time: float) -> void:
 	# Calculate how many 3-second thresholds have been crossed

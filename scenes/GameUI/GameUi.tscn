@@ -1,9 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo7ahvvu7g718"]
+[gd_scene load_steps=10 format=3 uid="uid://bo7ahvvu7g718"]
 
 [ext_resource type="PackedScene" uid="uid://blqjqujwtkoj" path="res://scenes/GameUI/CarUi.tscn" id="1_k6e7w"]
 [ext_resource type="Script" uid="uid://v1012rbfsn75" path="res://src/GameUi.gd" id="1_s76ix"]
+[ext_resource type="AudioStream" uid="uid://cxp7tx21t8kay" path="res://assets/audio/sfx/BeepMedPitche GFX010601 short.wav" id="3_5irnb"]
 [ext_resource type="Script" uid="uid://kxgt6dcc47uk" path="res://src/CarUi.gd" id="3_7y0a3"]
 [ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="4_xg3kr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5irnb"]
+font = ExtResource("4_xg3kr")
+font_size = 35
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ddyqp"]
+font = ExtResource("4_xg3kr")
+font_size = 35
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7y0a3"]
 content_margin_left = 20.0
@@ -30,6 +43,56 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s76ix")
 
+[node name="OffTrackCanvas" type="CanvasLayer" parent="."]
+
+[node name="RedFlashing" type="ColorRect" parent="OffTrackCanvas"]
+visible = false
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(18.892157, 0, 0, 0.33333334)
+
+[node name="Timer" type="Timer" parent="OffTrackCanvas"]
+
+[node name="TimerLabel" type="Label" parent="OffTrackCanvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -198.0
+offset_right = 52.0
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "00"
+label_settings = SubResource("LabelSettings_5irnb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextLabel" type="Label" parent="OffTrackCanvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.5
+offset_top = -247.0
+offset_right = 285.5
+offset_bottom = -181.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Return to track!"
+label_settings = SubResource("LabelSettings_ddyqp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Beep" type="AudioStreamPlayer" parent="OffTrackCanvas"]
+stream = ExtResource("3_5irnb")
+volume_db = -7.0
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -46,7 +109,7 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 script = ExtResource("3_7y0a3")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="RaceoverTable" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -62,7 +125,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7y0a3")
 
-[node name="RaceOverLabel" type="Label" parent="PanelContainer"]
+[node name="RaceOverLabel" type="Label" parent="RaceoverTable"]
 layout_mode = 2
 text = "saasassasas"
 label_settings = SubResource("LabelSettings_5bnkn")

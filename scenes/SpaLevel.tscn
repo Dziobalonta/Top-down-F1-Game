@@ -131,7 +131,7 @@ texture = ExtResource("8_trk6v")
 
 [node name="CarsHolder" type="Node" parent="."]
 
-[node name="Car" parent="CarsHolder" instance=ExtResource("1_s33ym")]
+[node name="Car" parent="CarsHolder" groups=["player"] instance=ExtResource("1_s33ym")]
 position = Vector2(17648, 32109.002)
 rotation = 2.4847872
 
