@@ -6,20 +6,30 @@ class_name Track
 @onready var RacingLine: Path2D  = $TrackStroke/RacingLine
 @onready var race_controller: RaceController = $RaceController
 @onready var game_ui: GameUi = $Ui/GameUi
+@onready var track_processor: TrackProcessor = $TrackStroke/RacingLine/TrackProcessor
+@onready var waypoints_holder: Node = $WaypointsHolder
 
 var racing_line_curve: Curve2D
 
 func _ready() -> void:
+	await setup()
+	
+func setup() -> void:
 	var cars: Array[Car] = []
 	racing_line_curve = RacingLine.curve
+	
+	track_processor.build_waypoint_data(waypoints_holder)
+	await track_processor.build_completed
+	#print("track_processor.build_completed")
 	
 	for car in CarsHolder.get_children():
 		cars.append(car)
 		if car is Car:
 			car.setup(SectionsHolder.get_children().size())
-		
+			
 	race_controller.setup(cars, racing_line_curve)
-	game_ui.setup(cars, race_controller.total_laps)
+	game_ui.setup(cars, race_controller.total_laps)		
+	
 
 func get_direction_to_path(from_pos: Vector2) -> Vector2:
 	var closeset_offset: float = racing_line_curve.get_closest_offset(from_pos)
