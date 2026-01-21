@@ -4,13 +4,14 @@ class_name RaceController
 @export var total_laps: int = 5
 @onready var race_over_timer: Timer = $RaceOverTimer
 @export var time_penalty_per_violation: float = 5.0  # 5 seconds penalty
-@export var max_off_track_time_allowed: float = 3.0  # 3 seconds off track = penalty
+@export var penalty_interval: float = 3.0  # Penalty every 3 seconds off track
 @export var max_total_off_track_time: float = 10.0  # 10 seconds total = disqualified to WAITING
 
 var car_penalties: Dictionary = {}  # {car: total_penalty_time}
 var car_violations: Dictionary = {}  # {car: violation_count}
 var car_total_off_track_time: Dictionary = {}  # {car: total_time_off_track}
 var car_currently_off_track: Dictionary = {}  # {car: is_off_track}
+var car_last_penalty_threshold: Dictionary = {}  # {car: last_threshold_crossed}
 
 var _cars: Array[Car] = []
 var _track_curve: Curve2D
@@ -36,6 +37,7 @@ func setup(cars: Array[Car], track_curve: Curve2D) -> void:
 		car_violations[car] = 0
 		car_total_off_track_time[car] = 0.0
 		car_currently_off_track[car] = false
+		car_last_penalty_threshold[car] = 0
 	
 	EventHub.wheels_left_track.connect(_on_car_left_track)
 	EventHub.wheels_returned_to_track.connect(_on_car_returned_to_track)
@@ -50,7 +52,11 @@ func _process(delta: float) -> void:
 	# Update off-track time for cars currently off track
 	for car in _cars:
 		if car_currently_off_track.get(car, false):
+			var old_time = car_total_off_track_time[car]
 			car_total_off_track_time[car] += delta
+			
+			# Check if crossed a new 3-second threshold
+			check_penalty_threshold(car, old_time, car_total_off_track_time[car])
 	
 	# Check violations periodically
 	_off_track_check_timer += delta
@@ -78,21 +84,18 @@ func check_if_exceeded_max_time(car: Car) -> bool:
 
 func _on_car_returned_to_track(car: Car):
 	car_currently_off_track[car] = false
-	var time_off_track = car.get_off_track_time()
-	
-	# Note: car_total_off_track_time is already updated in _process
-	# so we don't add it again here
-	
-	# Check one last time if exceeded max time
-	if check_if_exceeded_max_time(car):
-		return
-	
-	# Apply penalty if this violation exceeded the threshold
-	if time_off_track >= max_off_track_time_allowed:
-		apply_penalty(car, time_penalty_per_violation)
-		print(car.name + " was off track for " + str(time_off_track) + "s - PENALTY APPLIED!")
-	
 	car.reset_off_track_time()
+
+func check_penalty_threshold(car: Car, old_time: float, new_time: float) -> void:
+	# Calculate how many 3-second thresholds have been crossed
+	var old_threshold = int(old_time / penalty_interval)
+	var new_threshold = int(new_time / penalty_interval)
+	
+	# If we crossed into a new threshold, apply penalty
+	if new_threshold > old_threshold and new_threshold > car_last_penalty_threshold[car]:
+		car_last_penalty_threshold[car] = new_threshold
+		apply_penalty(car, time_penalty_per_violation)
+		print(car.name + " crossed " + str(new_threshold * penalty_interval) + "s threshold - PENALTY APPLIED!")
 
 func apply_penalty(car: Car, penalty_time: float):
 	car_penalties[car] += penalty_time

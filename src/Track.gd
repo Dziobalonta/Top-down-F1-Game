@@ -30,7 +30,3 @@ func get_direction_to_path(from_pos: Vector2) -> Vector2:
 func _on_start_line_body_entered(body: Node2D) -> void:
 	if body is Car:
 		body.lap_completed()
-
-
-func _on_track_collision_body_entered(_body: Node2D) -> void:
-	print("_on_track_collision_body_entered")
