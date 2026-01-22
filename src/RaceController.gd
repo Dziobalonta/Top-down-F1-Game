@@ -169,7 +169,12 @@ func finish_race() -> void:
 			rd.force_finish(elapsed, progress)
 			c.change_state(Car.CarState.RACEOVER)
 		
-	var results: Array[CarRaceData] = _race_data.values()
+	# Create typed array from dictionary values
+	var results: Array[CarRaceData] = []
+	for rd in _race_data.values():
+		results.append(rd)
+	
+	# Sort in place (sort_custom returns void, not the array)
 	results.sort_custom(CarRaceData.compare)
 			
 	EventHub.emit_on_race_over(results)

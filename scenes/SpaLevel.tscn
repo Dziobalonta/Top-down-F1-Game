@@ -1,6 +1,5 @@
-[gd_scene load_steps=18 format=3 uid="uid://di80rky40ky77"]
+[gd_scene load_steps=21 format=3 uid="uid://di80rky40ky77"]
 
-[ext_resource type="PackedScene" uid="uid://csry2506k7k3a" path="res://scenes/Car.tscn" id="1_s33ym"]
 [ext_resource type="Texture2D" uid="uid://dg3r7rttqas0n" path="res://assets/textures/grass/ground_grass_gen_04.png" id="1_wc4ky"]
 [ext_resource type="Script" uid="uid://cn34im82ita1b" path="res://src/Track.gd" id="2_03wxe"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="2_myp20"]
@@ -11,8 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://b78w13u5xjaj5" path="res://scenes/Sector.tscn" id="8_chhoc"]
 [ext_resource type="Texture2D" uid="uid://c6525nj1g65f0" path="res://assets/textures/red-flag.png" id="8_trk6v"]
 [ext_resource type="PackedScene" uid="uid://utawede35f45" path="res://scenes/RaceController.tscn" id="10_op70l"]
+[ext_resource type="PackedScene" uid="uid://cmsqapswmhsso" path="res://scenes/PlayerCar.tscn" id="10_qyuim"]
 [ext_resource type="PackedScene" uid="uid://bo7ahvvu7g718" path="res://scenes/GameUI/GameUi.tscn" id="11_uoqgd"]
 [ext_resource type="PackedScene" uid="uid://c3l1upilw3eu5" path="res://scenes/Countdown.tscn" id="11_wbtv6"]
+[ext_resource type="PackedScene" uid="uid://b3x50rxkh43ir" path="res://scenes/BotCar.tscn" id="11_xymfm"]
+[ext_resource type="Texture2D" uid="uid://p8i85rn5ariy" path="res://assets/sprites/f1_car_body_blue.svg" id="12_poxyf"]
+[ext_resource type="Texture2D" uid="uid://h557s5k4qxj5" path="res://assets/sprites/f1_car_rear_wing_blue.svg" id="13_1sokk"]
 
 [sub_resource type="Curve2D" id="Curve2D_e4u8j"]
 resource_local_to_scene = true
@@ -138,16 +141,26 @@ texture = ExtResource("8_trk6v")
 
 [node name="CarsHolder" type="Node" parent="."]
 
-[node name="Car" parent="CarsHolder" groups=["player"] instance=ExtResource("1_s33ym")]
-position = Vector2(15384.998, 33819.996)
-rotation = 2.4847872
+[node name="PlayerCar" parent="CarsHolder" groups=["player"] instance=ExtResource("10_qyuim")]
+position = Vector2(15362, 33770)
+rotation = 2.5098014
+car_name = "Player"
 
-[node name="Camera2D" type="Camera2D" parent="CarsHolder/Car"]
-position = Vector2(0.17951775, 1.404778)
-rotation = -2.4847872
+[node name="Camera2D" type="Camera2D" parent="CarsHolder/PlayerCar"]
+position = Vector2(0.8652344, 5.5898438)
+rotation = -2.5098014
 zoom = Vector2(0.235, 0.235)
 
+[node name="BotCar" parent="CarsHolder" instance=ExtResource("11_xymfm")]
+position = Vector2(15063.002, 33403)
+rotation = 2.5272923
+car_texture = ExtResource("12_poxyf")
+car_wing_texture = ExtResource("13_1sokk")
+car_number = 1
+car_name = "Bot"
+
 [node name="RaceController" parent="." instance=ExtResource("10_op70l")]
+total_laps = 2
 
 [node name="Ui" type="CanvasLayer" parent="."]
 layer = 2

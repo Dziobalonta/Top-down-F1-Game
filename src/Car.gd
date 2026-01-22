@@ -3,6 +3,8 @@ class_name Car
 
 enum CarState {WAITING, DRIVING, RACEOVER}
 
+@export var car_texture: Texture2D = preload("res://assets/sprites/f1_car_body.svg")
+@export var car_wing_texture: Texture2D = preload("res://assets/sprites/f1_car_rear_wing.svg")
 @export var car_number: int = 0
 @export var car_name: String = "Car"
 var state: CarState = CarState.WAITING
@@ -23,14 +25,18 @@ var state: CarState = CarState.WAITING
 var acceleration = Vector2.ZERO
 var steer_direction
 
+var lap_time: float = 0.0
+var race_started: bool = false
 var sectors_count: int = 0
 var sectors_passed: Array[int] = []
-var lap_time: float = 0.0
 
 @onready var left_front_wheel_area: Area2D = $LeftFrontWheel/LeftFrontWheelArea
 @onready var right_front_wheel_area: Area2D = $RightFrontWheel/RightFrontWheelArea
 @onready var left_rear_wheel_area: Area2D = $LeftRearWheel/LeftRearWheelArea
 @onready var right_rear_wheel_area: Area2D = $RightRearWheel/RightRearWheelArea
+@onready var car_body: Sprite2D = $CarBody
+@onready var rear_wing: Sprite2D = $RearWing
+
 
 var wheels_on_track: Dictionary = {
 	"left_front": false,
@@ -43,7 +49,6 @@ var is_on_track: bool = true
 var off_track_time: float = 0.0  # Track how long car is off track
 
 func _physics_process(delta: float) -> void:
-	acceleration = Vector2.ZERO
 	get_input()
 	apply_friction()
 	calculate_steering(delta)
@@ -52,11 +57,19 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_on_track:
 		off_track_time += delta
+		
+func get_input():
+	# Empty - to be overridden by child classes
+	pass
 	
 func _process(delta: float) -> void:
-	lap_time += delta
+	if race_started and state == CarState.DRIVING:
+		lap_time += delta
 	
 func _ready() -> void:
+	car_body.texture = car_texture
+	rear_wing.texture = car_wing_texture
+	
 	left_front_wheel_area.area_entered.connect(_on_wheel_entered.bind("left_front"))
 	left_front_wheel_area.area_exited.connect(_on_wheel_exited.bind("left_front"))
 	
@@ -150,28 +163,7 @@ func apply_friction():
 	var friction_force = velocity * friction
 	var drag_force = velocity * velocity.length() * drag
 	acceleration += drag_force + friction_force
-		
-	
-func get_input():
-	var turn = 0
-	if Input.is_action_pressed("Right"):
-		turn += 1
-	if Input.is_action_pressed("Left"):
-		turn -= 1
-	
-	if steering_curve_speed > 0:
-		var speed_ratio = velocity.length() / steering_curve_speed
-		var speed_factor = lerp(1.0, min_steering_factor, clamp(speed_ratio, 0.0, 1.0))
-		steer_direction = turn * deg_to_rad(steering_angle) * speed_factor
-	else:
-		steer_direction = turn * deg_to_rad(steering_angle)
-	
-	if Input.is_action_pressed("Throttle"):
-		acceleration = transform.x * engine_power
-		
-	if Input.is_action_pressed("Brake"):
-		acceleration = transform.x * braking
-		
+				
 func calculate_steering(delta):
 	var rear_wheel = position - transform.x * wheel_base / 2.0
 	var front_wheel = position + transform.x * wheel_base / 2.0
@@ -207,8 +199,8 @@ func lap_completed() -> void:
 		var lcd: LapCompleteData = LapCompleteData.new(self, lap_time)
 		print("lap_completed %s" % lcd)
 		EventHub.emit_on_lap_completed(lcd)
-	sectors_passed.clear()
-	lap_time = 0.0
+		sectors_passed.clear()
+		lap_time = 0.0
 	
 func hit_verfication(sector_id: int ) -> void:
 	if sector_id not in sectors_passed:
@@ -217,3 +209,4 @@ func hit_verfication(sector_id: int ) -> void:
 
 func on_race_start() -> void:
 	change_state(CarState.DRIVING)
+	race_started = true

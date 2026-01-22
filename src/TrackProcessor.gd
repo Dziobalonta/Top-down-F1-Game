@@ -5,11 +5,17 @@ signal build_completed
 
 const WAYPOINT = preload("res://scenes/Waypoint.tscn")
 
-@export var interval: float = 500.0
+@export var interval: float = 750.0
 @export var grid_space: float = 3000.0
 
-
 var _waypoints: Array[Waypoint]
+
+var first_waypoint: Waypoint:
+	get: 
+		if _waypoints.size() == 0:
+			printerr("Track Processor: first_waypoint not there!")
+			return null
+		return _waypoints[0]
 
 func connect_waypoints() -> void:
 	var total_wp: int = _waypoints.size()
@@ -17,8 +23,6 @@ func connect_waypoints() -> void:
 		var prev_ix: int = (i - 1 + total_wp) % total_wp
 		var next_ix: int = (i + 1) % total_wp
 		_waypoints[i].setup(_waypoints[next_ix], _waypoints[prev_ix], i)
-			
-
 
 func create_waypoint() -> Waypoint:
 	var wp: Waypoint = WAYPOINT.instantiate()

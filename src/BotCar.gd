@@ -1,0 +1,65 @@
+extends Car
+class_name BotCar
+
+const STEER_REACTION_MAX: float = 9.0
+@export var debug: bool = true
+@export var waypoint_distance: float = 100.0 
+
+@onready var target: Sprite2D = $Target
+
+var _adjusted_waypoint_target: Vector2 = Vector2.ZERO
+var _target_speed: float = 3500.0
+var _next_waypoint: Waypoint
+
+func _ready() -> void:
+	target.visible = debug
+	super()
+
+func get_input() -> void:
+	if !_next_waypoint: 
+		return
+	
+	# Calculate the angle we need to steer
+	var direction_to_target = (_adjusted_waypoint_target - global_position).normalized()
+	var angle_to_target = transform.x.angle_to(direction_to_target)
+	
+	# Apply skill-based steering responsiveness
+	# Higher steer_reaction = more precise/skilled steering
+	var skill_factor = clamp(STEER_REACTION_MAX / 10.0, 0.1, 1.0)  # Normalize to 0.1-1.0
+	var adjusted_angle = lerp(0.0, angle_to_target, skill_factor)
+	
+	# Set steering direction (clamped to max steering angle)
+	steer_direction = clamp(adjusted_angle, deg_to_rad(-steering_angle), deg_to_rad(steering_angle))
+	
+	# Accelerate if below target speed
+	if velocity.length() < _target_speed:
+		acceleration = transform.x * engine_power
+	else:
+		acceleration = Vector2.ZERO
+
+func _physics_process(delta: float) -> void:
+	if state != CarState.DRIVING or !_next_waypoint: 
+		return
+	
+	update_waypoint()
+	super._physics_process(delta)  # calls get_input(), apply_friction(), calculate_steering(), etc.
+
+func update_waypoint() -> void:
+	if !_next_waypoint:
+		return
+		
+	var distance = global_position.distance_to(_adjusted_waypoint_target)
+	
+	#if debug:
+		#print("Distance to waypoint %d: %f" % [_next_waypoint.number, distance])
+	
+	if distance < waypoint_distance:
+		set_next_waypoint(_next_waypoint.next_waypoint)
+
+func set_next_waypoint(wp: Waypoint) -> void:
+	_next_waypoint = wp
+	_adjusted_waypoint_target = wp.global_position
+	target.global_position = _adjusted_waypoint_target
+	
+	#if debug:
+		#print("New target waypoint: %d at %v" % [wp.number, wp.global_position])

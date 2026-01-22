@@ -13,13 +13,13 @@ outline_color = Color(0, 0, 0, 1)
 script = ExtResource("1_tw614")
 
 [node name="LeftCollision" type="RayCast2D" parent="."]
-target_position = Vector2(-1500, 0)
+target_position = Vector2(-2000, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="RightCollision" type="RayCast2D" parent="."]
-target_position = Vector2(1500, 0)
+target_position = Vector2(2000, 0)
 collision_mask = 4
 collide_with_areas = true
 collide_with_bodies = false

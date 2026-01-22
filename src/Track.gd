@@ -27,6 +27,9 @@ func setup() -> void:
 		if car is Car:
 			car.setup(SectionsHolder.get_children().size())
 			
+		if car is BotCar:
+			car.set_next_waypoint(track_processor.first_waypoint)
+			
 	race_controller.setup(cars, racing_line_curve)
 	game_ui.setup(cars, race_controller.total_laps)		
 	
