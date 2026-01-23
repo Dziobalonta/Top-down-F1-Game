@@ -3,7 +3,9 @@ class_name BotCar
 
 const STEER_REACTION_MAX: float = 9.0
 @export var debug: bool = true
-@export var waypoint_distance: float = 100.0 
+@export var waypoint_distance: float = 100.0
+@export var max_top_speed_limit: float = 5500.0
+@export var min_top_speed_limit: float = 2500.0
 
 @onready var target: Sprite2D = $Target
 
@@ -13,6 +15,7 @@ var _next_waypoint: Waypoint
 
 func _ready() -> void:
 	target.visible = debug
+	_target_speed = randf_range(min_top_speed_limit, max_top_speed_limit)
 	super()
 
 func get_input() -> void:
