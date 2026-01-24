@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://di80rky40ky77"]
+[gd_scene load_steps=21 format=3 uid="uid://di80rky40ky77"]
 
 [ext_resource type="Script" uid="uid://cn34im82ita1b" path="res://src/Track.gd" id="2_03wxe"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="2_myp20"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bo7ahvvu7g718" path="res://scenes/GameUI/GameUi.tscn" id="11_uoqgd"]
 [ext_resource type="PackedScene" uid="uid://c3l1upilw3eu5" path="res://scenes/Countdown.tscn" id="11_wbtv6"]
 [ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="14_dpirr"]
+[ext_resource type="AudioStream" uid="uid://mfoy22g8gu6l" path="res://assets/audio/sfx/Summer_day_field_ambience_loop.wav" id="14_t54hj"]
 
 [sub_resource type="Curve2D" id="Curve2D_e4u8j"]
 resource_local_to_scene = true
@@ -224,9 +225,14 @@ position = Vector2(21309, 2368)
 rotation = -3.1415925
 shape = SubResource("WorldBoundaryShape2D_prc8c")
 
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_t54hj")
+volume_db = -40.0
+autoplay = true
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_dpirr")
-volume_db = -25.0
+volume_db = -35.0
 autoplay = true
 
 [connection signal="body_entered" from="TrackStroke/TrackCollision" to="." method="_on_track_collision_body_entered"]
