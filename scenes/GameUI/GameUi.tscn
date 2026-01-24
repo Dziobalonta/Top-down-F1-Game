@@ -35,6 +35,7 @@ font = ExtResource("4_xg3kr")
 font_size = 25
 
 [node name="GameUi" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

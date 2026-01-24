@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://be6ouupk4wd2l"]
+
+[ext_resource type="Script" uid="uid://4sonhcd8asy2" path="res://src/Main.gd" id="1_77xjx"]
+[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="1_d07pu"]
+[ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Main/TrackSelector.tscn" id="2_kcxq7"]
+[ext_resource type="Resource" uid="uid://da87sbvyhvy1x" path="res://resources/Spa.tres" id="3_gnhi3"]
+[ext_resource type="Resource" uid="uid://b7k0fvyybi254" path="res://resources/Silverstone.tres" id="4_ouiwy"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_77xjx")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_d07pu")
+volume_db = -40.0
+autoplay = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08235294, 0.08235294, 0.11764706, 1)
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 129.0
+offset_right = 3122.0
+offset_bottom = 871.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.264, 0.264)
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 150
+
+[node name="GridContainer" type="GridContainer" parent="MC"]
+layout_mode = 2
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 100
+columns = 2
+
+[node name="TrackSelector1" parent="MC/GridContainer" instance=ExtResource("2_kcxq7")]
+layout_mode = 2
+track_info = ExtResource("3_gnhi3")
+
+[node name="TrackSelector2" parent="MC/GridContainer" instance=ExtResource("2_kcxq7")]
+layout_mode = 2
+track_info = ExtResource("4_ouiwy")

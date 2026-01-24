@@ -17,6 +17,10 @@ var _beep_timer: float = 0.0  # Timer for playing beeps every second
 
 @export var max_off_track_time: float = 10.0  # Should match RaceController's max_total_off_track_time
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		GameManager.change_to_main()
+
 func _enter_tree() -> void:
 	EventHub.on_lap_update.connect(on_lap_update)
 	EventHub.on_race_over.connect(on_race_over)
