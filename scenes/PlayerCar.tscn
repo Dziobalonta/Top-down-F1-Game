@@ -5,3 +5,6 @@
 
 [node name="PlayerCar" instance=ExtResource("1_2wfw4")]
 script = ExtResource("2_ryxr2")
+
+[node name="CarCs" parent="CrashDetector" index="0"]
+scale = Vector2(1.05, 1.05)

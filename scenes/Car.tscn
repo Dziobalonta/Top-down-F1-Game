@@ -1,16 +1,49 @@
-[gd_scene load_steps=7 format=3 uid="uid://csry2506k7k3a"]
+[gd_scene load_steps=23 format=3 uid="uid://csry2506k7k3a"]
 
 [ext_resource type="Script" uid="uid://c42jibati2jer" path="res://src/Car.gd" id="1_kb8hb"]
 [ext_resource type="Texture2D" uid="uid://db4b4g0ck4ihp" path="res://assets/sprites/f1_car_body.svg" id="2_fbyd5"]
 [ext_resource type="Texture2D" uid="uid://shtt1lyxwe32" path="res://assets/sprites/f1_car_wheel.svg" id="3_t6kce"]
 [ext_resource type="Texture2D" uid="uid://c387slcq6ats5" path="res://assets/sprites/f1_car_rear_wing.svg" id="4_vaoqk"]
+[ext_resource type="AudioStream" uid="uid://4bg45hguiaam" path="res://assets/audio/sfx/Car_offtrack_loop.wav" id="5_7e1fp"]
+[ext_resource type="AudioStream" uid="uid://bqmlpqswtctxb" path="res://assets/audio/sfx/27559 Car body hit-full.wav" id="5_658ie"]
+[ext_resource type="AudioStream" uid="uid://jn100xlwinn" path="res://assets/audio/sfx/Engine_idle_loop_1.wav" id="5_t6kce"]
+[ext_resource type="AudioStream" uid="uid://dwfmft07aufyt" path="res://assets/audio/sfx/32729 Car body hit 2-full.wav" id="6_i1fuk"]
+[ext_resource type="AudioStream" uid="uid://cp4wan2tdqtdt" path="res://assets/audio/sfx/32730 Car body hit 3-full.wav" id="7_q1vlk"]
+[ext_resource type="AudioStream" uid="uid://yo10g4xbgiuh" path="res://assets/audio/sfx/Engine_idle_loop_2.wav" id="9_ra71u"]
+[ext_resource type="AudioStream" uid="uid://5w6uigmdeon1" path="res://assets/audio/sfx/Engine_idle_loop_3.wav" id="10_dfshe"]
+[ext_resource type="AudioStream" uid="uid://bhqq7sij2ul67" path="res://assets/audio/sfx/Engine_highrpm_loop_3.wav" id="10_ra71u"]
+[ext_resource type="AudioStream" uid="uid://iayv87ohogr3" path="res://assets/audio/sfx/Engine_idle_loop_4.wav" id="11_ctlpt"]
+[ext_resource type="AudioStream" uid="uid://bm7p20lunpr12" path="res://assets/audio/sfx/Engine_highrpm_loop_4.wav" id="11_dfshe"]
+[ext_resource type="AudioStream" uid="uid://3lqqax4lycf8" path="res://assets/audio/sfx/Engine_highrpm_loop_5.wav" id="12_ctlpt"]
+[ext_resource type="AudioStream" uid="uid://bowseb4abs18" path="res://assets/audio/sfx/30081 Checkpoint bonus 16-full.wav" id="15_ctlpt"]
+[ext_resource type="AudioStream" uid="uid://balk4uvvk5cgw" path="res://assets/audio/sfx/38219 Cartoon game mechanic checkpoint 04-full.wav" id="16_7e1fp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ys5ts"]
 radius = 16.0
 height = 64.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kb8hb"]
-size = Vector2(166, 429)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra71u"]
+radius = 81.5
+height = 420.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7e1fp"]
+streams_count = 3
+stream_0/stream = ExtResource("5_658ie")
+stream_1/stream = ExtResource("6_i1fuk")
+stream_2/stream = ExtResource("7_q1vlk")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8osq2"]
+streams_count = 4
+stream_0/stream = ExtResource("5_t6kce")
+stream_1/stream = ExtResource("9_ra71u")
+stream_2/stream = ExtResource("10_dfshe")
+stream_3/stream = ExtResource("11_ctlpt")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q1vlk"]
+streams_count = 3
+stream_0/stream = ExtResource("10_ra71u")
+stream_1/stream = ExtResource("11_dfshe")
+stream_2/stream = ExtResource("12_ctlpt")
 
 [node name="Car" type="CharacterBody2D"]
 script = ExtResource("1_kb8hb")
@@ -88,7 +121,40 @@ debug_color = Color(0.69639224, 0.28142563, 1, 0.41960785)
 rotation = 1.5707964
 texture = ExtResource("4_vaoqk")
 
+[node name="CrashDetector" type="Area2D" parent="."]
+
+[node name="CarCs" type="CollisionShape2D" parent="CrashDetector"]
+position = Vector2(0, 0.5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ra71u")
+
 [node name="CarCs" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
 rotation = 1.5707964
-shape = SubResource("RectangleShape2D_kb8hb")
+shape = SubResource("CapsuleShape2D_ra71u")
+
+[node name="OffTrack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_7e1fp")
+volume_db = -40.0
+
+[node name="CrashSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_7e1fp")
+volume_db = -15.0
+
+[node name="EngineIdle" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_8osq2")
+volume_db = -15.0
+max_distance = 10000.0
+
+[node name="EngineHighRPM" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_q1vlk")
+volume_db = -15.0
+max_distance = 10000.0
+
+[node name="StartLinePassed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_ctlpt")
+volume_db = -10.0
+
+[node name="SectorPassed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_7e1fp")
+volume_db = -10.0

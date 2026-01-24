@@ -1,6 +1,14 @@
 extends Car
 class_name PlayerCar
 
+func _ready():
+	super()
+	# Debug sound
+	#engine_idle.stop()
+	#engine_high_rpm.stop()
+	engine_idle.bus = "Master"
+	engine_high_rpm.bus = "Master"
+
 func _physics_process(delta: float) -> void:
 	acceleration = Vector2.ZERO
 	get_input()
@@ -20,8 +28,11 @@ func get_input():
 	else:
 		steer_direction = turn * deg_to_rad(steering_angle)
 	
+	is_accelerating = false
+	
 	if Input.is_action_pressed("Throttle"):
 		acceleration = transform.x * engine_power
+		is_accelerating = true
 		
 	if Input.is_action_pressed("Brake"):
 		acceleration = transform.x * braking

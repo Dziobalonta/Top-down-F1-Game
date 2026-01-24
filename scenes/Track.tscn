@@ -1,0 +1,233 @@
+[gd_scene load_steps=20 format=3 uid="uid://di80rky40ky77"]
+
+[ext_resource type="Script" uid="uid://cn34im82ita1b" path="res://src/Track.gd" id="2_03wxe"]
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="2_myp20"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="3_x3iig"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="4_03wxe"]
+[ext_resource type="Texture2D" uid="uid://cp5tr12youbvw" path="res://assets/textures/FinishLine.png" id="5_x3iig"]
+[ext_resource type="PackedScene" uid="uid://syonu1l4n7y1" path="res://scenes/TrackProcessor.tscn" id="6_qyuim"]
+[ext_resource type="Texture2D" uid="uid://doeacwcd6qybp" path="res://assets/textures/starting_pos.png" id="7_84bdo"]
+[ext_resource type="PackedScene" uid="uid://b78w13u5xjaj5" path="res://scenes/Sector.tscn" id="8_chhoc"]
+[ext_resource type="Texture2D" uid="uid://c6525nj1g65f0" path="res://assets/textures/red-flag.png" id="8_trk6v"]
+[ext_resource type="PackedScene" uid="uid://utawede35f45" path="res://scenes/RaceController.tscn" id="10_op70l"]
+[ext_resource type="PackedScene" uid="uid://cmsqapswmhsso" path="res://scenes/PlayerCar.tscn" id="10_qyuim"]
+[ext_resource type="PackedScene" uid="uid://bo7ahvvu7g718" path="res://scenes/GameUI/GameUi.tscn" id="11_uoqgd"]
+[ext_resource type="PackedScene" uid="uid://c3l1upilw3eu5" path="res://scenes/Countdown.tscn" id="11_wbtv6"]
+[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="14_dpirr"]
+
+[sub_resource type="Curve2D" id="Curve2D_e4u8j"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0.13184, 1.3988, -246.40825, 130.07578, -0.96111965, -0.86621094, 3.1469, 2.8362, -244.70586, 133.17477, -51.2798, 36.628784, 9.0175, -6.4412, -189.55286, 98.930786, -6.980995, 4.9609985, 6.9814, -4.9613, -160.46486, 78.19978, -11.174, 8.5434, 11.174, -8.5434, -138.24387, 61.895782, -0.7779999, -7.6204987, 0.54917, 5.3802, -125.08386, 60.878387, -2.6944122, 0.2928009, 2.8403, -0.30871, -119.91106, 68.99078, -4.430008, 0.99890137, 7.9514, -1.7928, -73.34305, 60.61519, -28.391998, 13.706696, 32.219, -15.554, -25.272049, 40.114197, -20.257996, -6.1875, 20.257996, 6.1875, 26.588959, 30.858704, -24.440002, -37.328003, 24.907, 38.042, 100.698944, 86.07971, -30.569, -7.459015, 23.646, 5.77, 182.65594, 153.29971, -13.777985, 22.864899, 14.583, -24.2, 226.30194, 133.3627, 19.374786, 9.406982, -42.141, -20.461, 220.88315, 95.354706, 1.1170044, 10.824005, -0.47537, -4.6053, 178.36914, 64.6087, -2.0904846, 3.410492, 5.1232, -8.3583, 180.31454, 54.95111, 4.5522156, 7.6380005, -4.202, -7.0498, 181.14673, 31.656113, 41.467102, 11.847488, -57.071, -16.305, 134.57172, 12.383118, 1.6640015, 27.547005, -1.3409, -22.191, 71.433716, -34.755882, -26.440002, 7.4629974, 38.939, -10.991, 100.39572, -68.97188, -19.057007, 8.539001, 27.146, -12.163, 171.66672, -92.97388, -13.828003, -18.596798, 15.126, 20.343, 211.33472, -86.74508, -5.877014, 14.264999, 3.2206, -7.8173, 245.13773, -76.961075, 25.570313, 30.480202, -33.33, -39.73, 221.64072, -117.226074, 21.709991, -7.2859993, -16.833, 5.6483, 169.43073, -148.00308, 6.125, 7.804901, -3.4734, -4.4259, 144.38873, -150.35518, 5.5193787, -0.5739002, -3.732, 0.38809, 131.86075, -155.72208, 62.91089, -25.2617, -113.06, 45.398, 59.222748, -127.766075, 18.539993, -14.727997, -30.773, 24.434, -69.94725, -68.75008, 7.4420013, -1.9589996, -17.988, 4.7355, -122.75525, -32.279076, 5.5510025, -12.185699, -3.8076, 8.3581, -152.90924, -10.603073, 23.182304, -23.281998, -32.393, 32.533, -185.76025, 27.907928, 13.213001, -34.623993, -5.6978, 14.931, -238.96025, 106.25192, -0.2901001, -3.0769958, 0, 0, -246.39395, 130.07492, 0, 0, 0, 0, -246.40825, 130.07578)
+}
+point_count = 35
+
+[sub_resource type="Resource" id="Resource_aat71"]
+resource_local_to_scene = true
+script = ExtResource("4_03wxe")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03wxe"]
+size = Vector2(1920, 250)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rj64e"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_prc8c"]
+distance = -11.0
+
+[node name="Track" type="Node2D"]
+script = ExtResource("2_03wxe")
+
+[node name="BgTexture" type="Sprite2D" parent="."]
+
+[node name="TrackStroke" type="Node2D" parent="."]
+scale = Vector2(0.09999989, 0.10000043)
+metadata/svg_root = true
+
+[node name="path" type="Node2D" parent="TrackStroke" node_paths=PackedStringArray("line")]
+visible = false
+position = Vector2(358100.34, 233808.98)
+scale = Vector2(1250, 1250)
+script = ExtResource("2_myp20")
+stroke_color = Color(0.16565639, 0.16565642, 0.16565639, 1)
+stroke_width = 9.0
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_e4u8j")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_aat71")
+
+[node name="Stroke" type="Line2D" parent="TrackStroke/path"]
+points = PackedVector2Array(-246.40825, 130.07578, -246.33667, 130.57501, -246.2218, 131.0283, -246.06506, 131.44264, -245.86803, 131.825, -245.63213, 132.1824, -245.3588, 132.52184, -244.70586, 133.17477, -244.13124, 133.66, -243.84097, 133.85866, -243.53577, 134.02, -243.37454, 134.0848, -243.20596, 134.13799, -243.0288, 134.17883, -242.84183, 134.20659, -242.64386, 134.2205, -242.43367, 134.21982, -241.97183, 134.1716, -241.44655, 134.05594, -240.84816, 133.86684, -239.39323, 133.24413, -235.1792, 130.85214, -189.55286, 98.930786, -160.46486, 78.19978, -138.24387, 61.895782, -131.583, 57.06094, -129.37465, 55.810135, -128.5021, 55.472633, -128.11763, 55.37538, -127.765366, 55.325623, -127.60077, 55.318512, -127.44355, 55.32322, -127.29352, 55.339733, -127.150444, 55.368034, -127.014114, 55.408108, -126.884315, 55.459934, -126.76082, 55.523502, -126.64339, 55.59879, -126.531845, 55.685783, -126.42595, 55.784466, -126.325485, 55.894814, -126.23023, 56.016815, -126.05449, 56.295723, -125.89698, 56.62104, -125.6297, 57.410385, -125.4144, 58.383774, -125.08386, 60.878387, -124.81444, 62.783684, -124.42284, 64.456894, -123.91626, 65.88675, -123.62211, 66.50689, -123.301926, 67.061966, -122.9566, 67.55055, -122.587036, 67.97125, -122.19412, 68.32265, -121.98921, 68.471924, -121.778786, 68.60333, -121.56298, 68.71672, -121.34191, 68.811905, -121.11567, 68.8887, -120.88439, 68.946945, -120.64818, 68.98645, -120.40714, 69.007034, -120.16139, 69.00854, -119.91106, 68.99078, -73.34305, 60.61519, -66.470085, 58.583073, -56.97277, 54.832405, -25.272049, 40.114197, -6.425156, 31.236061, -0.045624495, 28.718975, 2.6585255, 27.891766, 5.143832, 27.333387, 7.4889708, 27.029789, 9.772617, 26.96693, 12.073445, 27.130764, 14.470131, 27.50724, 26.588959, 30.858704, 43.27811, 36.848083, 52.496117, 41.20775, 62.0757, 46.79152, 71.85131, 53.835, 81.65741, 62.5738, 91.328476, 73.2435, 100.698944, 86.07971, 119.7136, 111.582886, 129.51591, 122.09949, 139.5542, 131.15833, 149.85786, 138.7836, 160.45642, 144.99948, 171.37929, 149.83011, 182.65594, 153.29971, 190.75523, 155.03748, 197.51376, 155.83415, 200.4817, 155.83777, 203.22424, 155.556, 205.77797, 154.97208, 208.17944, 154.06929, 210.4653, 152.83096, 212.67209, 151.24034, 214.83641, 149.28072, 216.99487, 146.9354, 221.44058, 141.02075, 226.30194, 133.3627, 234.33203, 118.53743, 235.40948, 115.7187, 236.10454, 113.18233, 236.30705, 112.008675, 236.412, 110.891975, 236.41878, 109.82771, 236.32672, 108.811325, 236.13516, 107.83828, 235.84349, 106.90402, 235.45102, 106.00403, 234.95712, 105.13374, 234.36116, 104.28863, 233.66245, 103.46415, 231.95432, 101.8589, 229.82748, 100.28167, 227.2768, 98.69612, 220.88315, 95.354706, 189.20697, 79.48881, 184.24216, 76.367836, 182.51364, 75.00044, 181.20032, 73.69858, 180.67888, 73.05741, 180.23665, 72.41485, 179.86546, 71.76495, 179.55711, 71.10182, 179.3034, 70.4195, 179.09613, 69.7121, 178.78818, 68.19827, 178.36914, 64.6087, 178.17859, 61.636444, 178.22458, 60.428417, 178.37965, 59.331856, 178.655, 58.291294, 179.0618, 57.25129, 180.31454, 54.95111, 182.00793, 51.863686, 183.24608, 48.8592, 184.02956, 45.921272, 184.25096, 44.47214, 184.35892, 43.0335, 184.35349, 41.6033, 184.23474, 40.17949, 184.00276, 38.760025, 183.65762, 37.342854, 183.19936, 35.925922, 182.62808, 34.50719, 181.14673, 31.656113, 179.63982, 29.289845, 178.84164, 28.274895, 177.92798, 27.336624, 176.83458, 26.448456, 175.49724, 25.583807, 171.83365, 23.818748, 134.57172, 12.383118, 100.86358, 2.0127745, 89.95318, -2.4338694, 85.72791, -4.663682, 82.22509, -6.9706306, 79.37157, -9.409322, 78.165436, -10.695134, 77.09421, -12.034361, 76.14873, -13.4338255, 75.31987, -14.900355, 74.59848, -16.440775, 73.97542, -18.061913, 72.98772, -21.573635, 72.28362, -25.490135, 71.433716, -34.755882, 71.20873, -42.291245, 71.34283, -45.51434, 71.67521, -48.41448, 72.23137, -51.021725, 73.03673, -53.36616, 73.54082, -54.44922, 74.116745, -55.477856, 74.767715, -56.455822, 75.49688, -57.38688, 76.30744, -58.274796, 77.202576, -59.123314, 79.25926, -60.717228, 81.69241, -62.198692, 84.527466, -63.597786, 91.5051, -66.269135, 100.39572, -68.97188, 143.48697, -81.89238, 171.66672, -92.97388, 187.37251, -99.74707, 190.11067, -100.664505, 192.50127, -101.251564, 193.58615, -101.41807, 194.60808, -101.4982, 195.57501, -101.49074, 196.49496, -101.3944, 197.3759, -101.20795, 198.22578, -100.93013, 199.05264, -100.55969, 199.86441, -100.09537, 200.66904, -99.53593, 201.47461, -98.8801, 203.1203, -97.27428, 211.33472, -86.74508, 216.88896, -79.89892, 222.17125, -74.62811, 224.69359, -72.58835, 227.12776, -70.94828, 229.46701, -69.70988, 230.59894, -69.2419, 231.70459, -68.87508, 232.78316, -68.60964, 233.8338, -68.44584, 234.85564, -68.38392, 235.84787, -68.42412, 236.80965, -68.56669, 237.7401, -68.81187, 238.63843, -69.159904, 239.50374, -69.61104, 240.33524, -70.16553, 241.13203, -70.8236, 241.89337, -71.5855, 242.61832, -72.451485, 243.30606, -73.42179, 243.95578, -74.49666, 245.13773, -76.961075, 246.10153, -79.68547, 246.35643, -80.96784, 246.41429, -81.6111, 246.42084, -82.26412, 246.37239, -82.93321, 246.26534, -83.62464, 246.09598, -84.34473, 245.8606, -85.09974, 245.1772, -86.73974, 244.1858, -88.594986, 221.64072, -117.226074, 202.47478, -139.82066, 196.1985, -146.3447, 193.5758, -148.59683, 191.17822, -150.24557, 190.03604, -150.86006, 188.91678, -151.34335, 187.80937, -151.70201, 186.70264, -151.94258, 185.58548, -152.07161, 184.44682, -152.09566, 183.27548, -152.02127, 182.0604, -151.85498, 179.45451, -151.27298, 169.43073, -148.00308, 159.2778, -144.89015, 155.72495, -144.20721, 154.23308, -144.09315, 152.89423, -144.13417, 152.27359, -144.21365, 151.68085, -144.33286, 151.11261, -144.49211, 150.56543, -144.69177, 150.03586, -144.93213, 149.52045, -145.21353, 148.51839, -145.90068, 147.53171, -146.75583, 146.53288, -147.78159, 144.38873, -150.35518, 143.07956, -151.88005, 141.74205, -153.14165, 140.35371, -154.1496, 139.63342, -154.56148, 138.89198, -154.91356, 138.12656, -155.20703, 137.33435, -155.44315, 136.51254, -155.62306, 135.6583, -155.748, 133.84126, -155.83777, 131.86075, -155.72208, 130.24843, -155.44554, 127.78347, -154.74265, 59.222748, -127.766075, -40.80725, -86.75682, -50.74034, -81.925186, -57.84194, -77.800606, -69.94725, -68.75008, -105.10038, -42.086452, -115.69186, -35.368088, -119.611664, -33.40646, -121.273865, -32.743057, -122.75525, -32.279076, -134.27489, -28.608025, -138.7374, -26.552649, -142.49612, -24.2349, -144.1493, -22.950493, -145.67186, -21.56792, -147.07886, -20.076328, -148.3854, -18.46486, -150.75761, -14.838863, -152.90924, -10.603073, -154.46318, -7.50354, -156.38852, -4.3336864, -162.06923, 3.055966, -185.76025, 27.907928, -205.88048, 49.00504, -219.55275, 66.29581, -224.86206, 74.825806, -229.62878, 83.97864, -238.96025, 106.25192, -244.92256, 122.60867, -246.15608, 127.15414, -246.39153, 128.78024, -246.42087, 129.46434, -246.39395, 130.07492, -246.39397, 130.07494, -246.394, 130.07492, -246.39404, 130.07494, -246.3942, 130.07494, -246.39444, 130.07494, -246.39471, 130.07495, -246.39507, 130.07498, -246.39548, 130.07501, -246.39594, 130.07503, -246.39879, 130.07523, -246.40405, 130.07553, -246.40714, 130.07571, -246.4079, 130.07574)
+closed = true
+width = 9.0
+default_color = Color(0.16565639, 0.16565642, 0.16565639, 1)
+joint_mode = 2
+sharp_limit = 4.0
+round_precision = 10
+metadata/_edit_lock_ = true
+
+[node name="RacingLine" type="Path2D" parent="TrackStroke"]
+position = Vector2(240.00029, 479.99792)
+scale = Vector2(10.000011, 9.999957)
+
+[node name="TrackProcessor" parent="TrackStroke/RacingLine" instance=ExtResource("6_qyuim")]
+position = Vector2(14876, 33391)
+rotation = 2.496444
+
+[node name="TrackCollision" type="Area2D" parent="TrackStroke" groups=["track_collision"]]
+collision_layer = 4
+collision_mask = 2
+
+[node name="StartLine" type="Area2D" parent="."]
+position = Vector2(14861.001, 33778.004)
+rotation = 0.9091131
+scale = Vector2(0.59, 0.59)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="StartLine"]
+texture = ExtResource("5_x3iig")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartLine"]
+shape = SubResource("RectangleShape2D_03wxe")
+
+[node name="StartingPositions" type="Node2D" parent="."]
+position = Vector2(14861.001, 33778.004)
+rotation = 0.9091131
+scale = Vector2(0.59, 0.59)
+
+[node name="Pos1" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(453.8679, -720.70734)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="Pos2" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-351.81714, -750.95374)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="Pos3" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(490.73337, -1748.9941)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="Pos4" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-314.95163, -1779.2405)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="Pos5" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(530.06366, -2811.8447)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="Pos6" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-275.6214, -2842.091)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="Pos7" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(563.49023, -3737.4678)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="Pos8" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-242.1948, -3767.7144)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_84bdo")
+
+[node name="WaypointsHolder" type="Node" parent="."]
+
+[node name="SectionsHolder" type="Node" parent="."]
+
+[node name="Sector2" parent="SectionsHolder" instance=ExtResource("8_chhoc")]
+position = Vector2(51791, 4023.997)
+rotation = 1.2187864
+
+[node name="Sprite2D" type="Sprite2D" parent="SectionsHolder/Sector2"]
+position = Vector2(-825.2446, -99.64203)
+rotation = -1.2296933
+scale = Vector2(0.43313605, 0.43313605)
+texture = ExtResource("8_trk6v")
+
+[node name="Sector3" parent="SectionsHolder" instance=ExtResource("8_chhoc")]
+position = Vector2(64102.996, 39986.996)
+rotation = 0.5124079
+
+[node name="Sprite2D" type="Sprite2D" parent="SectionsHolder/Sector3"]
+position = Vector2(-840.4701, -129.57663)
+rotation = -0.49685878
+scale = Vector2(0.43313605, 0.43313605)
+texture = ExtResource("8_trk6v")
+
+[node name="CarsHolder" type="Node" parent="."]
+
+[node name="PlayerCar" parent="CarsHolder" groups=["player"] instance=ExtResource("10_qyuim")]
+position = Vector2(15339.999, 33743)
+rotation = 2.5098014
+car_name = "Player"
+
+[node name="Camera2D" type="Camera2D" parent="CarsHolder/PlayerCar"]
+position = Vector2(0.8652344, 5.5898438)
+rotation = -2.5098014
+zoom = Vector2(0.235, 0.235)
+
+[node name="RaceController" parent="." instance=ExtResource("10_op70l")]
+total_laps = 2
+
+[node name="Ui" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="GameUi" parent="Ui" instance=ExtResource("11_uoqgd")]
+
+[node name="Countdown" parent="Ui" instance=ExtResource("11_wbtv6")]
+scale = Vector2(0.192, 0.192)
+metadata/_edit_use_anchors_ = true
+
+[node name="WorldBoundries" type="Node2D" parent="."]
+
+[node name="Right" type="StaticBody2D" parent="WorldBoundries"]
+physics_material_override = SubResource("PhysicsMaterial_rj64e")
+
+[node name="RightCS" type="CollisionShape2D" parent="WorldBoundries/Right"]
+position = Vector2(69009, 42465)
+rotation = 10.995575
+shape = SubResource("WorldBoundaryShape2D_prc8c")
+
+[node name="Left" type="StaticBody2D" parent="WorldBoundries"]
+physics_material_override = SubResource("PhysicsMaterial_rj64e")
+
+[node name="LeftCS" type="CollisionShape2D" parent="WorldBoundries/Left"]
+position = Vector2(1723, 38357)
+rotation = 7.853982
+shape = SubResource("WorldBoundaryShape2D_prc8c")
+
+[node name="Bottom" type="StaticBody2D" parent="WorldBoundries"]
+physics_material_override = SubResource("PhysicsMaterial_rj64e")
+
+[node name="BottomCS" type="CollisionShape2D" parent="WorldBoundries/Bottom"]
+position = Vector2(17204, 44106)
+shape = SubResource("WorldBoundaryShape2D_prc8c")
+
+[node name="Top" type="StaticBody2D" parent="WorldBoundries"]
+physics_material_override = SubResource("PhysicsMaterial_rj64e")
+
+[node name="TopCS" type="CollisionShape2D" parent="WorldBoundries/Top"]
+position = Vector2(21309, 2368)
+rotation = -3.1415925
+shape = SubResource("WorldBoundaryShape2D_prc8c")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_dpirr")
+volume_db = -25.0
+autoplay = true
+
+[connection signal="body_entered" from="TrackStroke/TrackCollision" to="." method="_on_track_collision_body_entered"]
+[connection signal="body_entered" from="StartLine" to="." method="_on_start_line_body_entered"]

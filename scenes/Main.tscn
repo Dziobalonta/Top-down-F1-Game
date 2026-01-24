@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dauwkbo21iugx"]
 
-[ext_resource type="PackedScene" uid="uid://di80rky40ky77" path="res://scenes/SpaLevel.tscn" id="1_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://di80rky40ky77" path="res://scenes/Track.tscn" id="1_uu6xs"]
 [ext_resource type="PackedScene" uid="uid://csry2506k7k3a" path="res://scenes/Car.tscn" id="2_r0du0"]
 
 [node name="main" type="Node2D"]

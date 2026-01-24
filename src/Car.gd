@@ -37,6 +37,21 @@ var sectors_passed: Array[int] = []
 @onready var car_body: Sprite2D = $CarBody
 @onready var rear_wing: Sprite2D = $RearWing
 
+@onready var crash_sound: AudioStreamPlayer2D = $CrashSound
+@onready var engine_idle: AudioStreamPlayer2D = $EngineIdle
+@onready var engine_high_rpm: AudioStreamPlayer2D = $EngineHighRPM
+@onready var crash_detector: Area2D = $CrashDetector
+@onready var start_line_passed: AudioStreamPlayer2D = $StartLinePassed
+@onready var sector_passed_sound: AudioStreamPlayer2D = $SectorPassed
+@onready var off_track_sound: AudioStreamPlayer2D = $OffTrack
+var is_accelerating: bool = false
+var min_volume: float = -80.0
+var max_idle_volume: float = -20.0
+var max_high_rpm_volume: float = -30.0
+var crash_cooldown: float = 0.0
+var crash_cooldown_time: float = 0.5  # prevent spamming
+var last_crash_time: float = 0.0
+
 
 var wheels_on_track: Dictionary = {
 	"left_front": false,
@@ -54,6 +69,8 @@ func _physics_process(delta: float) -> void:
 	calculate_steering(delta)
 	velocity += acceleration * delta
 	move_and_slide()
+	
+	update_engine_sound(delta)
 	
 	if not is_on_track:
 		off_track_time += delta
@@ -82,9 +99,57 @@ func _ready() -> void:
 	right_rear_wheel_area.area_entered.connect(_on_wheel_entered.bind("right_rear"))
 	right_rear_wheel_area.area_exited.connect(_on_wheel_exited.bind("right_rear"))
 	
+	crash_detector.body_entered.connect(_on_crash_detector_body_entered)
+	
 	EventHub.on_race_start.connect(on_race_start)
 	set_physics_process(false)
 	
+	engine_idle.bus = "CarEngine"
+	engine_high_rpm.bus = "CarEngine"
+	
+	engine_idle.play()
+	engine_high_rpm.play()
+	engine_high_rpm.volume_db = min_volume  # mute completely
+	engine_idle.volume_db = max_idle_volume
+
+#region Sound Settings
+func update_engine_sound(delta: float) -> void:
+	#DEBUG
+	#print("is_accelerating: ", is_accelerating, " | idle_vol: ", engine_idle.volume_db, " | high_vol: ", engine_high_rpm.volume_db)
+	if is_accelerating:
+		engine_high_rpm.volume_db = lerp(engine_high_rpm.volume_db, max_high_rpm_volume, 20.0 * delta)
+		engine_idle.volume_db = lerp(engine_idle.volume_db, min_volume, delta)
+	else:
+		engine_high_rpm.volume_db = lerp(engine_high_rpm.volume_db, min_volume, delta)
+		engine_idle.volume_db = lerp(engine_idle.volume_db, max_idle_volume, 20.0 * delta)
+		
+func _on_crash_detector_body_entered(body: Node2D) -> void:
+	if body is Car:
+		var current_time = Time.get_ticks_msec() / 1000.0
+		
+		if current_time - last_crash_time > 0.1:
+			var other_car = body as Car
+			var relative_speed = (velocity - other_car.velocity).length()
+			
+			if relative_speed > 0:
+				play_crash_sound(relative_speed)
+				last_crash_time = current_time
+
+func play_crash_sound(speed: float) -> void:
+	# loudness depending on speed
+	var max_speed = 5500.0
+	var volume_factor = clamp(speed / max_speed, 0.4, 1.0)
+	crash_sound.volume_db = lerp(-35.0, -20.0, volume_factor)
+	
+	# Random pitch
+	crash_sound.pitch_scale = randf_range(0.9, 1.1)
+	
+	crash_sound.play()
+	
+	#print(name + " crashed at speed: " + str(int(speed)))
+	
+#endregion	
+
 #region Wheels Touch Logic
 func _on_wheel_entered(area: Area2D, wheel_name: String):
 	if area.is_in_group("track_collision"):
@@ -126,10 +191,12 @@ func check_all_wheels_status():
 
 func on_all_wheels_returned_to_track():
 	print(name + ": Back on track")
+	off_track_sound.stop()
 	EventHub.emit_on_wheels_returned_to_track(self)
 
 func on_wheels_left_track():
 	print(name + ": LEFT THE TRACK!")
+	off_track_sound.play()
 	EventHub.emit_on_wheels_left_track(self)
 
 func get_off_track_time() -> float:
@@ -151,6 +218,9 @@ func change_state(new_state: CarState) -> void:
 		CarState.DRIVING:
 			set_physics_process(true)
 		CarState.RACEOVER:
+			off_track_sound.stop()
+			engine_idle.stop()
+			engine_high_rpm.stop()
 			set_physics_process(false)
 
 #endregion
@@ -200,11 +270,13 @@ func lap_completed() -> void:
 		print("lap_completed %s" % lcd)
 		EventHub.emit_on_lap_completed(lcd)
 		sectors_passed.clear()
+		start_line_passed.play()
 		lap_time = 0.0
 	
 func hit_verfication(sector_id: int ) -> void:
 	if sector_id not in sectors_passed:
 		sectors_passed.append(sector_id)
+		sector_passed_sound.play()
 #endregion
 
 func on_race_start() -> void:

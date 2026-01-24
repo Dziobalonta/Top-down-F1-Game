@@ -1,31 +1,31 @@
-[gd_scene load_steps=33 format=3 uid="uid://di80rky40ky77"]
+[gd_scene load_steps=33 format=3 uid="uid://gxwulkf1agbo"]
 
-[ext_resource type="Texture2D" uid="uid://dg3r7rttqas0n" path="res://assets/textures/grass/ground_grass_gen_04.png" id="1_wc4ky"]
-[ext_resource type="Script" uid="uid://cn34im82ita1b" path="res://src/Track.gd" id="2_03wxe"]
-[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="2_myp20"]
-[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="3_x3iig"]
-[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="4_03wxe"]
-[ext_resource type="Texture2D" uid="uid://cp5tr12youbvw" path="res://assets/textures/FinishLine.png" id="5_x3iig"]
-[ext_resource type="PackedScene" uid="uid://syonu1l4n7y1" path="res://scenes/TrackProcessor.tscn" id="6_qyuim"]
-[ext_resource type="PackedScene" uid="uid://b78w13u5xjaj5" path="res://scenes/Sector.tscn" id="8_chhoc"]
-[ext_resource type="Texture2D" uid="uid://c6525nj1g65f0" path="res://assets/textures/red-flag.png" id="8_trk6v"]
-[ext_resource type="PackedScene" uid="uid://utawede35f45" path="res://scenes/RaceController.tscn" id="10_op70l"]
-[ext_resource type="PackedScene" uid="uid://cmsqapswmhsso" path="res://scenes/PlayerCar.tscn" id="10_qyuim"]
-[ext_resource type="PackedScene" uid="uid://bo7ahvvu7g718" path="res://scenes/GameUI/GameUi.tscn" id="11_uoqgd"]
-[ext_resource type="PackedScene" uid="uid://c3l1upilw3eu5" path="res://scenes/Countdown.tscn" id="11_wbtv6"]
-[ext_resource type="PackedScene" uid="uid://b3x50rxkh43ir" path="res://scenes/BotCar.tscn" id="11_xymfm"]
-[ext_resource type="Texture2D" uid="uid://p8i85rn5ariy" path="res://assets/sprites/f1_car_body_blue.svg" id="12_poxyf"]
-[ext_resource type="Texture2D" uid="uid://h557s5k4qxj5" path="res://assets/sprites/f1_car_rear_wing_blue.svg" id="13_1sokk"]
-[ext_resource type="Texture2D" uid="uid://d0a4ncefrepf4" path="res://assets/sprites/f1_car_body_orange.svg" id="14_b0wh3"]
-[ext_resource type="Texture2D" uid="uid://c3phdgm62njfb" path="res://assets/sprites/f1_car_rear_wing_orange.svg" id="15_gsowl"]
-[ext_resource type="Texture2D" uid="uid://cj18paiee85wr" path="res://assets/sprites/f1_car_body_teal.svg" id="16_rj64e"]
-[ext_resource type="Texture2D" uid="uid://d0powjbcglmk0" path="res://assets/sprites/f1_car_rear_wing_teal.svg" id="17_prc8c"]
-[ext_resource type="Texture2D" uid="uid://deeouwsd1ccic" path="res://assets/sprites/f1_car_body_green.svg" id="18_qng60"]
-[ext_resource type="Texture2D" uid="uid://cewq00jk2o0ag" path="res://assets/sprites/f1_car_rear_wing_green.svg" id="19_hdux7"]
-[ext_resource type="Texture2D" uid="uid://c1vf1ibqdxn7g" path="res://assets/sprites/f1_car_body_white_black.svg" id="20_gkyg4"]
-[ext_resource type="Texture2D" uid="uid://bs6m6yfjvjy6b" path="res://assets/sprites/f1_car_rear_white_black.svg" id="21_hg30b"]
-[ext_resource type="Texture2D" uid="uid://ca5csotcu7jev" path="res://assets/sprites/f1_car_body_pink.svg" id="22_4dnb7"]
-[ext_resource type="Texture2D" uid="uid://bxrwn7cxe6gh0" path="res://assets/sprites/f1_car_rear_wing_pink.svg" id="23_h5amf"]
+[ext_resource type="Texture2D" uid="uid://dg3r7rttqas0n" path="res://assets/textures/grass/ground_grass_gen_04.png" id="2_74wl6"]
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="3_kxoq3"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="4_higao"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="5_6lcbh"]
+[ext_resource type="PackedScene" uid="uid://syonu1l4n7y1" path="res://scenes/TrackProcessor.tscn" id="6_1bbkm"]
+[ext_resource type="Texture2D" uid="uid://doeacwcd6qybp" path="res://assets/textures/starting_pos.png" id="7_c0tmm"]
+[ext_resource type="Texture2D" uid="uid://cp5tr12youbvw" path="res://assets/textures/FinishLine.png" id="7_pok1h"]
+[ext_resource type="PackedScene" uid="uid://b78w13u5xjaj5" path="res://scenes/Sector.tscn" id="8_jddjs"]
+[ext_resource type="Texture2D" uid="uid://c6525nj1g65f0" path="res://assets/textures/red-flag.png" id="9_wl8jj"]
+[ext_resource type="PackedScene" uid="uid://cmsqapswmhsso" path="res://scenes/PlayerCar.tscn" id="10_jpkqv"]
+[ext_resource type="PackedScene" uid="uid://b3x50rxkh43ir" path="res://scenes/BotCar.tscn" id="11_1rtln"]
+[ext_resource type="Texture2D" uid="uid://p8i85rn5ariy" path="res://assets/sprites/f1_car_body_blue.svg" id="12_4c2vy"]
+[ext_resource type="Texture2D" uid="uid://h557s5k4qxj5" path="res://assets/sprites/f1_car_rear_wing_blue.svg" id="13_38uql"]
+[ext_resource type="Texture2D" uid="uid://d0a4ncefrepf4" path="res://assets/sprites/f1_car_body_orange.svg" id="14_xefaf"]
+[ext_resource type="Texture2D" uid="uid://c3phdgm62njfb" path="res://assets/sprites/f1_car_rear_wing_orange.svg" id="15_w6y4f"]
+[ext_resource type="Texture2D" uid="uid://cj18paiee85wr" path="res://assets/sprites/f1_car_body_teal.svg" id="16_umu16"]
+[ext_resource type="Texture2D" uid="uid://d0powjbcglmk0" path="res://assets/sprites/f1_car_rear_wing_teal.svg" id="17_af5wa"]
+[ext_resource type="Texture2D" uid="uid://deeouwsd1ccic" path="res://assets/sprites/f1_car_body_green.svg" id="18_6pjc6"]
+[ext_resource type="Texture2D" uid="uid://cewq00jk2o0ag" path="res://assets/sprites/f1_car_rear_wing_green.svg" id="19_8laeo"]
+[ext_resource type="Texture2D" uid="uid://c1vf1ibqdxn7g" path="res://assets/sprites/f1_car_body_white_black.svg" id="20_6a5nu"]
+[ext_resource type="Texture2D" uid="uid://bs6m6yfjvjy6b" path="res://assets/sprites/f1_car_rear_white_black.svg" id="21_5rekw"]
+[ext_resource type="Texture2D" uid="uid://ca5csotcu7jev" path="res://assets/sprites/f1_car_body_pink.svg" id="22_dxqg1"]
+[ext_resource type="Texture2D" uid="uid://bxrwn7cxe6gh0" path="res://assets/sprites/f1_car_rear_wing_pink.svg" id="23_ra7fe"]
+[ext_resource type="PackedScene" uid="uid://utawede35f45" path="res://scenes/RaceController.tscn" id="24_udsnh"]
+[ext_resource type="PackedScene" uid="uid://bo7ahvvu7g718" path="res://scenes/GameUI/GameUi.tscn" id="25_nggqq"]
+[ext_resource type="PackedScene" uid="uid://c3l1upilw3eu5" path="res://scenes/Countdown.tscn" id="26_qwio8"]
 
 [sub_resource type="Curve2D" id="Curve2D_e4u8j"]
 resource_local_to_scene = true
@@ -36,7 +36,7 @@ point_count = 35
 
 [sub_resource type="Resource" id="Resource_aat71"]
 resource_local_to_scene = true
-script = ExtResource("4_03wxe")
+script = ExtResource("5_6lcbh")
 
 [sub_resource type="Curve2D" id="Curve2D_wbtv6"]
 _data = {
@@ -52,13 +52,14 @@ size = Vector2(1920, 250)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_prc8c"]
 distance = -11.0
 
-[node name="SpaLevel" type="Node2D"]
-script = ExtResource("2_03wxe")
+[node name="SpaLevelBackup" type="Node2D"]
 
-[node name="Grass" type="TextureRect" parent="."]
+[node name="BgTexture" type="Sprite2D" parent="."]
+
+[node name="Grass" type="TextureRect" parent="BgTexture"]
 offset_right = 70656.0
 offset_bottom = 44928.0
-texture = ExtResource("1_wc4ky")
+texture = ExtResource("2_74wl6")
 stretch_mode = 1
 
 [node name="TrackStroke" type="Node2D" parent="."]
@@ -76,7 +77,7 @@ polygons = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1
 visible = false
 position = Vector2(358100.34, 233808.98)
 scale = Vector2(1250, 1250)
-script = ExtResource("2_myp20")
+script = ExtResource("3_kxoq3")
 stroke_color = Color(0.16565639, 0.16565642, 0.16565639, 1)
 stroke_width = 9.0
 line_joint_mode = 2
@@ -100,7 +101,7 @@ position = Vector2(240.00029, 479.99792)
 scale = Vector2(10.000011, 9.999957)
 curve = SubResource("Curve2D_wbtv6")
 
-[node name="TrackProcessor" parent="TrackStroke/RacingLine" instance=ExtResource("6_qyuim")]
+[node name="TrackProcessor" parent="TrackStroke/RacingLine" instance=ExtResource("6_1bbkm")]
 position = Vector2(14876, 33391)
 rotation = 2.496444
 
@@ -125,16 +126,69 @@ scale = Vector2(0.59, 0.59)
 collision_layer = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="StartLine"]
-texture = ExtResource("5_x3iig")
+texture = ExtResource("7_pok1h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartLine"]
 shape = SubResource("RectangleShape2D_03wxe")
+
+[node name="StartingPositions" type="Node2D" parent="."]
+position = Vector2(14861.001, 33778.004)
+rotation = 0.9091131
+scale = Vector2(0.59, 0.59)
+
+[node name="Pos1" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(453.8679, -720.70734)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
+
+[node name="Pos2" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-351.81714, -750.95374)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
+
+[node name="Pos3" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(490.73337, -1748.9941)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
+
+[node name="Pos4" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-314.95163, -1779.2405)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
+
+[node name="Pos5" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(530.06366, -2811.8447)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
+
+[node name="Pos6" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-275.6214, -2842.091)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
+
+[node name="Pos7" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(563.49023, -3737.4678)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
+
+[node name="Pos8" type="Sprite2D" parent="StartingPositions"]
+position = Vector2(-242.1948, -3767.7144)
+rotation = -1.5348129
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("7_c0tmm")
 
 [node name="WaypointsHolder" type="Node" parent="."]
 
 [node name="SectionsHolder" type="Node" parent="."]
 
-[node name="Sector2" parent="SectionsHolder" instance=ExtResource("8_chhoc")]
+[node name="Sector2" parent="SectionsHolder" instance=ExtResource("8_jddjs")]
 position = Vector2(51791, 4023.997)
 rotation = 1.2187864
 
@@ -142,9 +196,9 @@ rotation = 1.2187864
 position = Vector2(-825.2446, -99.64203)
 rotation = -1.2296933
 scale = Vector2(0.43313605, 0.43313605)
-texture = ExtResource("8_trk6v")
+texture = ExtResource("9_wl8jj")
 
-[node name="Sector3" parent="SectionsHolder" instance=ExtResource("8_chhoc")]
+[node name="Sector3" parent="SectionsHolder" instance=ExtResource("8_jddjs")]
 position = Vector2(64102.996, 39986.996)
 rotation = 0.5124079
 
@@ -152,12 +206,12 @@ rotation = 0.5124079
 position = Vector2(-840.4701, -129.57663)
 rotation = -0.49685878
 scale = Vector2(0.43313605, 0.43313605)
-texture = ExtResource("8_trk6v")
+texture = ExtResource("9_wl8jj")
 
 [node name="CarsHolder" type="Node" parent="."]
 
-[node name="PlayerCar" parent="CarsHolder" groups=["player"] instance=ExtResource("10_qyuim")]
-position = Vector2(15362, 33770)
+[node name="PlayerCar" parent="CarsHolder" groups=["player"] instance=ExtResource("10_jpkqv")]
+position = Vector2(15339.999, 33743)
 rotation = 2.5098014
 car_name = "Player"
 
@@ -166,75 +220,75 @@ position = Vector2(0.8652344, 5.5898438)
 rotation = -2.5098014
 zoom = Vector2(0.235, 0.235)
 
-[node name="BotCar1" parent="CarsHolder" instance=ExtResource("11_xymfm")]
-position = Vector2(15063.002, 33403)
+[node name="BotCar1" parent="CarsHolder" instance=ExtResource("11_1rtln")]
+position = Vector2(15060.999, 33355)
 rotation = 2.5272923
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
-car_texture = ExtResource("12_poxyf")
-car_wing_texture = ExtResource("13_1sokk")
+car_texture = ExtResource("12_4c2vy")
+car_wing_texture = ExtResource("13_38uql")
 car_number = 1
 car_name = "Max Verstappen"
 
-[node name="BotCar2" parent="CarsHolder" instance=ExtResource("11_xymfm")]
-position = Vector2(15892.001, 33399)
+[node name="BotCar2" parent="CarsHolder" instance=ExtResource("11_1rtln")]
+position = Vector2(15832.001, 33387)
 rotation = -3.778644
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
-car_texture = ExtResource("14_b0wh3")
-car_wing_texture = ExtResource("15_gsowl")
+car_texture = ExtResource("14_xefaf")
+car_wing_texture = ExtResource("15_w6y4f")
 car_number = 2
 car_name = "Lando Norris"
 
-[node name="BotCar3" parent="CarsHolder" instance=ExtResource("11_xymfm")]
-position = Vector2(15575.001, 33045)
+[node name="BotCar3" parent="CarsHolder" instance=ExtResource("11_1rtln")]
+position = Vector2(15555.003, 33000.004)
 rotation = -3.778644
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
-car_texture = ExtResource("16_rj64e")
-car_wing_texture = ExtResource("17_prc8c")
+car_texture = ExtResource("16_umu16")
+car_wing_texture = ExtResource("17_af5wa")
 car_number = 3
 car_name = "George Russel"
 
-[node name="BotCar4" parent="CarsHolder" instance=ExtResource("11_xymfm")]
-position = Vector2(16071.003, 32683.004)
+[node name="BotCar4" parent="CarsHolder" instance=ExtResource("11_1rtln")]
+position = Vector2(16062.002, 32632.002)
 rotation = -3.778644
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
-car_texture = ExtResource("18_qng60")
-car_wing_texture = ExtResource("19_hdux7")
+car_texture = ExtResource("18_6pjc6")
+car_wing_texture = ExtResource("19_8laeo")
 car_number = 4
 car_name = "Fernando Alonso"
 
-[node name="BotCar5" parent="CarsHolder" instance=ExtResource("11_xymfm")]
-position = Vector2(16436.002, 32997)
+[node name="BotCar5" parent="CarsHolder" instance=ExtResource("11_1rtln")]
+position = Vector2(16339.002, 33018)
 rotation = -3.778644
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
-car_texture = ExtResource("20_gkyg4")
-car_wing_texture = ExtResource("21_hg30b")
+car_texture = ExtResource("20_6a5nu")
+car_wing_texture = ExtResource("21_5rekw")
 car_number = 5
 car_name = "Estaban Ocon"
 
-[node name="BotCar6" parent="CarsHolder" instance=ExtResource("11_xymfm")]
-position = Vector2(16436.002, 32997)
+[node name="BotCar6" parent="CarsHolder" instance=ExtResource("11_1rtln")]
+position = Vector2(16784.998, 32699)
 rotation = -3.778644
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
-car_texture = ExtResource("22_4dnb7")
-car_wing_texture = ExtResource("23_h5amf")
+car_texture = ExtResource("22_dxqg1")
+car_wing_texture = ExtResource("23_ra7fe")
 car_number = 6
-car_name = "Estaban Ocon"
+car_name = "Pierre Gasly"
 
-[node name="RaceController" parent="." instance=ExtResource("10_op70l")]
+[node name="RaceController" parent="." instance=ExtResource("24_udsnh")]
 total_laps = 2
 
 [node name="Ui" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="GameUi" parent="Ui" instance=ExtResource("11_uoqgd")]
+[node name="GameUi" parent="Ui" instance=ExtResource("25_nggqq")]
 
-[node name="Countdown" parent="Ui" instance=ExtResource("11_wbtv6")]
+[node name="Countdown" parent="Ui" instance=ExtResource("26_qwio8")]
 scale = Vector2(0.192, 0.192)
 metadata/_edit_use_anchors_ = true
 

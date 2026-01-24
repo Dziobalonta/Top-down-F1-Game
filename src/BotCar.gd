@@ -16,6 +16,8 @@ var _next_waypoint: Waypoint
 func _ready() -> void:
 	target.visible = debug
 	_target_speed = randf_range(min_top_speed_limit, max_top_speed_limit)
+	sector_passed_sound.volume_db = -200
+	start_line_passed.volume_db = -200
 	super()
 
 func get_input() -> void:
@@ -37,8 +39,10 @@ func get_input() -> void:
 	# Accelerate if below target speed
 	if velocity.length() < _target_speed:
 		acceleration = transform.x * engine_power
+		is_accelerating = true
 	else:
 		acceleration = Vector2.ZERO
+		is_accelerating = false
 
 func _physics_process(delta: float) -> void:
 	if state != CarState.DRIVING or !_next_waypoint: 
