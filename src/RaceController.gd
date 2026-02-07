@@ -146,6 +146,8 @@ func on_lap_completed(info: LapCompleteData) -> void:
 		total_laps,
 		info.lap_time
 	)
+	if car is PlayerCar:
+		GameManager.save_best_lap(info.lap_time)
 	
 	if rd.race_completed:
 		car.change_state(Car.CarState.RACEOVER)

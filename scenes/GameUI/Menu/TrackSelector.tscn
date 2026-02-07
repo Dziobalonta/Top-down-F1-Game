@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://dro6mljcga6jw"]
 
-[ext_resource type="Script" uid="uid://cxgkcisi3w7lh" path="res://src/TrackSelector.gd" id="1_hv5um"]
+[ext_resource type="Script" uid="uid://cxgkcisi3w7lh" path="res://src/ui/TrackSelector.gd" id="1_hv5um"]
 [ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="2_bobsl"]
-[ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Main/TrackButton.tscn" id="3_87dx7"]
+[ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Menu/TrackButton.tscn" id="3_87dx7"]
 [ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="4_rcuev"]
 [ext_resource type="Resource" uid="uid://da87sbvyhvy1x" path="res://resources/Spa.tres" id="4_vqrn0"]
 [ext_resource type="Resource" uid="uid://b7k0fvyybi254" path="res://resources/Silverstone.tres" id="5_muoj6"]

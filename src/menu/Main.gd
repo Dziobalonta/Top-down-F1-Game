@@ -1,6 +1,6 @@
 extends Control
 
-const MODE_SELECTOR = preload("res://scenes/GameUI/Main/ModeSelector.tscn")
+const MODE_SELECTOR = preload("res://scenes/GameUI/Menu/ModeSelector.tscn")
 
 
 func _ready() -> void:

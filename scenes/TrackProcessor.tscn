@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://syonu1l4n7y1"]
 
-[ext_resource type="Script" uid="uid://cvk3yecuxk0vs" path="res://src/TrackProcessor.gd" id="1_uu8oa"]
+[ext_resource type="Script" uid="uid://cvk3yecuxk0vs" path="res://src/track/TrackProcessor.gd" id="1_uu8oa"]
 
 [node name="TrackProcessor" type="PathFollow2D"]
 loop = false

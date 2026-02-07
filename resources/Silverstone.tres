@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="TrackInfo" load_steps=5 format=3 uid="uid://b7k0fvyybi254"]
 
 [ext_resource type="Texture2D" uid="uid://dndyuhyfk0ms1" path="res://assets/imgs/crop-35986603.jpg" id="1_8cwyy"]
-[ext_resource type="Script" uid="uid://sr667dtfsd41" path="res://src/TrackInfo.gd" id="1_r7uym"]
+[ext_resource type="Script" uid="uid://sr667dtfsd41" path="res://src/classes/TrackInfo.gd" id="1_r7uym"]
 [ext_resource type="Texture2D" uid="uid://btg1htq4cenma" path="res://assets/textures/RaceCircuitSpa_detailed.svg" id="3_y50bd"]
 [ext_resource type="PackedScene" uid="uid://vh3np7nuuq2f" path="res://scenes/TrackSpa.tscn" id="4_ebd17"]
 

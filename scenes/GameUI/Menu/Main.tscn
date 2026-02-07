@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://be6ouupk4wd2l"]
 
-[ext_resource type="Script" uid="uid://4sonhcd8asy2" path="res://src/Main.gd" id="1_uri8x"]
+[ext_resource type="Script" uid="uid://4sonhcd8asy2" path="res://src/menu/Main.gd" id="1_uri8x"]
 [ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="2_j8k31"]
 [ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="3_r0yci"]
 [ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="4_13d5r"]

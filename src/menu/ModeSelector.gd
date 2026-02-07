@@ -1,7 +1,7 @@
 extends Control
 
-const MODE_SELECTOR = preload("res://scenes/GameUI/Main/TrackSelector.tscn")
-const MAIN = preload("res://scenes/GameUI/Main/Main.tscn")
+const MODE_SELECTOR = preload("res://scenes/GameUI/Menu/TrackSelector.tscn")
+const MAIN = preload("res://scenes/GameUI/Menu/Main.tscn")
 
 
 func _ready() -> void:

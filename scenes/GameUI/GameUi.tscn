@@ -39,9 +39,9 @@ font_size = 25
 texture = ExtResource("6_5irnb")
 region_rect = Rect2(371, 3369, 1921, 1081)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5irnb"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_scsgl"]
 texture = ExtResource("6_5irnb")
-region_rect = Rect2(2715, 3369, 1921, 1081)
+region_rect = Rect2(2715, 4846, 1921, 1081)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dk4pi"]
 
@@ -159,7 +159,6 @@ text = "saasassasas"
 label_settings = SubResource("LabelSettings_5bnkn")
 
 [node name="EscCanvas" type="CanvasLayer" parent="."]
-layer = 5
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="EscCanvas"]
@@ -171,18 +170,17 @@ grow_vertical = 2
 color = Color(0.26244184, 0.26244184, 0.26244184, 0.5)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EscCanvas"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -157.0
-offset_top = -276.0
-offset_right = 893.0
-offset_bottom = 1519.0
+anchors_preset = -1
+anchor_left = 0.34982643
+anchor_top = 0.40432099
+anchor_right = 1.3498263
+anchor_bottom = 2.4305556
+offset_top = -241.0
+offset_bottom = 241.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.31, 0.31)
+scale = Vector2(0.325, 0.325)
+metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="EscCanvas/VBoxContainer"]
 layout_mode = 2
@@ -203,8 +201,8 @@ theme_override_constants/v_separation = 300
 custom_minimum_size = Vector2(650, 365)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_ddyqp")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_5irnb")
-theme_override_styles/hover = SubResource("StyleBoxTexture_5irnb")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_scsgl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_scsgl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_dk4pi")
 
 [node name="RestartButton" type="Button" parent="EscCanvas/VBoxContainer/MarginContainer/GridContainer2"]

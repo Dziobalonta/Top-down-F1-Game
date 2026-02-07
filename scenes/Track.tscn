@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://di80rky40ky77"]
 
-[ext_resource type="Script" uid="uid://cn34im82ita1b" path="res://src/Track.gd" id="2_03wxe"]
+[ext_resource type="Script" uid="uid://cn34im82ita1b" path="res://src/track/Track.gd" id="2_03wxe"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="2_myp20"]
 [ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="3_x3iig"]
 [ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="4_03wxe"]

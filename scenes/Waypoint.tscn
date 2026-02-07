@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bsv4p1lju2613"]
 
 [ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="1_om3bq"]
-[ext_resource type="Script" uid="uid://dh4v0kfvawixw" path="res://src/Waypoint.gd" id="1_tw614"]
+[ext_resource type="Script" uid="uid://dh4v0kfvawixw" path="res://src/track/Waypoint.gd" id="1_tw614"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tw614"]
 font = ExtResource("1_om3bq")

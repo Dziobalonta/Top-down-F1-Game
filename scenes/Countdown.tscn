@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c3l1upilw3eu5"]
 
-[ext_resource type="Script" uid="uid://03kkoyw8w1k8" path="res://src/Countdown.gd" id="1_vcxug"]
+[ext_resource type="Script" uid="uid://03kkoyw8w1k8" path="res://src/ui/Countdown.gd" id="1_vcxug"]
 [ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="2_7wovf"]
 [ext_resource type="AudioStream" uid="uid://bn2ly8hw1d46k" path="res://assets/audio/sfx/391650__jeckkech__beep.wav" id="3_jxnca"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b3njbt7td612s"]
 
 [ext_resource type="Script" uid="uid://cd2hrik4wvt1o" path="res://addons/curved_lines_2d/svg_texture_helper.gd" id="1_fdpju"]
-[ext_resource type="Script" uid="uid://dsbp01iwmpai3" path="res://src/TrackButton.gd" id="1_hv5um"]
+[ext_resource type="Script" uid="uid://dsbp01iwmpai3" path="res://src/ui/TrackButton.gd" id="1_hv5um"]
 [ext_resource type="Texture2D" uid="uid://dndyuhyfk0ms1" path="res://assets/imgs/crop-35986603.jpg" id="1_uh3s5"]
 [ext_resource type="Script" uid="uid://yh2davxk4fh7" path="res://addons/curved_lines_2d/svg_resource.gd" id="2_uh3s5"]
 [ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="4_rcuev"]
