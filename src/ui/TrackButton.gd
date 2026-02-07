@@ -26,6 +26,7 @@ func _ready() -> void:
 		best_lap_label.text = "Best %s" % format_time(best_lap)
 		
 func format_time(time_seconds: float) -> String:
+	@warning_ignore("integer_division")
 	var minutes: int = int(time_seconds) / 60
 	var seconds: int = int(time_seconds) % 60
 	var milliseconds: int = int((time_seconds - int(time_seconds)) * 100)
