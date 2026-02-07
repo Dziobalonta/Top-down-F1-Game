@@ -15,7 +15,7 @@ curved_lines_2d/snap_to_pixel=false
 [application]
 
 config/name="F1Game"
-run/main_scene="uid://vh3np7nuuq2f"
+run/main_scene="uid://be6ouupk4wd2l"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
 [autoload]

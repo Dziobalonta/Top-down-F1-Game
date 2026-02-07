@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bo7ahvvu7g718"]
+[gd_scene load_steps=18 format=3 uid="uid://bo7ahvvu7g718"]
 
 [ext_resource type="PackedScene" uid="uid://blqjqujwtkoj" path="res://scenes/GameUI/CarUi.tscn" id="1_k6e7w"]
 [ext_resource type="Script" uid="uid://v1012rbfsn75" path="res://src/GameUi.gd" id="1_s76ix"]
 [ext_resource type="AudioStream" uid="uid://cxp7tx21t8kay" path="res://assets/audio/sfx/BeepMedPitche GFX010601 short.wav" id="3_5irnb"]
 [ext_resource type="Script" uid="uid://kxgt6dcc47uk" path="res://src/CarUi.gd" id="3_7y0a3"]
 [ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="4_xg3kr"]
+[ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="6_5irnb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5irnb"]
 font = ExtResource("4_xg3kr")
@@ -33,6 +34,32 @@ corner_detail = 5
 [sub_resource type="LabelSettings" id="LabelSettings_5bnkn"]
 font = ExtResource("4_xg3kr")
 font_size = 25
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ddyqp"]
+texture = ExtResource("6_5irnb")
+region_rect = Rect2(371, 3369, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5irnb"]
+texture = ExtResource("6_5irnb")
+region_rect = Rect2(2715, 3369, 1921, 1081)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dk4pi"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b76xi"]
+texture = ExtResource("6_5irnb")
+region_rect = Rect2(371, 4846, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m5vl7"]
+texture = ExtResource("6_5irnb")
+region_rect = Rect2(2715, 4846, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eh818"]
+texture = ExtResource("6_5irnb")
+region_rect = Rect2(380, 6338, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qmbnm"]
+texture = ExtResource("6_5irnb")
+region_rect = Rect2(2724, 6338, 1921, 1081)
 
 [node name="GameUi" type="Control"]
 process_mode = 3
@@ -130,3 +157,68 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7y0a3")
 layout_mode = 2
 text = "saasassasas"
 label_settings = SubResource("LabelSettings_5bnkn")
+
+[node name="EscCanvas" type="CanvasLayer" parent="."]
+layer = 5
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="EscCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.26244184, 0.26244184, 0.26244184, 0.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EscCanvas"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = -276.0
+offset_right = 893.0
+offset_bottom = 1519.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.31, 0.31)
+
+[node name="MarginContainer" type="MarginContainer" parent="EscCanvas/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 50
+
+[node name="GridContainer2" type="GridContainer" parent="EscCanvas/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/h_separation = 300
+theme_override_constants/v_separation = 300
+
+[node name="ResumeButton" type="Button" parent="EscCanvas/VBoxContainer/MarginContainer/GridContainer2"]
+custom_minimum_size = Vector2(650, 365)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_ddyqp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5irnb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5irnb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dk4pi")
+
+[node name="RestartButton" type="Button" parent="EscCanvas/VBoxContainer/MarginContainer/GridContainer2"]
+custom_minimum_size = Vector2(650, 365)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_b76xi")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m5vl7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m5vl7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dk4pi")
+
+[node name="QuitButton" type="Button" parent="EscCanvas/VBoxContainer/MarginContainer/GridContainer2"]
+custom_minimum_size = Vector2(650, 365)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_eh818")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qmbnm")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qmbnm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dk4pi")

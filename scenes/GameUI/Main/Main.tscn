@@ -1,10 +1,33 @@
-[gd_scene load_steps=6 format=3 uid="uid://be6ouupk4wd2l"]
+[gd_scene load_steps=12 format=3 uid="uid://be6ouupk4wd2l"]
 
-[ext_resource type="Script" uid="uid://4sonhcd8asy2" path="res://src/Main.gd" id="1_77xjx"]
-[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="1_d07pu"]
-[ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Main/TrackSelector.tscn" id="2_kcxq7"]
-[ext_resource type="Resource" uid="uid://da87sbvyhvy1x" path="res://resources/Spa.tres" id="3_gnhi3"]
-[ext_resource type="Resource" uid="uid://b7k0fvyybi254" path="res://resources/Silverstone.tres" id="4_ouiwy"]
+[ext_resource type="Script" uid="uid://4sonhcd8asy2" path="res://src/Main.gd" id="1_uri8x"]
+[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="2_j8k31"]
+[ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="3_r0yci"]
+[ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="4_13d5r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u8emg"]
+font = ExtResource("3_r0yci")
+font_size = 671
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_77xjx"]
+texture = ExtResource("4_13d5r")
+region_rect = Rect2(375, 324, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0rfny"]
+texture = ExtResource("4_13d5r")
+region_rect = Rect2(2719, 324, 1922, 1081)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ouiwy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ouiwy"]
+texture = ExtResource("4_13d5r")
+region_rect = Rect2(380, 1892, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u8emg"]
+texture = ExtResource("4_13d5r")
+region_rect = Rect2(2724, 1892, 1921, 1081)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_77xjx"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -13,10 +36,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_77xjx")
+script = ExtResource("1_uri8x")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_d07pu")
+stream = ExtResource("2_j8k31")
 volume_db = -40.0
 autoplay = true
 
@@ -29,33 +52,64 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.08235294, 0.08235294, 0.11764706, 1)
 
-[node name="MC" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
-offset_top = 129.0
-offset_right = 3122.0
-offset_bottom = 871.0
+offset_left = 374.0
+offset_top = 84.99999
+offset_right = 2819.0
+offset_bottom = 3239.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.264, 0.264)
+scale = Vector2(0.12, 0.12)
+
+[node name="LabelMC" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 300
+
+[node name="Label" type="Label" parent="VBoxContainer/LabelMC"]
+layout_mode = 2
+text = "F1 GAME"
+label_settings = SubResource("LabelSettings_u8emg")
+
+[node name="ButtonMC" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/margin_left = 150
 theme_override_constants/margin_top = 150
 theme_override_constants/margin_right = 150
 theme_override_constants/margin_bottom = 150
 
-[node name="GridContainer" type="GridContainer" parent="MC"]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ButtonMC"]
 layout_mode = 2
-theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 100
-columns = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 300
+theme_override_constants/v_separation = 300
 
-[node name="TrackSelector1" parent="MC/GridContainer" instance=ExtResource("2_kcxq7")]
+[node name="PlayButton" type="Button" parent="VBoxContainer/ButtonMC/GridContainer"]
+custom_minimum_size = Vector2(1921, 1081)
 layout_mode = 2
-track_info = ExtResource("3_gnhi3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_77xjx")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0rfny")
+theme_override_styles/hover = SubResource("StyleBoxTexture_0rfny")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ouiwy")
 
-[node name="TrackSelector2" parent="MC/GridContainer" instance=ExtResource("2_kcxq7")]
+[node name="QuitButton" type="Button" parent="VBoxContainer/ButtonMC/GridContainer"]
+custom_minimum_size = Vector2(1921, 1081)
 layout_mode = 2
-track_info = ExtResource("4_ouiwy")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ouiwy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u8emg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_u8emg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_77xjx")
+
+[connection signal="pressed" from="VBoxContainer/ButtonMC/GridContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonMC/GridContainer/QuitButton" to="." method="_on_quit_button_pressed"]

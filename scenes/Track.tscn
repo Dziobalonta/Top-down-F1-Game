@@ -184,13 +184,12 @@ zoom = Vector2(0.235, 0.235)
 total_laps = 2
 
 [node name="Ui" type="CanvasLayer" parent="."]
-layer = 2
-
-[node name="GameUi" parent="Ui" instance=ExtResource("11_uoqgd")]
 
 [node name="Countdown" parent="Ui" instance=ExtResource("11_wbtv6")]
 scale = Vector2(0.192, 0.192)
 metadata/_edit_use_anchors_ = true
+
+[node name="GameUi" parent="Ui" instance=ExtResource("11_uoqgd")]
 
 [node name="WorldBoundries" type="Node2D" parent="."]
 

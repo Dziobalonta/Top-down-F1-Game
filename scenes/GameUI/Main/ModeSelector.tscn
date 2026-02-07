@@ -1,0 +1,155 @@
+[gd_scene load_steps=14 format=3 uid="uid://lvk4e6f4xkmf"]
+
+[ext_resource type="Script" uid="uid://e3l4rlmwxhm0" path="res://src/ModeSelector.gd" id="1_p1oe7"]
+[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="1_u3vmw"]
+[ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="2_p1oe7"]
+[ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="3_4i2ae"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wlsgi"]
+font = ExtResource("2_p1oe7")
+font_size = 671
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bkt06"]
+texture = ExtResource("3_4i2ae")
+region_rect = Rect2(371, 9342, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m3qw1"]
+texture = ExtResource("3_4i2ae")
+region_rect = Rect2(2715, 9342, 1921, 1081)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31rg2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u3vmw"]
+texture = ExtResource("3_4i2ae")
+region_rect = Rect2(380, 7807, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p1oe7"]
+texture = ExtResource("3_4i2ae")
+region_rect = Rect2(2724, 7807, 1921, 1081)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7papq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4mgrc"]
+texture = ExtResource("3_4i2ae")
+region_rect = Rect2(380, 6338, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v0ejl"]
+texture = ExtResource("3_4i2ae")
+region_rect = Rect2(2724, 6338, 1921, 1081)
+
+[node name="ModeSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_p1oe7")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_u3vmw")
+volume_db = -40.0
+autoplay = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08235294, 0.08235294, 0.11764706, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 280.00003
+offset_top = 70.0
+offset_right = 4030.0
+offset_bottom = 4961.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.12, 0.12)
+
+[node name="LabelMC" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 300
+
+[node name="Label" type="Label" parent="VBoxContainer/LabelMC"]
+layout_mode = 2
+text = "Select Mode"
+label_settings = SubResource("LabelSettings_wlsgi")
+
+[node name="ButtonMC" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 150
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ButtonMC"]
+layout_mode = 2
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ButtonMC/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 300
+theme_override_constants/v_separation = 300
+columns = 2
+
+[node name="SprintButton" type="Button" parent="VBoxContainer/ButtonMC/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(1921, 1081)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_bkt06")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m3qw1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m3qw1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_31rg2")
+
+[node name="GpButton" type="Button" parent="VBoxContainer/ButtonMC/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(1921, 1081)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_u3vmw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_p1oe7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_p1oe7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7papq")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ButtonMC/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 1200
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="GridContainer2" type="GridContainer" parent="VBoxContainer/ButtonMC/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 300
+theme_override_constants/v_separation = 300
+
+[node name="BackButton" type="Button" parent="VBoxContainer/ButtonMC/VBoxContainer/MarginContainer/GridContainer2"]
+custom_minimum_size = Vector2(1921, 1081)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_4mgrc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_v0ejl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_v0ejl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7papq")
+
+[connection signal="pressed" from="VBoxContainer/ButtonMC/VBoxContainer/GridContainer/SprintButton" to="." method="_on_sprint_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonMC/VBoxContainer/GridContainer/GpButton" to="." method="_on_gp_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonMC/VBoxContainer/MarginContainer/GridContainer2/BackButton" to="." method="_on_back_button_pressed"]

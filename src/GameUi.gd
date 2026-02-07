@@ -10,16 +10,17 @@ class_name GameUi
 @onready var text_label: Label = $OffTrackCanvas/TextLabel
 @onready var beep: AudioStreamPlayer = $OffTrackCanvas/Beep
 
+@onready var pause_menu_container: CanvasLayer = $EscCanvas
+@onready var resume_button: Button = $EscCanvas/VBoxContainer/MarginContainer/GridContainer2/ResumeButton
+@onready var restart_button: Button = $EscCanvas/VBoxContainer/MarginContainer/GridContainer2/RestartButton
+@onready var quit_button: Button = $EscCanvas/VBoxContainer/MarginContainer/GridContainer2/QuitButton
+
 var _car_ui_dict: Dictionary[Car, CarUi] = {}
 var _pulse_tween: Tween
 var _player_car: Car = null
 var _beep_timer: float = 0.0  # Timer for playing beeps every second
 
 @export var max_off_track_time: float = 10.0  # Should match RaceController's max_total_off_track_time
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		GameManager.change_to_main()
 
 func _enter_tree() -> void:
 	EventHub.on_lap_update.connect(on_lap_update)
@@ -31,6 +32,11 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	timer_label.hide()
 	text_label.hide()
+	
+	# Podłączenie przycisków
+	resume_button.pressed.connect(_on_resume_pressed)
+	restart_button.pressed.connect(_on_restart_pressed)
+	quit_button.pressed.connect(_on_quit_pressed)
 
 func _process(delta: float) -> void:
 	# Update timer based on player car's off-track time
@@ -150,4 +156,35 @@ func update_timer_label(remaining_time: float) -> void:
 	# Display remaining time with 1 decimal place
 	timer_label.text = "%.1f" % max(0.0, remaining_time)
 	
+#endregion
+
+#region Buttons
+
+func _unhandled_input(event: InputEvent) -> void:
+	if get_tree().paused and not pause_menu_container.visible:
+		return  # works only when countdown ended
+	
+	if event.is_action_pressed("ui_cancel"):
+		_toggle_pause()
+		get_viewport().set_input_as_handled()
+
+func _toggle_pause() -> void:
+	var is_paused = not get_tree().paused
+	get_tree().paused = is_paused
+	
+	if is_paused:
+		pause_menu_container.show()
+	else:
+		pause_menu_container.hide()
+
+func _on_resume_pressed() -> void:
+	_toggle_pause()
+
+func _on_restart_pressed() -> void:
+	_toggle_pause()
+	get_tree().reload_current_scene()
+
+func _on_quit_pressed() -> void:
+	_toggle_pause()
+	GameManager.change_to_main()
 #endregion
