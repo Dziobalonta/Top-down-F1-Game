@@ -16,11 +16,6 @@ var first_waypoint: Waypoint:
 			printerr("Track Processor: first_waypoint not there!")
 			return null
 		return _waypoints[0]
-		
-func calculate_radius() -> void:
-	for wp in _waypoints:
-		wp.calc_turn_radius()
-	
 
 func connect_waypoints() -> void:
 	var total_wp: int = _waypoints.size()
@@ -50,7 +45,6 @@ func build_waypoint_data(holder: Node) -> void:
 	_waypoints.clear()
 	await generate_waypoints(holder)
 	connect_waypoints()
-	calculate_radius()
 	
 	for wp in _waypoints: print(wp)
 	
