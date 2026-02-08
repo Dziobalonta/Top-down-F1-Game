@@ -94,12 +94,12 @@ func get_target_adjusted(weight: float) -> Vector2:
 	deviation = clampf(deviation, 0.0, _max_path_deviation)
 	
 	# DEBUG
-	print("WP %d: weight=%.2f, raw_dev=%.2f, clamped=%.2f, collision_dist=%.2f" % [
-		number, weight, 
-		abs(weight) * (_left_collision_distance if weight < 0 else _right_collision_distance),
-		deviation,
-		_left_collision_distance if weight < 0 else _right_collision_distance
-	])
+	#print("WP %d: weight=%.2f, raw_dev=%.2f, clamped=%.2f, collision_dist=%.2f" % [
+		#number, weight, 
+		#abs(weight) * (_left_collision_distance if weight < 0 else _right_collision_distance),
+		#deviation,
+		#_left_collision_distance if weight < 0 else _right_collision_distance
+	#])
 	
 	return global_position + direction * deviation
 

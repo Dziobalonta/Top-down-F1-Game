@@ -10,6 +10,10 @@ debug = true
 waypoint_distance = 100.0
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
+skill = 1.0
+max_bottom_speed_limit = 1750.0
+min_bottom_speed_limit = 1000.0
+speed_reaction = 3.5
 
 [node name="Target" type="Sprite2D" parent="." index="7"]
 modulate = Color(1, 0, 0, 1)
@@ -17,3 +21,8 @@ top_level = true
 position = Vector2(2, 0)
 texture = ExtResource("3_oy0s3")
 offset = Vector2(0, 20.35)
+
+[node name="DeviationTimer" type="Timer" parent="." index="15"]
+autostart = true
+
+[connection signal="timeout" from="DeviationTimer" to="." method="_on_deviation_timer_timeout"]

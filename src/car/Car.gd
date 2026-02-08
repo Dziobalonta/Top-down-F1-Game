@@ -166,20 +166,20 @@ func check_all_wheels_status():
 	var all_wheels_on_track = wheels_on_track.values().all(func(x): return x == false)
 	
 	# Debug
-	var wheels_count_on = wheels_on_track.values().filter(func(x): return x == false).size()
-	print("Wheels on track: ", wheels_count_on, "/4")
+	#var wheels_count_on = wheels_on_track.values().filter(func(x): return x == false).size()
+	#print("Wheels on track: ", wheels_count_on, "/4")
 	
 	# Wszystkie koła wróciły na tor
 	if all_wheels_on_track and not is_on_track:
 		on_all_wheels_returned_to_track()
 		is_on_track = true
-		print("All 4 wheels back on track")
+		#print("All 4 wheels back on track")
 	
 	# Wszystkie koła zjechały z toru
 	elif all_wheels_off_track and is_on_track:
 		on_wheels_left_track()
 		is_on_track = false
-		print("All 4 wheels off track - START COUNTING!")
+		#print("All 4 wheels off track - START COUNTING!")
 	
 	# Stan pośredni (część kół na torze, część nie)
 	elif not all_wheels_on_track and not all_wheels_off_track:
@@ -190,12 +190,12 @@ func check_all_wheels_status():
 			is_on_track = true  # Uznaj że "wrócił"
 
 func on_all_wheels_returned_to_track():
-	print(name + ": Back on track")
+	#print(name + ": Back on track")
 	off_track_sound.stop()
 	EventHub.emit_on_wheels_returned_to_track(self)
 
 func on_wheels_left_track():
-	print(name + ": LEFT THE TRACK!")
+	#print(name + ": LEFT THE TRACK!")
 	off_track_sound.play()
 	EventHub.emit_on_wheels_left_track(self)
 
