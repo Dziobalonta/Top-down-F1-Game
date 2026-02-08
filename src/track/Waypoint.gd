@@ -7,6 +7,12 @@ const MAX_RADIUS: float = 8000.0
 @onready var left_collision: RayCast2D = $LeftCollision
 @onready var label: Label = $Label
 
+var _left_collision_distance: float = 0.0
+var _right_collision_distance: float = 0.0
+var _left_collision_dir: Vector2 = Vector2.ZERO
+var _right_collision_dir: Vector2 = Vector2.ZERO
+var _max_path_deviation: float
+
 var radius: float = MAX_RADIUS:
 	get: return radius
 	
@@ -54,7 +60,54 @@ func set_radius_factor(min_radius: float, radius_curve: Curve) -> void:
 		
 	radius_factor = radius_curve.sample(t)
 	
+func set_collider_data(max_path_deviation: float) -> void:
+	_max_path_deviation = max_path_deviation
+	
+	_left_collision_distance = left_collision.target_position.length()
+	_right_collision_distance = right_collision.target_position.length()
+	
+	if left_collision.is_colliding():
+		var colp: Vector2 = left_collision.get_collision_point()
+		_left_collision_distance = global_position.distance_to(colp)
+		
+	if right_collision.is_colliding():
+		var colp: Vector2 = right_collision.get_collision_point()
+		_right_collision_distance = global_position.distance_to(colp)
+		
+	_left_collision_dir =  Vector2.LEFT.rotated(rotation)
+	_right_collision_dir =  Vector2.RIGHT.rotated(rotation)
+	
+func get_target_adjusted(weight: float) -> Vector2:
+	if is_zero_approx(weight): 
+		return global_position
+	
+	var deviation: float
+	var direction: Vector2
+	
+	if weight > 0.0:
+		deviation = weight * _right_collision_distance
+		direction = _right_collision_dir
+	else:
+		deviation = abs(weight) * _left_collision_distance
+		direction = _left_collision_dir
+	
+	deviation = clampf(deviation, 0.0, _max_path_deviation)
+	
+	# DEBUG
+	print("WP %d: weight=%.2f, raw_dev=%.2f, clamped=%.2f, collision_dist=%.2f" % [
+		number, weight, 
+		abs(weight) * (_left_collision_distance if weight < 0 else _right_collision_distance),
+		deviation,
+		_left_collision_distance if weight < 0 else _right_collision_distance
+	])
+	
+	return global_position + direction * deviation
+
 	
 func _to_string() -> String:
-	return "%d next: %d prev: %d rad: %.2f factor: %.2f" % [number, next_waypoint.number, previous_waypoint.number, radius, radius_factor]
+	return "%d next: %d prev: %d rad: %.2f factor: %.2f lcd: %.2f rcd: %.2f" % [
+		number, next_waypoint.number, previous_waypoint.number,
+		radius, radius_factor, 
+		_left_collision_distance,_right_collision_distance
+	]
 	

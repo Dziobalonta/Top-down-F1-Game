@@ -9,6 +9,4 @@ point_count = 3
 [node name="TrackProcessor" type="PathFollow2D"]
 loop = false
 script = ExtResource("1_uu8oa")
-interval = null
-grid_space = null
 radius_curve = SubResource("Curve_uu8oa")

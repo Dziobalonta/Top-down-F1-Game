@@ -7,6 +7,7 @@ const WAYPOINT = preload("res://scenes/Waypoint.tscn")
 
 @export var interval: float = 1400.0
 @export var grid_space: float = 3000.0
+@export var max_path_deviation: float = 500
 @export var radius_curve: Curve
 
 var _waypoints: Array[Waypoint]
@@ -51,11 +52,17 @@ func generate_waypoints(holder: Node) -> void:
 		
 	await get_tree().physics_frame
 
+func setup_wp_collisions() -> void:
+	for wp in _waypoints:
+		wp.set_collider_data(max_path_deviation)
+
 func build_waypoint_data(holder: Node) -> void:
 	_waypoints.clear()
 	await generate_waypoints(holder)
 	connect_waypoints()
 	calculate_radius()
+	await get_tree().physics_frame
+	setup_wp_collisions()
 	
 	for wp in _waypoints: print(wp)
 	

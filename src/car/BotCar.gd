@@ -81,8 +81,10 @@ func update_waypoint() -> void:
 
 func set_next_waypoint(wp: Waypoint) -> void:
 	_next_waypoint = wp
-	_adjusted_waypoint_target = wp.global_position
+	#_adjusted_waypoint_target = wp.global_position
+	_adjusted_waypoint_target = wp.get_target_adjusted(-0.9)
 	target.global_position = _adjusted_waypoint_target
+	
 	
 	#if debug:
 		#print("New target waypoint: %d at %v" % [wp.number, wp.global_position])
