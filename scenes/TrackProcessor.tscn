@@ -1,7 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://syonu1l4n7y1"]
+[gd_scene load_steps=3 format=3 uid="uid://syonu1l4n7y1"]
 
 [ext_resource type="Script" uid="uid://cvk3yecuxk0vs" path="res://src/track/TrackProcessor.gd" id="1_uu8oa"]
+
+[sub_resource type="Curve" id="Curve_uu8oa"]
+_data = [Vector2(0, 0), 0.0, -0.0029490567, 0, 0, Vector2(0.40759078, 0.89800847), 0.44572255, 0.44572255, 0, 0, Vector2(1, 1), 0.11534879, 0.0, 0, 0]
+point_count = 3
 
 [node name="TrackProcessor" type="PathFollow2D"]
 loop = false
 script = ExtResource("1_uu8oa")
+interval = null
+grid_space = null
+radius_curve = SubResource("Curve_uu8oa")

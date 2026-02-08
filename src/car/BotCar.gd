@@ -7,6 +7,10 @@ const STEER_REACTION_MAX: float = 9.0
 @export var max_top_speed_limit: float = 5500.0
 @export var min_top_speed_limit: float = 2500.0
 
+@export var max_bottom_speed_limit: float = 1750.0
+@export var min_bottom_speed_limit: float = 1000.0
+@export var speed_reaction: float = 3.5
+
 @onready var target: Sprite2D = $Target
 
 var _adjusted_waypoint_target: Vector2 = Vector2.ZERO
@@ -15,7 +19,10 @@ var _next_waypoint: Waypoint
 
 func _ready() -> void:
 	target.visible = debug
-	_target_speed = randf_range(min_top_speed_limit, max_top_speed_limit)
+	#_target_speed = randf_range(min_top_speed_limit, max_top_speed_limit)
+
+	
+	
 	sector_passed_sound.volume_db = -200
 	start_line_passed.volume_db = -200
 	super()
@@ -50,6 +57,13 @@ func _physics_process(delta: float) -> void:
 	
 	update_waypoint()
 	super._physics_process(delta)  # calls get_input(), apply_friction(), calculate_steering(), etc.
+	
+	# Smoothly adjust velocity magnitude toward target speed
+	var current_speed = velocity.length()
+	var new_speed = lerp(current_speed, _target_speed, speed_reaction * acceleration * delta)
+	
+	if velocity.length() > 0:
+		velocity = velocity.normalized() * new_speed
 
 func update_waypoint() -> void:
 	if !_next_waypoint:
@@ -62,6 +76,8 @@ func update_waypoint() -> void:
 	
 	if distance < waypoint_distance:
 		set_next_waypoint(_next_waypoint.next_waypoint)
+		_target_speed = lerp(max_bottom_speed_limit, max_top_speed_limit, _next_waypoint.next_waypoint.radius_factor)
+		#print(_target_speed)
 
 func set_next_waypoint(wp: Waypoint) -> void:
 	_next_waypoint = wp

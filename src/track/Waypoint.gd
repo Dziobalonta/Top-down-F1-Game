@@ -1,7 +1,7 @@
 extends Node2D
 class_name Waypoint
 
-const MAX_RADIUS: float = 400.0
+const MAX_RADIUS: float = 8000.0
 
 @onready var right_collision: RayCast2D = $RightCollision
 @onready var left_collision: RayCast2D = $LeftCollision
@@ -42,6 +42,17 @@ func calc_turn_radius() -> void:
 	
 	if !is_zero_approx(area):
 		radius = (a * b * c) / (4.0 * area)
+
+func set_radius_factor(min_radius: float, radius_curve: Curve) -> void:
+	var adj: float = clampf(radius, min_radius, MAX_RADIUS)
+	var t: float
+	# Avoid division by zero
+	if is_equal_approx(MAX_RADIUS, min_radius):
+		t = 1.0
+	else:
+		t = (adj - min_radius) / (MAX_RADIUS - min_radius)
+		
+	radius_factor = radius_curve.sample(t)
 	
 	
 func _to_string() -> String:

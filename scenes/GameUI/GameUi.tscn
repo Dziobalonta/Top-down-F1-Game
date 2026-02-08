@@ -1,9 +1,9 @@
 [gd_scene load_steps=18 format=3 uid="uid://bo7ahvvu7g718"]
 
 [ext_resource type="PackedScene" uid="uid://blqjqujwtkoj" path="res://scenes/GameUI/CarUi.tscn" id="1_k6e7w"]
-[ext_resource type="Script" uid="uid://v1012rbfsn75" path="res://src/GameUi.gd" id="1_s76ix"]
+[ext_resource type="Script" uid="uid://v1012rbfsn75" path="res://src/ui/GameUi.gd" id="1_s76ix"]
 [ext_resource type="AudioStream" uid="uid://cxp7tx21t8kay" path="res://assets/audio/sfx/BeepMedPitche GFX010601 short.wav" id="3_5irnb"]
-[ext_resource type="Script" uid="uid://kxgt6dcc47uk" path="res://src/CarUi.gd" id="3_7y0a3"]
+[ext_resource type="Script" uid="uid://kxgt6dcc47uk" path="res://src/ui/CarUi.gd" id="3_7y0a3"]
 [ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="4_xg3kr"]
 [ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="6_5irnb"]
 
@@ -39,9 +39,9 @@ font_size = 25
 texture = ExtResource("6_5irnb")
 region_rect = Rect2(371, 3369, 1921, 1081)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_scsgl"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5irnb"]
 texture = ExtResource("6_5irnb")
-region_rect = Rect2(2715, 4846, 1921, 1081)
+region_rect = Rect2(2715, 3369, 1921, 1081)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dk4pi"]
 
@@ -201,8 +201,8 @@ theme_override_constants/v_separation = 300
 custom_minimum_size = Vector2(650, 365)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_ddyqp")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_scsgl")
-theme_override_styles/hover = SubResource("StyleBoxTexture_scsgl")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5irnb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5irnb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_dk4pi")
 
 [node name="RestartButton" type="Button" parent="EscCanvas/VBoxContainer/MarginContainer/GridContainer2"]
