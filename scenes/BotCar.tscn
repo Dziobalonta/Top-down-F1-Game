@@ -7,13 +7,13 @@
 [node name="BotCar" instance=ExtResource("1_qodbk")]
 script = ExtResource("2_liusl")
 debug = true
-waypoint_distance = 100.0
+base_waypoint_distance = 100.0
 max_top_speed_limit = 5500.0
 min_top_speed_limit = 2500.0
 skill = 1.0
 max_bottom_speed_limit = 1750.0
 min_bottom_speed_limit = 1000.0
-speed_reaction = 3.5
+waypoint_lookahead = 5
 
 [node name="Target" type="Sprite2D" parent="." index="7"]
 modulate = Color(1, 0, 0, 1)
@@ -24,5 +24,8 @@ offset = Vector2(0, 20.35)
 
 [node name="DeviationTimer" type="Timer" parent="." index="15"]
 autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="." index="16"]
+target_position = Vector2(400, 0)
 
 [connection signal="timeout" from="DeviationTimer" to="." method="_on_deviation_timer_timeout"]

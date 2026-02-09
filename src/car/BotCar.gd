@@ -16,6 +16,7 @@ const DEVIATION_LIMIT_MIN: float = 0.1
 @export var max_bottom_speed_limit: float = 1750.0
 @export var min_bottom_speed_limit: float = 1000.0
 @export var waypoint_lookahead: int = 5  # How many waypoints ahead to check for nearest
+@onready var avoidance_ray: RayCast2D = $RayCast2D # scan for other cars
 
 @onready var target: Sprite2D = $Target
 
@@ -68,6 +69,24 @@ func get_input() -> void:
 		# Don't brake, just stop accelerating - let drag slow us down naturally
 		acceleration = Vector2.ZERO
 		is_accelerating = false
+		
+	# SIMPLE BRAKING LOGIC
+	var car_ahead = false
+	if avoidance_ray.is_colliding():
+		var collider = avoidance_ray.get_collider()
+		if collider is Car:
+			car_ahead = true
+			
+	if velocity.length() < _target_speed and not car_ahead:
+		acceleration = transform.x * engine_power
+		is_accelerating = true
+	else:
+		# If car ahead or over speed -> Coast/Brake
+		acceleration = Vector2.ZERO 
+		is_accelerating = false
+		if car_ahead:
+			# Optional: Active braking to prevent rear-ending
+			acceleration = -transform.x * engine_power * 0.5
 
 func _physics_process(delta: float) -> void:
 	if state != CarState.DRIVING or !_next_waypoint: 
