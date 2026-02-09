@@ -2,7 +2,7 @@ extends Control
 class_name GameUi
 
 @onready var margin_container: MarginContainer = $MarginContainer
-@onready var race_over_label: Label = $RaceoverTable/RaceOverLabel
+@onready var results_grid: GridContainer = $RaceoverTable/ResultsGrid
 @onready var raceover_table: PanelContainer = $RaceoverTable
 @onready var off_track_canvas: CanvasLayer = $OffTrackCanvas
 @onready var red_rect_flashing: ColorRect = $OffTrackCanvas/RedFlashing
@@ -14,6 +14,9 @@ class_name GameUi
 @onready var resume_button: Button = $EscCanvas/VBoxContainer/MarginContainer/GridContainer2/ResumeButton
 @onready var restart_button: Button = $EscCanvas/VBoxContainer/MarginContainer/GridContainer2/RestartButton
 @onready var quit_button: Button = $EscCanvas/VBoxContainer/MarginContainer/GridContainer2/QuitButton
+
+@export var table_font: Font = preload("res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf")
+@export var table_font_size: int = 24
 
 var _car_ui_dict: Dictionary[Car, CarUi] = {}
 var _pulse_tween: Tween
@@ -54,18 +57,93 @@ func _process(delta: float) -> void:
 	else:
 		# Reset beep timer when not off track
 		_beep_timer = 0.0
-	
+
+#region Building Table
+# W pliku GameUi.gd
+
 func on_race_over(data: Array[CarRaceData]) -> void:
-	race_over_label.text = "%10s %6s %6s %5s" % [
-		"Car", "Time", "Best", "Laps"
-	]
-	
-	for d in data:
-		print(d)
-		race_over_label.text += "\n%s" % d
-	
+	for child in results_grid.get_children():
+		child.queue_free()
+
+	# Header
+	var headers = ["Pos", "Driver", "Best Lap", "Laps", "Gap"]
+	for h in headers:
+		_add_cell(h, true)
+
+	# 3. ZNAJDŹ CZAS LIDERA (Pierwszy w posortowanej tablicy data)
+	var winner_time: float = 0.0
+	if data.size() > 0:
+		# if first one finished take his time
+		if data[0].race_completed or data[0].total_time > 0:
+			winner_time = data[0].total_time
+
+	for i in range(data.size()):
+		var d = data[i]
+		
+		# Pos and name
+		_add_cell(str(i + 1) + ".")
+		_add_cell(d.car_name)
+		
+		# Best Lap
+		if d.best_lap != CarRaceData.DEFAULT_LAPTIME:
+			_add_cell("%.3fs" % d.best_lap)
+		else:
+			_add_cell("--")
+			
+		# Laps
+		_add_cell(str(d.completed_laps))
+		
+		# GAP
+		var time_str = ""
+		
+		# check if completed
+		if d.race_completed or d.total_time > 0:
+			if i == 0:
+				# Lider displays time
+				time_str = "%.3fs" % (d.total_time / 1000.0)
+			else:
+				# Else display gap
+				
+				# check if there is a winner 
+				if winner_time > 0:
+					var gap = d.total_time - winner_time
+					time_str = "+%.3fs" % (gap / 1000.0)
+				else:
+					# something goes wrong
+					time_str = "%.3fs" % (d.total_time / 1000.0)
+			
+			# Opcjonalnie: Dodaj gwiazdkę jeśli to wymuszony koniec
+			if not d.race_completed: 
+				time_str = "DNF"
+		
+		_add_cell(time_str)
+
 	raceover_table.show()
 	get_tree().paused = true
+
+func _add_cell(text: String, is_header: bool = false) -> void:
+	var label = Label.new()
+	label.text = text
+	
+	# 1. APPLY FONT
+	if table_font:
+		label.add_theme_font_override("font", table_font)
+	
+	# 2. APPLY SIZE (Make headers bigger?)
+	var font_size = table_font_size
+	if is_header:
+		font_size += 8 # Headers are 8px bigger
+		label.modulate = Color(0.7, 0.7, 0.7) # Grey color for headers
+	
+	label.add_theme_font_size_override("font_size", font_size)
+	
+	# 3. ALIGNMENT (Optional)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	
+	results_grid.add_child(label)
+
+#endregion
 
 func setup(cars: Array[Car], total_laps: int) -> void:
 	var ui_nodes : Array[Node] = margin_container.get_children()

@@ -185,7 +185,7 @@ func check_all_wheels_status():
 	elif not all_wheels_on_track and not all_wheels_off_track:
 		# Jeśli był poza torem i wrócił choć jednym kołem - przestań liczyć
 		if not is_on_track:
-			print("Partial return - stopping timer")
+			#print("Partial return - stopping timer")
 			on_all_wheels_returned_to_track()  # Zatrzymaj licznik
 			is_on_track = true  # Uznaj że "wrócił"
 
@@ -274,6 +274,9 @@ func lap_completed() -> void:
 		lap_time = 0.0
 	
 func hit_verfication(sector_id: int ) -> void:
+	
+	print("%s hit sector %d" % [name, sector_id])
+	
 	if sector_id not in sectors_passed:
 		sectors_passed.append(sector_id)
 		sector_passed_sound.play()

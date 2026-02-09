@@ -1,7 +1,9 @@
 extends Object
 class_name CarRaceData
 
-const  DEFAULT_LAPTIME: float = 999.999
+const DEFAULT_LAPTIME: float = 999.999
+# Define columns: Rank(4), Name(16), BestLap(12), Laps(8), Time(Remaining)
+const ROW_FORMAT = "%-4s %-16s %-12s %-8s %s"
 
 var _car_number: int
 var _car_name: String
@@ -23,8 +25,14 @@ var race_completed: bool:
 var total_progress: float:
 	get: return _completed_laps + _partial_progress
 	
-func _init(car_name: String, car_number: int, target_laps: int) -> void:
-	_car_name = car_name
+var car_name: String:
+	get: return _car_name
+	
+var best_lap: float:
+	get: return _best_lap
+	
+func _init(car_name_: String, car_number: int, target_laps: int) -> void:
+	_car_name = car_name_
 	_car_number = car_number
 	_target_laps = target_laps
 	
@@ -38,25 +46,37 @@ func set_total_time(totaltime: float) -> void:
 func force_finish(totaltime: float, progress: float) -> void:
 	_partial_progress = progress
 	_total_time = totaltime
+
+static func get_header_string() -> String:
+	# NEW (Fixed): Add "Time" at the end
+	return ROW_FORMAT % ["Pos", "Driver", "Best Lap", "Laps", "Gap"]
+
+func get_formatted_row(rank: int) -> String:
+	var rank_str = str(rank) + "."
 	
-func _to_string() -> String:
-	var total_str = "DNF"
-	if race_completed: 
-		total_str = "%0.fs" % (_total_time/ 1000)
+	var best_str = "--"
+	if _best_lap != DEFAULT_LAPTIME:
+		best_str = "%.3fs" % _best_lap
+		
+	var time_str = "DNF"
+	# Show time if race completed OR if forced finish time exists (> 0)
+	if race_completed or _total_time > 0:
+		time_str = "%.3fs" % (_total_time / 1000.0)
 	
-	var best_lap_str: String = ""
-	
-	if _best_lap != DEFAULT_LAPTIME: 
-		best_lap_str = "%.3fs" % _best_lap
-	
-	return "%10s %6s %6s %5d" % [
-		_car_name, total_str, best_lap_str, _completed_laps
+	return ROW_FORMAT % [
+		rank_str,
+		_car_name,
+		best_str,
+		str(_completed_laps),
+		time_str
 	]
 	
+func _to_string() -> String:
+	return get_formatted_row(0) # Fallback
+
 static func compare(a: CarRaceData, b: CarRaceData) -> bool:
 	if a.completed_laps == b.completed_laps:
 		if a.race_completed:
 			return a.total_time < b.total_time
 		return a.total_progress > b.total_progress
 	return a.completed_laps > b.completed_laps
-			

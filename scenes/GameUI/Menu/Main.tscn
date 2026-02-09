@@ -8,6 +8,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_u8emg"]
 font = ExtResource("3_r0yci")
 font_size = 671
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_77xjx"]
 texture = ExtResource("4_13d5r")

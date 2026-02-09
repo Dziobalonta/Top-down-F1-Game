@@ -69,7 +69,7 @@ func _process(delta: float) -> void:
 #region Car Outside Track	
 func _on_car_left_track(car: Car):
 	car_currently_off_track[car] = true
-	print(car.name + " left the track - violation recorded!")
+	#print(car.name + " left the track - violation recorded!")
 
 func check_if_exceeded_max_time(car: Car) -> bool:
 	# Check if total off-track time exceeds max time
@@ -155,11 +155,14 @@ func on_lap_completed(info: LapCompleteData) -> void:
 		if race_over_timer.is_stopped():
 			race_over_timer.start()
 		
+# RaceController.gd 
+
 func finish_race() -> void:
 	if _finished:
 		return
 	_finished = true
 	
+	# ... (Keep existing force_finish logic for bots) ...
 	var total_len: float = _track_curve.get_baked_length()
 	var elapsed: float = get_elapsed_time()
 	
@@ -170,15 +173,32 @@ func finish_race() -> void:
 			var progress: float = offset / total_len
 			rd.force_finish(elapsed, progress)
 			c.change_state(Car.CarState.RACEOVER)
-		
-	# Create typed array from dictionary values
+	
+	# --- SORTING AND DISPLAY LOGIC ---
+	
+	# 1. Get results and sort
 	var results: Array[CarRaceData] = []
 	for rd in _race_data.values():
 		results.append(rd)
-	
-	# Sort in place (sort_custom returns void, not the array)
 	results.sort_custom(CarRaceData.compare)
-			
+	
+	# 2. Build the Final String Table
+	var final_string = ""
+	
+	# Add Header
+	final_string += CarRaceData.get_header_string() + "\n"
+	final_string += "--------------------------------------------------------\n"
+	
+# ... inside finish_race() ...
+	
+	# Add Rows with Rank
+	for i in range(results.size()):
+		var data = results[i]
+		var rank = i + 1
+		# CHANGE THIS LINE:
+		final_string += data.get_formatted_row(rank) + "\n" 
+	
+	print(final_string)
 	EventHub.emit_on_race_over(results)
 	
 func _on_race_over_timer_timeout() -> void:

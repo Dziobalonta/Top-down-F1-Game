@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bo7ahvvu7g718"]
+[gd_scene load_steps=17 format=3 uid="uid://bo7ahvvu7g718"]
 
 [ext_resource type="PackedScene" uid="uid://blqjqujwtkoj" path="res://scenes/GameUI/CarUi.tscn" id="1_k6e7w"]
 [ext_resource type="Script" uid="uid://v1012rbfsn75" path="res://src/ui/GameUi.gd" id="1_s76ix"]
@@ -30,10 +30,6 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
-
-[sub_resource type="LabelSettings" id="LabelSettings_5bnkn"]
-font = ExtResource("4_xg3kr")
-font_size = 25
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ddyqp"]
 texture = ExtResource("6_5irnb")
@@ -153,10 +149,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7y0a3")
 
-[node name="RaceOverLabel" type="Label" parent="RaceoverTable"]
+[node name="ResultsGrid" type="GridContainer" parent="RaceoverTable"]
 layout_mode = 2
-text = "saasassasas"
-label_settings = SubResource("LabelSettings_5bnkn")
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 10
+columns = 5
 
 [node name="EscCanvas" type="CanvasLayer" parent="."]
 visible = false
