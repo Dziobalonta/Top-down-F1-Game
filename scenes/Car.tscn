@@ -45,7 +45,9 @@ stream_0/stream = ExtResource("10_ra71u")
 stream_1/stream = ExtResource("11_dfshe")
 stream_2/stream = ExtResource("12_ctlpt")
 
-[node name="Car" type="CharacterBody2D"]
+[node name="Car" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 8
 script = ExtResource("1_kb8hb")
 
 [node name="CarBody" type="Sprite2D" parent="."]
@@ -129,6 +131,7 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_ra71u")
 
 [node name="CarCs" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 0.5)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_ra71u")

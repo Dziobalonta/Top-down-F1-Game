@@ -1,174 +1,189 @@
 extends Car
 class_name BotCar
 
-const DEVIATION_STEP_MAX: float = 0.4
-const DEVIATION_STEP_MIN: float = 0.1
+@export_category("Bot Settings")
+@export_range(0.0, 1.0, 0.1) var skill_level: float = 0.5  # 0 - noob 1 - expert
+@export var max_speed: float = 5000.0  # Maximum speed tbot can reach
+@export var min_speed: float = 3000.0  # Minimum speed in corners
+@export var start_acceleration_time: float = 2.0  # Seconds to reach full speed
 
-const DEVIATION_LIMIT_MAX: float = 1.0
-const DEVIATION_LIMIT_MIN: float = 0.1
+@export_category("Collision Avoidance")
+@export var slowdown_factor: float = 0.2  # Slow down to 20% when car detected
+@export var detection_distance: float = 400.0  # How far ahead to look
 
+var _race_start_time: float = 0.0
+var _speed_multiplier: float = 0.0
+var _collision_slowdown: float = 1.0  # 1.0 = full speed, 0.2 = slowed down
 
 @export var debug: bool = true
-@export var base_waypoint_distance: float = 100.0
-@export var max_top_speed_limit: float = 5500.0
-@export var min_top_speed_limit: float = 2500.0
-@export_range(0,1) var skill: float = 1.0
-@export var max_bottom_speed_limit: float = 1750.0
-@export var min_bottom_speed_limit: float = 1000.0
-@export var waypoint_lookahead: int = 5  # How many waypoints ahead to check for nearest
-@onready var avoidance_ray: RayCast2D = $RayCast2D # scan for other cars
 
-@onready var target: Sprite2D = $Target
+@onready var target_marker: Sprite2D = $Target
+@onready var deviation_timer: Timer = $DeviationTimer
+@onready var raycast_forward: RayCast2D = $RayCastForward
 
-var _adjusted_waypoint_target: Vector2 = Vector2.ZERO
-var _target_speed: float = 3500.0
 var _next_waypoint: Waypoint
-var _deviation_step: float = 0.0
-var _deviation_limit: float = 0.0
-var _deviation_weight: float = 0.0
-var _inverted_skill: float = 0.0
-var _allowed_max_speed: float = 0.0
-var _allowed_min_speed: float = 0.0
+var _target_position: Vector2 = Vector2.ZERO
+var _racing_line: float = 0.0  # -1 to 1, changes over time
+var _racing_line_step: float = 0.1  # How much racing line can change per timer
+var _inverted_skill: float = 0.0  # Cached 1.0 - skill
 
 func _ready() -> void:
-	target.visible = debug
-	sector_passed_sound.volume_db = -200
-	start_line_passed.volume_db = -200
+	# Calculate inverted skill (0=expert, 1=beginner)
+	_inverted_skill = 1.0 - skill_level
+	
+	# Initialize racing line randomly
+	_racing_line = randf_range(-1.0, 1.0)
+	
+	# Racing line step: skilled drivers have smaller, more consistent changes
+	# Beginners (low skill) have bigger, more erratic line changes
+	_racing_line_step = lerp(0.5, 0.8, _inverted_skill)
+	
+	# Hide target marker unless debugging
+	if target_marker:
+		target_marker.visible = debug
+	
+	# Setup raycast for collision detection
+	if raycast_forward:
+		raycast_forward.enabled = true
+		raycast_forward.target_position = Vector2(detection_distance, 0)
+		raycast_forward.collision_mask = 9  # Detect cars on layers 8 and 9
+		raycast_forward.collide_with_areas = false
+		raycast_forward.collide_with_bodies = true
+	
+	$SectorPassed.volume_db = -80
+	$StartLinePassed.volume_db = -80
+	$EngineIdle.volume_db = -20
+	$EngineHighRPM.volume_db = -30
+	
 	super()
-	
-	_inverted_skill = 1.0 - skill
-	_deviation_step = lerp(DEVIATION_STEP_MIN, DEVIATION_STEP_MAX, _inverted_skill)
-	_deviation_limit = lerp(DEVIATION_LIMIT_MIN, DEVIATION_LIMIT_MAX, _inverted_skill)
-	_deviation_weight = randf_range(-_deviation_limit, _deviation_limit)
-	update_speeds()
-	
-func update_speeds() -> void:
-	_allowed_max_speed = randf_range(min_top_speed_limit, max_top_speed_limit)
-	_allowed_min_speed = randf_range(min_bottom_speed_limit, max_bottom_speed_limit)
-
-func get_input() -> void:
-	if !_next_waypoint: 
-		return
-	
-	# Calculate the angle we need to steer
-	var direction_to_target = (_adjusted_waypoint_target - global_position).normalized()
-	var angle_to_target = transform.x.angle_to(direction_to_target)
-	
-	# Apply skill-based steering smoothness (removed distance damping)
-	var steering_responsiveness = clamp(skill, 0.2, 1.0)
-	var adjusted_angle = lerp(0.0, angle_to_target, steering_responsiveness)
-	
-	# Set steering direction (clamped to max steering angle)
-	steer_direction = clamp(adjusted_angle, deg_to_rad(-steering_angle), deg_to_rad(steering_angle))
-	
-	# Simple acceleration - let friction/drag handle the rest naturally
-	if velocity.length() < _target_speed:
-		acceleration = transform.x * engine_power
-		is_accelerating = true
-	else:
-		# Don't brake, just stop accelerating - let drag slow us down naturally
-		acceleration = Vector2.ZERO
-		is_accelerating = false
-		
-	# SIMPLE BRAKING LOGIC
-	var car_ahead = false
-	if avoidance_ray.is_colliding():
-		var collider = avoidance_ray.get_collider()
-		if collider is Car:
-			car_ahead = true
-			
-	if velocity.length() < _target_speed and not car_ahead:
-		acceleration = transform.x * engine_power
-		is_accelerating = true
-	else:
-		# If car ahead or over speed -> Coast/Brake
-		acceleration = Vector2.ZERO 
-		is_accelerating = false
-		if car_ahead:
-			# Optional: Active braking to prevent rear-ending
-			acceleration = -transform.x * engine_power * 0.5
 
 func _physics_process(delta: float) -> void:
-	if state != CarState.DRIVING or !_next_waypoint: 
+	if not is_on_track:
+		off_track_time += delta
+	
+	# Check for cars ahead
+	_check_collision_avoidance()
+
+func _check_collision_avoidance() -> void:
+	if not raycast_forward:
+		_collision_slowdown = 1.0
 		return
 	
-	update_waypoint()
-	super._physics_process(delta)
-
-func update_waypoint() -> void:
-	if !_next_waypoint:
-		return
+	# Force raycast update
+	raycast_forward.force_raycast_update()
 	
-	var distance = global_position.distance_to(_adjusted_waypoint_target)
-	
-	# Dynamic waypoint distance based on speed
-	var current_speed = velocity.length()
-	var dynamic_waypoint_distance = base_waypoint_distance + (current_speed / 40.0)
-	
-	# Check if we've passed the current waypoint
-	var direction_to_waypoint = (_adjusted_waypoint_target - global_position).normalized()
-	var movement_direction = velocity.normalized() if velocity.length() > 10 else transform.x
-	var dot_product = direction_to_waypoint.dot(movement_direction)
-	
-	# Switch waypoint if within distance OR if we've clearly passed it
-	if distance < dynamic_waypoint_distance or (distance < 400.0 and dot_product < -0.2):
-		advance_to_next_waypoint()
-		return
-	
-	# Recovery: If we're far from current waypoint, check if a future waypoint is closer
-	# This handles collision pushes
-	if distance > 500.0:
-		check_and_skip_to_nearest_waypoint()
-
-func advance_to_next_waypoint() -> void:
-	var next_wp = _next_waypoint.next_waypoint
-	set_next_waypoint(next_wp)
-	_target_speed = lerp(_allowed_min_speed, _allowed_max_speed, next_wp.radius_factor)
-	
-	#if debug:
-		#print("Car %d -> WP %d, speed: %.0f" % [car_number, next_wp.number, _target_speed])
-
-func check_and_skip_to_nearest_waypoint() -> void:
-	"""Find and jump to the nearest waypoint ahead if we got pushed off course"""
-	var current_wp = _next_waypoint
-	var nearest_wp = current_wp
-	var nearest_distance = global_position.distance_to(_adjusted_waypoint_target)
-	
-	# Check next few waypoints to find the nearest one
-	var check_wp = current_wp
-	for i in range(waypoint_lookahead):
-		check_wp = check_wp.next_waypoint
-		var check_distance = global_position.distance_to(check_wp.global_position)
+	if raycast_forward.is_colliding():
+		var collider = raycast_forward.get_collider()
 		
-		if check_distance < nearest_distance:
-			nearest_distance = check_distance
-			nearest_wp = check_wp
+		# Check if we hit a car (RigidBody2D)
+		if collider is RigidBody2D and collider != self:
+			_collision_slowdown = slowdown_factor
+			
+			if debug:
+				print("[Bot %s] Car detected ahead! Slowing to %d%%" % [car_name, slowdown_factor * 100])
+		else:
+			_collision_slowdown = 1.0
+	else:
+		_collision_slowdown = 1.0
+
+func _integrate_forces(physics_state: PhysicsDirectBodyState2D) -> void:
+	# Don't move if waiting or no waypoint
+	if state == CarState.WAITING or !_next_waypoint:
+		physics_state.linear_velocity = physics_state.linear_velocity.lerp(Vector2.ZERO, 0.1)
+		physics_state.angular_velocity = 0.0
+		_race_start_time = 0.0
+		_speed_multiplier = 0.0
+		return
 	
-	# If we found a closer waypoint ahead, skip to it
-	if nearest_wp != current_wp:
-		#if debug:
-			#print("Car %d RECOVERY: skipping from WP %d to WP %d (%.0f -> %.0f)" % [
-				#car_number, current_wp.number, nearest_wp.number, 
-				#global_position.distance_to(_adjusted_waypoint_target), nearest_distance
-			#])
-		
-		set_next_waypoint(nearest_wp)
-		_target_speed = lerp(_allowed_min_speed, _allowed_max_speed, nearest_wp.radius_factor)
+	# Gradual acceleration at race start
+	if _race_start_time < start_acceleration_time:
+		_race_start_time += physics_state.step
+		_speed_multiplier = clamp(_race_start_time / start_acceleration_time, 0.0, 1.0)
+	else:
+		_speed_multiplier = 1.0
+	
+	# Update waypoint if close enough
+	if global_position.distance_to(_target_position) < 150.0:
+		set_next_waypoint(_next_waypoint.next_waypoint)
+	
+	# Calculate direction to target
+	var direction = (_target_position - global_position).normalized()
+	
+	# ROTATION - Skill affects turn speed (based on skill)
+	var current_angle = rotation
+	var target_angle = direction.angle()
+	var turn_speed = lerp(3.0, 8.0, skill_level)
+	var new_angle = lerp_angle(current_angle, target_angle, turn_speed * physics_state.step)
+	
+	physics_state.transform = Transform2D(new_angle, global_position)
+	physics_state.angular_velocity = 0.0
+	
+	# SPEED - Use waypoint factor AND corner angle
+	var angle_diff = abs(angle_difference(current_angle, target_angle))
+	var corner_penalty = angle_diff * lerp(0.8, 0.3, skill_level)
+	var speed_factor = clamp(1.0 - corner_penalty, 0.3, 1.0)
+
+	# Get waypoint radius_factor (0.01 = tight corner, 1.0 = straight)
+	var waypoint_factor = 1.0
+	if _next_waypoint:
+		waypoint_factor = _next_waypoint.radius_factor
+
+	# Combine both factors
+	var final_speed_factor = speed_factor * waypoint_factor
+
+	# Apply all multipliers INCLUDING collision avoidance
+	var desired_speed = lerp(min_speed, max_speed, final_speed_factor) * _speed_multiplier * _collision_slowdown
+	var desired_velocity = direction * desired_speed
+
+	var responsiveness = lerp(0.1, 0.3, skill_level)
+	physics_state.linear_velocity = physics_state.linear_velocity.lerp(desired_velocity, responsiveness)
 
 func set_next_waypoint(wp: Waypoint) -> void:
+	if !wp:
+		return
+	
 	_next_waypoint = wp
 	
-	# Update deviation weight for this waypoint
-	_deviation_weight += randf_range(-_deviation_step, _deviation_step)
-	_deviation_weight = clampf(_deviation_weight, -_deviation_limit, _deviation_limit)
+	# Calculate racing line offset to prevent bunching
+	var offset = Vector2.ZERO
+	if wp.next_waypoint:
+		var track_dir = (wp.next_waypoint.global_position - wp.global_position).normalized()
+		var perpendicular = Vector2(-track_dir.y, track_dir.x)
+		offset = perpendicular * _racing_line * 200.0
 	
-	# Calculate adjusted target position based on deviation
-	_adjusted_waypoint_target = wp.get_target_adjusted(_deviation_weight)
-	target.global_position = _adjusted_waypoint_target
+	# Add small random variance (less for skilled bots)
+	var variance = lerp(20.0, 5.0, skill_level)
+	var random_offset = Vector2(randf_range(-variance, variance), randf_range(-variance, variance))
+	
+	_target_position = wp.global_position + offset + random_offset
+	
+	if target_marker:
+		target_marker.global_position = _target_position
 
 func _on_deviation_timer_timeout() -> void:
-	if randf() < _inverted_skill:
-		_deviation_weight = -_deviation_weight
+	# Random step in racing line
+	_racing_line += randf_range(-_racing_line_step, _racing_line_step)
+	# Keep within bounds
+	_racing_line = clampf(_racing_line, -1.0, 1.0)
+	
+	# RECALCULATE target position with new racing line
+	if _next_waypoint:
+		var offset = Vector2.ZERO
+		if _next_waypoint.next_waypoint:
+			var track_dir = (_next_waypoint.next_waypoint.global_position - _next_waypoint.global_position).normalized()
+			var perpendicular = Vector2(-track_dir.y, track_dir.x)
+			offset = perpendicular * _racing_line * 150.0
 		
-		#if debug:
-			#print("Car %d deviation adjusted: %.2f" % [car_number, _deviation_weight])
+		var variance = lerp(40.0, 10.0, skill_level)
+		var random_offset = Vector2(randf_range(-variance, variance), randf_range(-variance, variance))
+		
+		_target_position = _next_waypoint.global_position + offset + random_offset
+		
+		if target_marker:
+			target_marker.global_position = _target_position
+	
+	if debug:
+		print("[Bot %s] Racing line adjusted to: %.2f" % [car_name, _racing_line])
+
+func get_input() -> void:
+	pass  # Bots don't use input
