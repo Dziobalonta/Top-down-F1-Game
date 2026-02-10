@@ -4,4 +4,8 @@ extends Area2D
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Car:
-		body.hit_verfication(sector_index)
+		body.hit_verification(sector_index)
+		
+		# Emit sector crossing event for delta time tracking
+		if sector_index > 0:
+			EventHub.emit_on_sector_crossed(body, sector_index)

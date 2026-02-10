@@ -202,7 +202,7 @@ func lap_completed() -> void:
 		start_line_passed.play()
 		lap_time = 0.0
 
-func hit_verfication(sector_id: int ) -> void:
+func hit_verification(sector_id: int ) -> void:
 	if sector_id not in sectors_passed:
 		sectors_passed.append(sector_id)
 		sector_passed_sound.play()

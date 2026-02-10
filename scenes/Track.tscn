@@ -184,7 +184,7 @@ rotation = -2.5098014
 zoom = Vector2(0.235, 0.235)
 
 [node name="RaceController" parent="." instance=ExtResource("10_op70l")]
-total_laps = 2
+total_laps = 3
 
 [node name="Ui" type="CanvasLayer" parent="."]
 

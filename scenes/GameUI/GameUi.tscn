@@ -83,10 +83,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -52.0
-offset_top = -198.0
-offset_right = 52.0
-offset_bottom = -132.0
+offset_left = -51.5
+offset_top = -171.0
+offset_right = 52.5
+offset_bottom = -105.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -101,10 +101,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -285.5
-offset_top = -247.0
-offset_right = 285.5
-offset_bottom = -181.0
+offset_left = -285.0
+offset_top = -220.0
+offset_right = 286.0
+offset_bottom = -154.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -132,6 +132,30 @@ theme_override_constants/margin_bottom = 20
 [node name="CarUi" parent="MarginContainer" instance=ExtResource("1_k6e7w")]
 layout_mode = 2
 script = ExtResource("3_7y0a3")
+
+[node name="CurrentLapTimer" type="Label" parent="."]
+layout_mode = 0
+offset_left = 422.0
+offset_top = 21.0
+offset_right = 730.0
+offset_bottom = 57.0
+size_flags_horizontal = 4
+text = "00:00:00s"
+label_settings = SubResource("LabelSettings_ddyqp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeltaTimeLabel" type="Label" parent="CurrentLapTimer"]
+layout_mode = 0
+offset_left = -6.0
+offset_top = 41.0
+offset_right = 302.0
+offset_bottom = 77.0
+size_flags_horizontal = 4
+text = "+00:00:00s"
+label_settings = SubResource("LabelSettings_ddyqp")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RaceoverTable" type="PanelContainer" parent="."]
 visible = false

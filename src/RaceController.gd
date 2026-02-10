@@ -13,6 +13,7 @@ var car_total_off_track_time: Dictionary = {}  # {car: total_time_off_track}
 var car_currently_off_track: Dictionary = {}  # {car: is_off_track}
 var car_last_penalty_threshold: Dictionary = {}  # {car: last_threshold_crossed}
 
+var player_best_laptime: float = 0.0
 var _cars: Array[Car] = []
 var _track_curve: Curve2D
 var _race_data: Dictionary = {}
@@ -144,7 +145,8 @@ func on_lap_completed(info: LapCompleteData) -> void:
 		car, 
 		rd.completed_laps,
 		total_laps,
-		info.lap_time
+		info.lap_time,
+		rd.best_lap
 	)
 	if car is PlayerCar:
 		GameManager.save_best_lap(info.lap_time)

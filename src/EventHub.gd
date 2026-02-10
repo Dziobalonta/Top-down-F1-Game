@@ -4,6 +4,7 @@ signal on_lap_completed(info: LapCompleteData)
 signal on_race_start
 signal on_lap_update
 signal on_race_over(data: Array[CarRaceData])
+signal on_sector_crossed(car: Car, sector_index: int)
 
 signal on_wheels_left_track(car: Car)
 signal on_wheels_returned_to_track(car: Car)
@@ -16,8 +17,8 @@ func emit_on_lap_completed(info: LapCompleteData) -> void:
 func emit_on_race_start() -> void:
 	on_race_start.emit()
 
-func emit_on_lap_update(car: Car, lap_count: int, total_laps: int, lap_time: float) -> void:
-	on_lap_update.emit(car, lap_count, total_laps, lap_time)
+func emit_on_lap_update(car: Car, lap_count: int, total_laps: int, lap_time: float, best_lap_time: float) -> void:
+	on_lap_update.emit(car, lap_count, total_laps, lap_time, best_lap_time)
 	
 func emit_on_race_over(data: Array[CarRaceData]) -> void:
 	on_race_over.emit(data)
@@ -30,3 +31,6 @@ func emit_on_wheels_left_track(car: Car) -> void:
 	
 func emit_penalty_applied(car: Car, penalty_time: float, violation_count: int):
 	penalty_applied.emit(car, penalty_time, violation_count)
+	
+func emit_on_sector_crossed(car: Car, sector_index: int) -> void:
+	on_sector_crossed.emit(car, sector_index)

@@ -70,7 +70,6 @@ polygon = PackedVector2Array(266.02197, 168.4145, -156.61612, 173.14325, -134.18
 [node name="PlayerCar" parent="CarsHolder" index="0"]
 collision_layer = 1
 collision_mask = 1
-start_acceleration_time = 1.25
 
 [node name="BotCar1" parent="CarsHolder" index="1" instance=ExtResource("5_3x62l")]
 position = Vector2(15060.999, 33355)
@@ -263,6 +262,3 @@ body_mass = null
 linear_damp_value = null
 angular_damp_value = null
 bounce_amount = null
-
-[node name="RaceController" parent="." index="7"]
-total_laps = 1
