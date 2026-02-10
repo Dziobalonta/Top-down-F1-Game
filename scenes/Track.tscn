@@ -151,6 +151,7 @@ texture = ExtResource("7_84bdo")
 [node name="Sector2" parent="SectionsHolder" instance=ExtResource("8_chhoc")]
 position = Vector2(51791, 4023.997)
 rotation = 1.2187864
+sector_index = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SectionsHolder/Sector2"]
 position = Vector2(-825.2446, -99.64203)
@@ -161,6 +162,7 @@ texture = ExtResource("8_trk6v")
 [node name="Sector3" parent="SectionsHolder" instance=ExtResource("8_chhoc")]
 position = Vector2(64102.996, 39986.996)
 rotation = 0.5124079
+sector_index = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="SectionsHolder/Sector3"]
 position = Vector2(-840.4701, -129.57663)
@@ -173,6 +175,7 @@ texture = ExtResource("8_trk6v")
 [node name="PlayerCar" parent="CarsHolder" groups=["player"] instance=ExtResource("10_qyuim")]
 position = Vector2(15339.999, 33743)
 rotation = 2.5098014
+start_acceleration_time = 1.25
 car_name = "Player"
 
 [node name="Camera2D" type="Camera2D" parent="CarsHolder/PlayerCar"]

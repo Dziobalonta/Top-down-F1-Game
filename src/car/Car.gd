@@ -3,25 +3,28 @@ class_name Car
 
 enum CarState {WAITING, DRIVING, RACEOVER}
 
-# Visuals
+@export_category("Finish Behavior")
+@export var coast_friction: float = 0.9999  # How quickly to slow down after finish
+
+@export_category("Visuals")
 @export var car_texture: Texture2D = preload("res://assets/sprites/f1_car_body.svg")
 @export var car_wing_texture: Texture2D = preload("res://assets/sprites/f1_car_rear_wing.svg")
 @export var car_number: int = 0
 @export var car_name: String = "Car"
 
-# Physics / Handling
+@export_category("Physics / Handling")
 @export var wheel_base = 250
 @export var steering_angle: float = 50.0
 @export var engine_power = 9000 
 @export var braking = -4000
 @export var max_speed_reverse = 1500
-@export var slip_speed = 3500
+@export var slip_speed = 00
 @export var traction_fast = 0.2
 @export var traction_slow = 0.9
 @export var min_steering_factor = 0.3
 @export var steering_curve_speed = 3000.0 
 
-# RigidBody Properties
+@export_category("RigidBody Properties")
 @export var body_mass: float = 1000.0
 @export var linear_damp_value: float = 2.0
 @export var angular_damp_value: float = 5.0 
@@ -86,7 +89,7 @@ func _ready() -> void:
 	contact_monitor = true
 	max_contacts_reported = 4
 	
-	# Use native RigidBody collision detection
+	# RigidBody collision detection
 	body_entered.connect(_on_body_entered)
 	
 	left_front_wheel_area.area_entered.connect(_on_wheel_entered.bind("left_front"))
@@ -162,7 +165,7 @@ func _on_body_entered(body: Node) -> void:
 		var current_time = Time.get_ticks_msec() / 1000.0
 		
 		if current_time - last_crash_time > 0.1:
-			# Use linear_velocity for RigidBody
+			# linear_velocity for RigidBody
 			var relative_speed = (linear_velocity - other_car.linear_velocity).length()
 			
 			if relative_speed > 100.0:
@@ -207,9 +210,8 @@ func hit_verfication(sector_id: int ) -> void:
 func change_state(new_state: CarState) -> void:
 	state = new_state
 	if state == CarState.DRIVING:
-		freeze = false # UNFREEZE
+		freeze = false
 	elif state == CarState.RACEOVER:
-		freeze = true 
 		engine_idle.stop()
 		engine_high_rpm.stop()
 

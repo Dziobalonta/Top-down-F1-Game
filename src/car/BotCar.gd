@@ -8,12 +8,12 @@ class_name BotCar
 @export var start_acceleration_time: float = 2.0  # Seconds to reach full speed
 
 @export_category("Collision Avoidance")
-@export var slowdown_factor: float = 0.2  # Slow down to 20% when car detected
+@export var slowdown_factor: float = 0.45  # Slow down to 20% when car detected
 @export var detection_distance: float = 400.0  # How far ahead to look
 
 var _race_start_time: float = 0.0
 var _speed_multiplier: float = 0.0
-var _collision_slowdown: float = 1.0  # 1.0 = full speed, 0.2 = slowed down
+var _collision_slowdown: float = 0.8  # 1.0 = full speed, 0.2 = slowed down
 
 @export var debug: bool = true
 
@@ -25,7 +25,7 @@ var _next_waypoint: Waypoint
 var _target_position: Vector2 = Vector2.ZERO
 var _racing_line: float = 0.0  # -1 to 1, changes over time
 var _racing_line_step: float = 0.1  # How much racing line can change per timer
-var _inverted_skill: float = 0.0  # Cached 1.0 - skill
+var _inverted_skill: float = 0.0  
 
 func _ready() -> void:
 	# Calculate inverted skill (0=expert, 1=beginner)
@@ -61,8 +61,9 @@ func _physics_process(delta: float) -> void:
 	if not is_on_track:
 		off_track_time += delta
 	
-	# Check for cars ahead
-	_check_collision_avoidance()
+	# Only check for cars ahead if still racing
+	if state == CarState.DRIVING:
+		_check_collision_avoidance()
 
 func _check_collision_avoidance() -> void:
 	if not raycast_forward:
@@ -79,8 +80,8 @@ func _check_collision_avoidance() -> void:
 		if collider is RigidBody2D and collider != self:
 			_collision_slowdown = slowdown_factor
 			
-			if debug:
-				print("[Bot %s] Car detected ahead! Slowing to %d%%" % [car_name, slowdown_factor * 100])
+			#if debug:
+				#print("[Bot %s] Car detected ahead! Slowing to %d%%" % [car_name, slowdown_factor * 100])
 		else:
 			_collision_slowdown = 1.0
 	else:
@@ -93,6 +94,17 @@ func _integrate_forces(physics_state: PhysicsDirectBodyState2D) -> void:
 		physics_state.angular_velocity = 0.0
 		_race_start_time = 0.0
 		_speed_multiplier = 0.0
+		return
+	
+	# If race is over, just coast to a stop
+	if state == CarState.RACEOVER:
+		# Apply gentle friction to coast to a stop
+		physics_state.linear_velocity *= coast_friction
+		physics_state.angular_velocity = 0.0
+		
+		#if debug and physics_state.linear_velocity.length() > 10.0:
+			#print("[Bot %s] Coasting... Speed: %.1f" % [car_name, physics_state.linear_velocity.length()])
+		
 		return
 	
 	# Gradual acceleration at race start
@@ -182,8 +194,8 @@ func _on_deviation_timer_timeout() -> void:
 		if target_marker:
 			target_marker.global_position = _target_position
 	
-	if debug:
-		print("[Bot %s] Racing line adjusted to: %.2f" % [car_name, _racing_line])
+	#if debug:
+		#print("[Bot %s] Racing line adjusted to: %.2f" % [car_name, _racing_line])
 
 func get_input() -> void:
 	pass  # Bots don't use input
