@@ -70,7 +70,6 @@ func _process(delta: float) -> void:
 #region Car Outside Track	
 func _on_car_left_track(car: Car):
 	car_currently_off_track[car] = true
-	#print(car.name + " left the track - violation recorded!")
 
 func check_if_exceeded_max_time(car: Car) -> bool:
 	# Check if total off-track time exceeds max time
@@ -104,19 +103,12 @@ func apply_penalty(car: Car, penalty_time: float):
 	
 	print("Penalty: +" + str(penalty_time) + "s for " + car.name)
 	print("Total penalties: " + str(car_penalties[car]) + "s")
-	print("Total off-track time: " + str(car_total_off_track_time[car]) + "s")
 
 func get_final_time(car: Car, race_time: float) -> float:
 	return race_time + car_penalties[car]
 
 func get_car_penalties(car: Car) -> float:
 	return car_penalties.get(car, 0.0)
-
-func get_car_violations(car: Car) -> int:
-	return car_violations.get(car, 0)
-
-func get_car_total_off_track_time(car: Car) -> float:
-	return car_total_off_track_time.get(car, 0.0)
 	
 #endregion	
 	
@@ -141,19 +133,23 @@ func on_lap_completed(info: LapCompleteData) -> void:
 	var car: Car = info.car
 	var rd: CarRaceData = _race_data[car]
 	rd.add_lap_time(info.lap_time)
-	EventHub.emit_on_lap_update(
-		car, 
-		rd.completed_laps,
-		total_laps,
-		info.lap_time,
-		rd.best_lap
-	)
+	EventHub.emit_on_lap_update(car, rd.completed_laps, total_laps, info.lap_time, rd.best_lap)
+	
 	if car is PlayerCar:
 		GameManager.save_best_lap(info.lap_time)
 	
 	if rd.race_completed:
 		car.change_state(Car.CarState.RACEOVER)
-		rd.set_total_time(get_elapsed_time())
+		
+		# --- CRITICAL FIX START ---
+		# Convert penalty seconds to milliseconds (* 1000.0)
+		var penalty_ms = get_car_penalties(car) * 1000.0
+		var final_race_time_ms = get_elapsed_time() + penalty_ms
+		
+		rd.set_total_time(final_race_time_ms)
+		rd.set_meta("penalty_time", get_car_penalties(car)) 
+		# --- CRITICAL FIX END ---
+		
 		if race_over_timer.is_stopped():
 			race_over_timer.start()
 		
@@ -169,10 +165,20 @@ func finish_race() -> void:
 	
 	for c in _cars:
 		var rd: CarRaceData = _race_data[c]
+		var penalty = get_car_penalties(c)
+		
+		# Ensure metadata is set for all cars (even if they DNF)
+		rd.set_meta("penalty_time", penalty)
+		
 		if not rd.race_completed:
 			var offset: float = _track_curve.get_closest_offset(c.global_position)
 			var progress: float = offset / total_len
 			rd.force_finish(elapsed, progress)
+			
+			# Add penalty to DNF/Forced finish time as well
+			if rd.total_time > 0:
+				rd.total_time += penalty
+				
 			c.change_state(Car.CarState.RACEOVER)
 	
 	# Sorting and displaying info

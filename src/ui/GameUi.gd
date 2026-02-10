@@ -9,6 +9,7 @@ class_name GameUi
 @onready var timer_label: Label = $OffTrackCanvas/TimerLabel
 @onready var text_label: Label = $OffTrackCanvas/TextLabel
 @onready var beep: AudioStreamPlayer = $OffTrackCanvas/Beep
+@onready var penalty_label: Label = $PenaltyLabel
 
 # Lap timer labels
 @onready var current_lap_timer_label: Label = $CurrentLapTimer
@@ -25,10 +26,14 @@ class_name GameUi
 
 var _car_ui_dict: Dictionary[Car, CarUi] = {}
 var _pulse_tween: Tween
+var _penalty_tween: Tween
 var _player_car: Car = null
 var _beep_timer: float = 0.0
-var _current_lap_start_time: float = 0.0
+
+var _current_lap_time: float = 0.0 
+
 var _race_started: bool = false
+var _penalty_display_timer: float = 0.0
 
 # Sector delta tracking
 var _delta_display_timer: float = 0.0
@@ -39,7 +44,7 @@ var _sector_count: int = 0  # How many sectors in the track
 
 @export var max_off_track_time: float = 10.0
 
-# F1-style delta colors
+# delta colors
 const DELTA_FASTER_COLOR: Color = Color(0.0, 1.0, 0.0)  # Green
 const DELTA_SLOWER_COLOR: Color = Color(1.0, 0.0, 0.0)  # Red
 const DELTA_NEUTRAL_COLOR: Color = Color(1.0, 1.0, 1.0)  # White
@@ -52,7 +57,8 @@ func _enter_tree() -> void:
 	EventHub.on_wheels_left_track.connect(_on_wheels_left_track)
 	EventHub.on_wheels_returned_to_track.connect(_on_wheels_returned_to_track)
 	
-	# Connect to sector crossing event (if it exists)
+	EventHub.penalty_applied.connect(_on_penalty_applied)
+	
 	if EventHub.has_signal("on_sector_crossed"):
 		EventHub.on_sector_crossed.connect(_on_sector_crossed)
 
@@ -67,6 +73,10 @@ func _ready() -> void:
 	if delta_time_label:
 		delta_time_label.text = ""
 		delta_time_label.hide()
+		
+	if penalty_label:
+		penalty_label.text = ""
+		penalty_label.hide()
 	
 	resume_button.pressed.connect(_on_resume_pressed)
 	restart_button.pressed.connect(_on_restart_pressed)
@@ -75,15 +85,20 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# Update real-time lap timer for player
 	if _race_started and _player_car and _player_car.get("state") != Car.CarState.RACEOVER:
-		var current_lap_time = (Time.get_ticks_msec() - _current_lap_start_time) / 1000.0
+		
+		# Only add time if not paused
+		if not get_tree().paused:
+			_current_lap_time += delta
 		
 		# Update current lap timer
 		if current_lap_timer_label:
-			current_lap_timer_label.text = "%.2fs" % current_lap_time
+			current_lap_timer_label.text = "%.2fs" % _current_lap_time
 	
 	# Handle delta display timer (hide after 3 seconds)
 	if _delta_visible:
-		_delta_display_timer -= delta
+		if not get_tree().paused:
+			_delta_display_timer -= delta
+			
 		if _delta_display_timer <= 0.0:
 			_hide_delta()
 	
@@ -92,17 +107,49 @@ func _process(delta: float) -> void:
 		var remaining_time = max(0.0, max_off_track_time - _player_car.off_track_time)
 		update_timer_label(remaining_time)
 		
-		_beep_timer += delta
-		if _beep_timer >= 1.0:
-			_beep_timer -= 1.0
-			if remaining_time > 0:
-				beep.play()
+		if not get_tree().paused:
+			_beep_timer += delta
+			if _beep_timer >= 1.0:
+				_beep_timer -= 1.0
+				if remaining_time > 0:
+					beep.play()
 	else:
 		_beep_timer = 0.0
+		
+	# Penalty fade-out
+	if _penalty_display_timer > 0:
+		if not get_tree().paused:
+			_penalty_display_timer -= delta
+			
+		if _penalty_display_timer <= 0:
+			if _penalty_tween:
+				_penalty_tween.kill()
+			
+			_penalty_tween = create_tween()
+			_penalty_tween.tween_property(penalty_label, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			_penalty_tween.tween_callback(penalty_label.hide)
 
-# Called when player crosses a sector (NOT the finish line)
+func _on_penalty_applied(car: Car, penalty_time: float, _violation_count: int) -> void:
+	# Only show if player car and penalty time is bigger
+	if penalty_time > 0:
+		if car == _player_car:
+			
+			if _penalty_tween:
+				_penalty_tween.kill()
+			
+			penalty_label.text = "+ %.1f s PENALTY" % penalty_time
+			penalty_label.modulate.a = 0.0 # Start invisible
+			penalty_label.show()
+			
+			_penalty_tween = create_tween()
+			# Fade in over 0.25 seconds
+			_penalty_tween.tween_property(penalty_label, "modulate:a", 1.0, 0.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			
+			_penalty_display_timer = 3.0  # Show for 3 seconds
+
+# Called when player crosses a sector
 func _on_sector_crossed(car: Car, sector_index: int) -> void:
-	# Only track player's sectors
+	# Only track players sectors
 	if car != _player_car:
 		return
 	
@@ -114,8 +161,7 @@ func _on_sector_crossed(car: Car, sector_index: int) -> void:
 	if sector_index < 1 or sector_index > _sector_count:
 		return
 	
-	# Get current time since lap start
-	var current_time = (Time.get_ticks_msec() - _current_lap_start_time) / 1000.0
+	var current_time = _current_lap_time
 	
 	# Store sector time (sector_index is 1-based, array is 0-based)
 	var array_index = sector_index - 1
@@ -155,7 +201,7 @@ func _hide_delta() -> void:
 
 func _on_race_start() -> void:
 	_race_started = true
-	_current_lap_start_time = Time.get_ticks_msec()
+	_current_lap_time = 0.0
 	
 	# Initialize sector arrays
 	for i in range(_sector_count):
@@ -175,7 +221,7 @@ func on_race_over(data: Array[CarRaceData]) -> void:
 	for child in results_grid.get_children():
 		child.queue_free()
 
-	var headers = ["Pos", "Driver", "Best Lap", "Laps", "Gap"]
+	var headers = ["Pos", "Driver", "Best Lap", "Laps", "Pen", "Gap"]
 	for h in headers:
 		_add_cell(h, true)
 
@@ -191,23 +237,41 @@ func on_race_over(data: Array[CarRaceData]) -> void:
 		_add_cell(d.car_name)
 		
 		if d.best_lap != CarRaceData.DEFAULT_LAPTIME:
-			_add_cell("%.3fs" % d.best_lap)
+			_add_cell("%.2fs" % d.best_lap)
 		else:
 			_add_cell("--")
 			
 		_add_cell(str(d.completed_laps))
 		
+		# Penalty Column
+		var pen_time = 0.0
+		if d.has_meta("penalty_time"):
+			pen_time = d.get_meta("penalty_time")
+		
+		if pen_time > 0:
+			var p_label = Label.new()
+			p_label.text = "+%.1fs" % pen_time
+			p_label.modulate = Color.YELLOW
+			if table_font:
+				p_label.add_theme_font_override("font", table_font)
+			p_label.add_theme_font_size_override("font_size", table_font_size)
+			p_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+			p_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			results_grid.add_child(p_label)
+		else:
+			_add_cell("-")
+		
 		var time_str = ""
 		
 		if d.race_completed or d.total_time > 0:
 			if i == 0:
-				time_str = "%.3fs" % (d.total_time / 1000.0)
+				time_str = "%.2fs" % (d.total_time / 1000.0)
 			else:
 				if winner_time > 0:
 					var gap = d.total_time - winner_time
-					time_str = "+%.3fs" % (gap / 1000.0)
+					time_str = "+%.2fs" % (gap / 1000.0)
 				else:
-					time_str = "%.3fs" % (d.total_time / 1000.0)
+					time_str = "%.2fs" % (d.total_time / 1000.0)
 			
 			if not d.race_completed: 
 				time_str = "DNF"
@@ -272,7 +336,7 @@ func on_lap_update(car: Car, lap_count: int, total_laps: int, last_lap_time: flo
 		for i in range(_current_sector_times.size()):
 			_current_sector_times[i] = 0.0
 		
-		_current_lap_start_time = Time.get_ticks_msec()
+		_current_lap_time = 0.0
 	
 #region Exceeding Track Limits
 func _on_wheels_left_track(car: Car) -> void:
