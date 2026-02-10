@@ -78,6 +78,11 @@ func check_if_exceeded_max_time(car: Car) -> bool:
 		car_currently_off_track[car] = false
 		car.change_state(Car.CarState.RACEOVER)
 		EventHub.emit_penalty_applied(car, 0.0, car_violations[car])  # Notify UI
+		
+		# If the player is disqualified, end the race immediately
+		if car.is_in_group("player"):
+			finish_race()
+		
 		return true
 	return false
 
@@ -141,17 +146,17 @@ func on_lap_completed(info: LapCompleteData) -> void:
 	if rd.race_completed:
 		car.change_state(Car.CarState.RACEOVER)
 		
-		# --- CRITICAL FIX START ---
 		# Convert penalty seconds to milliseconds (* 1000.0)
 		var penalty_ms = get_car_penalties(car) * 1000.0
 		var final_race_time_ms = get_elapsed_time() + penalty_ms
 		
 		rd.set_total_time(final_race_time_ms)
-		rd.set_meta("penalty_time", get_car_penalties(car)) 
-		# --- CRITICAL FIX END ---
+		rd.set_meta("penalty_time", get_car_penalties(car))
 		
-		if race_over_timer.is_stopped():
-			race_over_timer.start()
+		# Only finish the race session if the PLAYER finishes.
+		# If a bot finishes, the race continues until the player is done.
+		if car.is_in_group("player"):
+			finish_race()
 		
 
 func finish_race() -> void:
