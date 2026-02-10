@@ -155,14 +155,13 @@ func on_lap_completed(info: LapCompleteData) -> void:
 		if race_over_timer.is_stopped():
 			race_over_timer.start()
 		
-# RaceController.gd 
 
 func finish_race() -> void:
 	if _finished:
 		return
 	_finished = true
 	
-	# ... (Keep existing force_finish logic for bots) ...
+	# force finish logic for bots
 	var total_len: float = _track_curve.get_baked_length()
 	var elapsed: float = get_elapsed_time()
 	
@@ -174,28 +173,22 @@ func finish_race() -> void:
 			rd.force_finish(elapsed, progress)
 			c.change_state(Car.CarState.RACEOVER)
 	
-	# --- SORTING AND DISPLAY LOGIC ---
-	
-	# 1. Get results and sort
+	# Sorting and displaying info
 	var results: Array[CarRaceData] = []
 	for rd in _race_data.values():
 		results.append(rd)
 	results.sort_custom(CarRaceData.compare)
 	
-	# 2. Build the Final String Table
 	var final_string = ""
 	
 	# Add Header
 	final_string += CarRaceData.get_header_string() + "\n"
 	final_string += "--------------------------------------------------------\n"
-	
-# ... inside finish_race() ...
-	
+
 	# Add Rows with Rank
 	for i in range(results.size()):
 		var data = results[i]
 		var rank = i + 1
-		# CHANGE THIS LINE:
 		final_string += data.get_formatted_row(rank) + "\n" 
 	
 	print(final_string)

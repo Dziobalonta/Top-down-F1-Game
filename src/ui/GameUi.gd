@@ -59,7 +59,6 @@ func _process(delta: float) -> void:
 		_beep_timer = 0.0
 
 #region Building Table
-# W pliku GameUi.gd
 
 func on_race_over(data: Array[CarRaceData]) -> void:
 	for child in results_grid.get_children():
@@ -239,12 +238,23 @@ func update_timer_label(remaining_time: float) -> void:
 #region Buttons
 
 func _unhandled_input(event: InputEvent) -> void:
-	if get_tree().paused and not pause_menu_container.visible:
-		return  # works only when countdown ended
+	# Allow ESC to work when raceover_table visible
+	if get_tree().paused and not pause_menu_container.visible and not raceover_table.visible:
+		return  # Only block input if paused without any menu visible
 	
 	if event.is_action_pressed("ui_cancel"):
-		_toggle_pause()
-		get_viewport().set_input_as_handled()
+		# If race is over, go to main menu immediately
+		if raceover_table.visible:
+			get_tree().paused = false
+			GameManager.change_to_main()
+		else:
+			# Otherwise toggle pause menu
+			_toggle_pause()
+		
+		# Add null check before calling set_input_as_handled
+		var viewport = get_viewport()
+		if viewport:
+			viewport.set_input_as_handled()
 
 func _toggle_pause() -> void:
 	var is_paused = not get_tree().paused

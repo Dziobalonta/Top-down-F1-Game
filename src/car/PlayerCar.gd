@@ -25,6 +25,7 @@ func _physics_process(delta: float) -> void:
 		_speed_multiplier = clamp(_race_start_time / start_acceleration_time, 0.0, 1.0)
 	else:
 		_speed_multiplier = 1.0
+		
 
 func get_input():
 	# Cut off input when race is over
