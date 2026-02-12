@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://sr667dtfsd41" path="res://src/classes/TrackInfo.gd" id="1_hl1e7"]
 [ext_resource type="Texture2D" uid="uid://dndyuhyfk0ms1" path="res://assets/imgs/crop-35986603.jpg" id="1_mq0ur"]
 [ext_resource type="Texture2D" uid="uid://btg1htq4cenma" path="res://assets/textures/RaceCircuitSpa_detailed.svg" id="3_qx3gr"]
-[ext_resource type="PackedScene" uid="uid://vh3np7nuuq2f" path="res://scenes/TrackSpa.tscn" id="4_3dsur"]
+[ext_resource type="PackedScene" uid="uid://vh3np7nuuq2f" path="res://scenes/track/TrackSpa_GP.tscn" id="4_3dsur"]
 
 [resource]
 script = ExtResource("1_hl1e7")

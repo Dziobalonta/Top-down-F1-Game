@@ -1,16 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://di80rky40ky77"]
+[gd_scene load_steps=20 format=3 uid="uid://di80rky40ky77"]
 
 [ext_resource type="Script" uid="uid://cn34im82ita1b" path="res://src/track/Track.gd" id="2_03wxe"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="2_myp20"]
 [ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="3_x3iig"]
 [ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="4_03wxe"]
 [ext_resource type="Texture2D" uid="uid://cp5tr12youbvw" path="res://assets/textures/FinishLine.png" id="5_x3iig"]
-[ext_resource type="PackedScene" uid="uid://syonu1l4n7y1" path="res://scenes/TrackProcessor.tscn" id="6_qyuim"]
+[ext_resource type="PackedScene" uid="uid://syonu1l4n7y1" path="res://scenes/track/TrackProcessor.tscn" id="6_qyuim"]
 [ext_resource type="Texture2D" uid="uid://doeacwcd6qybp" path="res://assets/textures/starting_pos.png" id="7_84bdo"]
-[ext_resource type="PackedScene" uid="uid://b78w13u5xjaj5" path="res://scenes/Sector.tscn" id="8_chhoc"]
+[ext_resource type="PackedScene" uid="uid://b78w13u5xjaj5" path="res://scenes/track/Sector.tscn" id="8_chhoc"]
 [ext_resource type="Texture2D" uid="uid://c6525nj1g65f0" path="res://assets/textures/red-flag.png" id="8_trk6v"]
-[ext_resource type="PackedScene" uid="uid://utawede35f45" path="res://scenes/RaceController.tscn" id="10_op70l"]
-[ext_resource type="PackedScene" uid="uid://cmsqapswmhsso" path="res://scenes/PlayerCar.tscn" id="10_qyuim"]
+[ext_resource type="PackedScene" uid="uid://cmsqapswmhsso" path="res://scenes/car/PlayerCar.tscn" id="10_qyuim"]
 [ext_resource type="PackedScene" uid="uid://bo7ahvvu7g718" path="res://scenes/GameUI/GameUi.tscn" id="11_uoqgd"]
 [ext_resource type="PackedScene" uid="uid://c3l1upilw3eu5" path="res://scenes/Countdown.tscn" id="11_wbtv6"]
 [ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="14_dpirr"]
@@ -175,16 +174,12 @@ texture = ExtResource("8_trk6v")
 [node name="PlayerCar" parent="CarsHolder" groups=["player"] instance=ExtResource("10_qyuim")]
 position = Vector2(15339.999, 33743)
 rotation = 2.5098014
-start_acceleration_time = 1.25
 car_name = "Player"
 
 [node name="Camera2D" type="Camera2D" parent="CarsHolder/PlayerCar"]
 position = Vector2(0.8652344, 5.5898438)
 rotation = -2.5098014
 zoom = Vector2(0.235, 0.235)
-
-[node name="RaceController" parent="." instance=ExtResource("10_op70l")]
-total_laps = 3
 
 [node name="Ui" type="CanvasLayer" parent="."]
 

@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://nnh7f80jgn8r"]
+
+[ext_resource type="Script" uid="uid://cukqh73twn2pn" path="res://src/car/GhostCar.gd" id="1_ilhhg"]
+[ext_resource type="Texture2D" uid="uid://db4b4g0ck4ihp" path="res://assets/sprites/f1_car_body.svg" id="2_ig3m6"]
+[ext_resource type="Texture2D" uid="uid://shtt1lyxwe32" path="res://assets/sprites/f1_car_wheel.svg" id="3_44h27"]
+[ext_resource type="Texture2D" uid="uid://c387slcq6ats5" path="res://assets/sprites/f1_car_rear_wing.svg" id="4_mu326"]
+
+[node name="GhostCar" type="Node2D"]
+script = ExtResource("1_ilhhg")
+
+[node name="CarBody" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(1.5258789e-05, 0)
+rotation = 1.5707964
+texture = ExtResource("2_ig3m6")
+
+[node name="RightRearWheel" type="Sprite2D" parent="."]
+position = Vector2(-151, 58)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_44h27")
+
+[node name="LeftRearWheel" type="Sprite2D" parent="."]
+position = Vector2(-151.00002, -58)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_44h27")
+
+[node name="RightFrontWheel" type="Sprite2D" parent="."]
+position = Vector2(105, 63)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_44h27")
+
+[node name="LeftFrontWheel" type="Sprite2D" parent="."]
+position = Vector2(105, -65)
+rotation = 1.5707964
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("3_44h27")
+
+[node name="RearWing" type="Sprite2D" parent="."]
+rotation = 1.5707964
+texture = ExtResource("4_mu326")

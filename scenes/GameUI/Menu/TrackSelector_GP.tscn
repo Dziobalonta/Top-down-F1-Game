@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=3 uid="uid://dro6mljcga6jw"]
+
+[ext_resource type="Script" uid="uid://cxgkcisi3w7lh" path="res://src/ui/TrackSelector.gd" id="1_7783a"]
+[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="2_hnr2h"]
+[ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="3_qv23y"]
+[ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Menu/TrackButton.tscn" id="4_eefe5"]
+[ext_resource type="Resource" uid="uid://da87sbvyhvy1x" path="res://resources/Spa_GP.tres" id="5_n5lay"]
+[ext_resource type="Resource" uid="uid://b7k0fvyybi254" path="res://resources/Silverstone_GP.tres" id="6_xvq02"]
+[ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="7_fxfmu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bobsl"]
+font = ExtResource("3_qv23y")
+font_size = 200
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vqrn0"]
+texture = ExtResource("7_fxfmu")
+region_rect = Rect2(380, 6338, 1921, 1081)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_muoj6"]
+texture = ExtResource("7_fxfmu")
+region_rect = Rect2(2724, 6338, 1921, 1081)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hs54y"]
+
+[node name="TrackSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7783a")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_hnr2h")
+volume_db = -40.0
+autoplay = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08235294, 0.08235294, 0.11764706, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_right = 3108.0
+offset_bottom = 2479.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.27, 0.27)
+
+[node name="LabelMC" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 100
+
+[node name="Label" type="Label" parent="VBoxContainer/LabelMC"]
+layout_mode = 2
+text = "Select Track"
+label_settings = SubResource("LabelSettings_bobsl")
+
+[node name="TracksMC" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 150
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/TracksMC"]
+layout_mode = 2
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 100
+columns = 2
+
+[node name="TrackSelector1" parent="VBoxContainer/TracksMC/GridContainer" instance=ExtResource("4_eefe5")]
+layout_mode = 2
+track_info = ExtResource("5_n5lay")
+
+[node name="TrackSelector2" parent="VBoxContainer/TracksMC/GridContainer" instance=ExtResource("4_eefe5")]
+layout_mode = 2
+track_info = ExtResource("6_xvq02")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 50
+
+[node name="GridContainer2" type="GridContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/h_separation = 300
+theme_override_constants/v_separation = 300
+
+[node name="BackButton" type="Button" parent="VBoxContainer/MarginContainer/GridContainer2"]
+custom_minimum_size = Vector2(650, 365)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_vqrn0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_muoj6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_muoj6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hs54y")
+
+[connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer2/BackButton" to="." method="_on_back_button_pressed"]

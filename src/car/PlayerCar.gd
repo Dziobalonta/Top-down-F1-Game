@@ -1,5 +1,6 @@
 extends Car
 class_name PlayerCar
+var ghost_recorder: GhostRecorder
 
 @export var start_acceleration_time: float = 1.25
 

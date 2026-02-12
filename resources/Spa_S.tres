@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TrackInfo" load_steps=5 format=3 uid="uid://ip5b00kkc7ak"]
+
+[ext_resource type="Texture2D" uid="uid://dndyuhyfk0ms1" path="res://assets/imgs/crop-35986603.jpg" id="1_58wfh"]
+[ext_resource type="Script" uid="uid://sr667dtfsd41" path="res://src/classes/TrackInfo.gd" id="2_bhnq4"]
+[ext_resource type="Texture2D" uid="uid://btg1htq4cenma" path="res://assets/textures/RaceCircuitSpa_detailed.svg" id="3_m3qjp"]
+[ext_resource type="PackedScene" uid="uid://c30bghxinmrp3" path="res://scenes/track/TrackSpa_S.tscn" id="4_58wfh"]
+
+[resource]
+script = ExtResource("2_bhnq4")
+track_name = "Spa"
+track_scene = ExtResource("4_58wfh")
+bg_image = ExtResource("1_58wfh")
+track_preview = ExtResource("3_m3qjp")
+metadata/_custom_type_script = "uid://sr667dtfsd41"

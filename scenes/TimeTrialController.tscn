@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://labl3uj7b8ar"]
+
+[ext_resource type="Script" uid="uid://cjdonxr24xc10" path="res://src/TimeTrialController.gd" id="1_4edmy"]
+
+[node name="TimeTrialController" type="Node"]
+script = ExtResource("1_4edmy")
+
+[node name="RaceOverTimer" type="Timer" parent="."]
+
+[node name="Timer" type="Timer" parent="."]

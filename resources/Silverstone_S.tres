@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TrackInfo" load_steps=5 format=3 uid="uid://cm3rin6podi4y"]
+
+[ext_resource type="Texture2D" uid="uid://dndyuhyfk0ms1" path="res://assets/imgs/crop-35986603.jpg" id="1_woayb"]
+[ext_resource type="Script" uid="uid://sr667dtfsd41" path="res://src/classes/TrackInfo.gd" id="2_4mk6d"]
+[ext_resource type="Texture2D" uid="uid://btg1htq4cenma" path="res://assets/textures/RaceCircuitSpa_detailed.svg" id="3_0o2hl"]
+[ext_resource type="PackedScene" uid="uid://c30bghxinmrp3" path="res://scenes/track/TrackSpa_S.tscn" id="4_woayb"]
+
+[resource]
+script = ExtResource("2_4mk6d")
+track_name = "Silverstone"
+track_scene = ExtResource("4_woayb")
+bg_image = ExtResource("1_woayb")
+track_preview = ExtResource("3_0o2hl")
+metadata/_custom_type_script = "uid://sr667dtfsd41"

@@ -4,7 +4,7 @@ class_name Track
 @onready var SectionsHolder: Node = $SectionsHolder
 @onready var CarsHolder: Node = $CarsHolder
 @onready var RacingLine: Path2D  = $TrackStroke/RacingLine
-@onready var race_controller: RaceController = $RaceController
+var race_controller: RaceController
 @onready var game_ui: GameUi = $Ui/GameUi
 @onready var track_processor: TrackProcessor = $TrackStroke/RacingLine/TrackProcessor
 @onready var waypoints_holder: Node = $WaypointsHolder
@@ -12,6 +12,14 @@ class_name Track
 var racing_line_curve: Curve2D
 
 func _ready() -> void:
+	if has_node("TimeTrialController"):
+		race_controller = $TimeTrialController
+	elif has_node("RaceController"):
+		race_controller = $RaceController
+	else:
+		push_error("Nie znaleziono ani RaceController, ani TimeTrialController!")
+		return
+		
 	await setup()
 	
 func setup() -> void:
@@ -23,8 +31,8 @@ func setup() -> void:
 	#print("track_processor.build_completed")
 	
 	for car in CarsHolder.get_children():
-		cars.append(car)
 		if car is Car:
+			cars.append(car)
 			car.setup(SectionsHolder.get_children().size())
 			
 		if car is BotCar:

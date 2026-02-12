@@ -3,7 +3,7 @@ class_name TrackProcessor
 
 signal build_completed
 
-const WAYPOINT = preload("res://scenes/Waypoint.tscn")
+const WAYPOINT = preload("res://scenes/track/Waypoint.tscn")
 
 @export var interval: float = 1400.0
 @export var grid_space: float = 3000.0

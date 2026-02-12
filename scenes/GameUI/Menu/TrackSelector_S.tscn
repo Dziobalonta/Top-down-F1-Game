@@ -1,23 +1,23 @@
-[gd_scene load_steps=12 format=3 uid="uid://dro6mljcga6jw"]
+[gd_scene load_steps=12 format=3 uid="uid://df4r0rybsgogf"]
 
-[ext_resource type="Script" uid="uid://cxgkcisi3w7lh" path="res://src/ui/TrackSelector.gd" id="1_hv5um"]
-[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="2_bobsl"]
-[ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Menu/TrackButton.tscn" id="3_87dx7"]
-[ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="4_rcuev"]
-[ext_resource type="Resource" uid="uid://da87sbvyhvy1x" path="res://resources/Spa.tres" id="4_vqrn0"]
-[ext_resource type="Resource" uid="uid://b7k0fvyybi254" path="res://resources/Silverstone.tres" id="5_muoj6"]
-[ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="7_87dx7"]
+[ext_resource type="Script" uid="uid://cxgkcisi3w7lh" path="res://src/ui/TrackSelector.gd" id="1_j0hc5"]
+[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="2_hj1i4"]
+[ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="3_7xmmi"]
+[ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Menu/TrackButton.tscn" id="4_xlwo1"]
+[ext_resource type="Resource" uid="uid://ip5b00kkc7ak" path="res://resources/Spa_S.tres" id="5_j0hc5"]
+[ext_resource type="Resource" uid="uid://cm3rin6podi4y" path="res://resources/Silverstone_S.tres" id="6_hj1i4"]
+[ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="7_w8vxb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bobsl"]
-font = ExtResource("4_rcuev")
+font = ExtResource("3_7xmmi")
 font_size = 200
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vqrn0"]
-texture = ExtResource("7_87dx7")
+texture = ExtResource("7_w8vxb")
 region_rect = Rect2(380, 6338, 1921, 1081)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_muoj6"]
-texture = ExtResource("7_87dx7")
+texture = ExtResource("7_w8vxb")
 region_rect = Rect2(2724, 6338, 1921, 1081)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hs54y"]
@@ -29,10 +29,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_hv5um")
+script = ExtResource("1_j0hc5")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_bobsl")
+stream = ExtResource("2_hj1i4")
 volume_db = -40.0
 autoplay = true
 
@@ -84,13 +84,13 @@ theme_override_constants/h_separation = 100
 theme_override_constants/v_separation = 100
 columns = 2
 
-[node name="TrackSelector1" parent="VBoxContainer/TracksMC/GridContainer" instance=ExtResource("3_87dx7")]
+[node name="TrackSelector1" parent="VBoxContainer/TracksMC/GridContainer" instance=ExtResource("4_xlwo1")]
 layout_mode = 2
-track_info = ExtResource("4_vqrn0")
+track_info = ExtResource("5_j0hc5")
 
-[node name="TrackSelector2" parent="VBoxContainer/TracksMC/GridContainer" instance=ExtResource("3_87dx7")]
+[node name="TrackSelector2" parent="VBoxContainer/TracksMC/GridContainer" instance=ExtResource("4_xlwo1")]
 layout_mode = 2
-track_info = ExtResource("5_muoj6")
+track_info = ExtResource("6_hj1i4")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
