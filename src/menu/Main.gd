@@ -5,6 +5,7 @@ const MODE_SELECTOR = preload("res://scenes/GameUI/Menu/ModeSelector.tscn")
 
 func _ready() -> void:
 	get_tree().paused = false
+	MusicManager.play_menu_track()
 
 
 func _on_play_button_pressed() -> void:

@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://lvk4e6f4xkmf"]
+[gd_scene load_steps=13 format=3 uid="uid://lvk4e6f4xkmf"]
 
 [ext_resource type="Script" uid="uid://e3l4rlmwxhm0" path="res://src/menu/ModeSelector.gd" id="1_p1oe7"]
-[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="1_u3vmw"]
 [ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="2_p1oe7"]
 [ext_resource type="Texture2D" uid="uid://d1m1v3ryvyrol" path="res://assets/sprites/buttons.svg" id="3_4i2ae"]
 
@@ -47,11 +46,6 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_p1oe7")
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_u3vmw")
-volume_db = -40.0
-autoplay = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

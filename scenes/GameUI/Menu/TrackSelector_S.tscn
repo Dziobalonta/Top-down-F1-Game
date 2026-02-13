@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://df4r0rybsgogf"]
+[gd_scene load_steps=11 format=3 uid="uid://df4r0rybsgogf"]
 
 [ext_resource type="Script" uid="uid://cxgkcisi3w7lh" path="res://src/ui/TrackSelector.gd" id="1_j0hc5"]
-[ext_resource type="AudioStream" uid="uid://cpktj3ri11nfg" path="res://assets/audio/music/F1_256kbps.wav" id="2_hj1i4"]
 [ext_resource type="FontFile" uid="uid://cyqk3yx7yr3na" path="res://assets/fonts/F1-Font-Family/Formula1-Bold_web.ttf" id="3_7xmmi"]
 [ext_resource type="PackedScene" uid="uid://b3njbt7td612s" path="res://scenes/GameUI/Menu/TrackButton.tscn" id="4_xlwo1"]
 [ext_resource type="Resource" uid="uid://ip5b00kkc7ak" path="res://resources/Spa_S.tres" id="5_j0hc5"]
@@ -30,11 +29,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j0hc5")
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_hj1i4")
-volume_db = -40.0
-autoplay = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

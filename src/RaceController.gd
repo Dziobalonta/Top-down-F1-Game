@@ -40,6 +40,7 @@ func setup(cars: Array[Car], track_curve: Curve2D) -> void:
 		car_currently_off_track[car] = false
 		car_last_penalty_threshold[car] = 0
 	
+	MusicManager.stop_menu_track()
 	EventHub.emit_set_max_off_track_time(max_total_off_track_time)
 	EventHub.on_wheels_left_track.connect(_on_car_left_track)
 	EventHub.on_wheels_returned_to_track.connect(_on_car_returned_to_track)

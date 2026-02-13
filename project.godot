@@ -22,6 +22,7 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 
 EventHub="*res://src/EventHub.gd"
 GameManager="*res://src/GameManager.gd"
+MusicManager="*res://scenes/GameUI/MusicManager.tscn"
 
 [display]
 
