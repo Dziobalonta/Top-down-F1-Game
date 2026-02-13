@@ -19,7 +19,7 @@ func _ready() -> void:
 	track_preview_img.texture = track_info.track_preview
 	track_label.text = track_info.track_name
 	
-	var best_lap: float =GameManager.get_best_lap(track_info.track_name)
+	var best_lap: float = GameManager.get_best_lap(track_info.track_name)
 	if best_lap == CarRaceData.DEFAULT_LAPTIME:
 		best_lap_label.text = "No best lap"
 	else:

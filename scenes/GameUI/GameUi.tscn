@@ -74,6 +74,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s76ix")
+table_font = null
+table_font_size = null
+delta_display_duration = null
+max_off_track_time = null
 
 [node name="OffTrackCanvas" type="CanvasLayer" parent="."]
 

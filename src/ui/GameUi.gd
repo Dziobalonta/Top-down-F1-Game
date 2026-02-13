@@ -58,6 +58,7 @@ func _enter_tree() -> void:
 	EventHub.on_wheels_returned_to_track.connect(_on_wheels_returned_to_track)
 	
 	EventHub.penalty_applied.connect(_on_penalty_applied)
+	EventHub.set_max_off_track_time.connect(_on_set_max_off_track_time)
 	
 	if EventHub.has_signal("on_sector_crossed"):
 		EventHub.on_sector_crossed.connect(_on_sector_crossed)
@@ -287,6 +288,9 @@ func _add_cell(text: String, is_header: bool = false) -> void:
 	
 	if table_font:
 		label.add_theme_font_override("font", table_font)
+	else:
+		# Add a print statement to see if the font is failing to load on map 2
+		print("WARNING: table_font is NULL in GameUi!") 
 	
 	var font_size = table_font_size
 	if is_header:
@@ -337,7 +341,13 @@ func on_lap_update(car: Car, lap_count: int, total_laps: int, last_lap_time: flo
 			_current_sector_times[i] = 0.0
 		
 		_current_lap_time = 0.0
-	
+		
+func _on_set_max_off_track_time(max_time: float) -> void:
+	max_off_track_time = max_time
+	# Optional: Update the label immediately if needed
+	if timer_label:
+		timer_label.text = "%.1f" % max_off_track_time
+		
 #region Exceeding Track Limits
 func _on_wheels_left_track(car: Car) -> void:
 	if car.is_in_group("player"):

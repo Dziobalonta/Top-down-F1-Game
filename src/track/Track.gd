@@ -17,7 +17,7 @@ func _ready() -> void:
 	elif has_node("RaceController"):
 		race_controller = $RaceController
 	else:
-		push_error("Nie znaleziono ani RaceController, ani TimeTrialController!")
+		push_error("No RaceController, or TimeTrialController!")
 		return
 		
 	await setup()

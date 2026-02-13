@@ -9,6 +9,8 @@ signal on_sector_crossed(car: Car, sector_index: int)
 signal on_wheels_left_track(car: Car)
 signal on_wheels_returned_to_track(car: Car)
 
+signal set_max_off_track_time(max_off_track_time: float)
+
 signal penalty_applied(car: Car, penalty_time: float, violation_count: int)
 
 func emit_on_lap_completed(info: LapCompleteData) -> void:
@@ -34,3 +36,6 @@ func emit_penalty_applied(car: Car, penalty_time: float, violation_count: int):
 	
 func emit_on_sector_crossed(car: Car, sector_index: int) -> void:
 	on_sector_crossed.emit(car, sector_index)
+	
+func emit_set_max_off_track_time(max_off_track_time: float) -> void:
+	set_max_off_track_time.emit(max_off_track_time)
