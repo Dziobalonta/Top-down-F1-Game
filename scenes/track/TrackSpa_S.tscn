@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c30bghxinmrp3"]
+[gd_scene load_steps=11 format=3 uid="uid://c30bghxinmrp3"]
 
 [ext_resource type="PackedScene" uid="uid://di80rky40ky77" path="res://scenes/track/Track.tscn" id="1_vq4bu"]
 [ext_resource type="Texture2D" uid="uid://dg3r7rttqas0n" path="res://assets/textures/grass/ground_grass_gen_04.png" id="2_on6eh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="4_bhxv4"]
 [ext_resource type="PackedScene" uid="uid://nnh7f80jgn8r" path="res://scenes/car/GhostCar.tscn" id="5_e1yib"]
 [ext_resource type="PackedScene" uid="uid://labl3uj7b8ar" path="res://scenes/TimeTrialController.tscn" id="6_sl73o"]
+[ext_resource type="FontFile" uid="uid://b8a6k2m8x73wx" path="res://assets/fonts/F1-Font-Family/Formula1-Regular-1.ttf" id="7_6jg5j"]
 
 [sub_resource type="Curve2D" id="Curve2D_uasha"]
 resource_local_to_scene = true
@@ -27,8 +28,10 @@ point_count = 38
 [node name="TrackSpa_S" instance=ExtResource("1_vq4bu")]
 
 [node name="Grass" type="TextureRect" parent="BgTexture" index="0"]
-offset_right = 70656.0
-offset_bottom = 44928.0
+offset_left = -2916.0
+offset_top = -1020.0
+offset_right = 73790.0
+offset_bottom = 47406.0
 texture = ExtResource("2_on6eh")
 stretch_mode = 1
 
@@ -63,3 +66,9 @@ total_laps = 3
 [node name="PlayerCar" parent="CarsHolder" index="0"]
 collision_layer = 1
 collision_mask = 1
+
+[node name="GameUi" parent="Ui" index="1"]
+table_font = ExtResource("7_6jg5j")
+table_font_size = 24
+delta_display_duration = 3.0
+max_off_track_time = 10.0

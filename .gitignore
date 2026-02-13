@@ -4,3 +4,6 @@
 /godot-git-plugin
 .editorconfig
 *.tmp
+*.exe
+*pck
+*.cfg

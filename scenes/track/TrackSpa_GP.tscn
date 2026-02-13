@@ -35,8 +35,10 @@ script = ExtResource("4_u1kmv")
 [node name="TrackSpa_GP" instance=ExtResource("1_rupu1")]
 
 [node name="Grass" type="TextureRect" parent="BgTexture" index="0"]
-offset_right = 70656.0
-offset_bottom = 44928.0
+offset_left = -1676.0
+offset_top = -510.0
+offset_right = 73281.0
+offset_bottom = 47480.0
 texture = ExtResource("2_h5vxi")
 stretch_mode = 1
 
@@ -74,12 +76,13 @@ collision_layer = 1
 collision_mask = 1
 
 [node name="BotCar1" parent="CarsHolder" index="1" instance=ExtResource("5_emhaf")]
-position = Vector2(15060.999, 33355)
-rotation = 2.5272923
+position = Vector2(15067, 33350.004)
+rotation = 2.507741
 collision_layer = 1
 collision_mask = 1
 skill_level = 0.9
-max_speed = 4600.0
+max_speed = 4700.0
+debug = false
 coast_friction = 0.9999
 car_texture = ExtResource("6_281ro")
 car_wing_texture = ExtResource("7_xiqa4")
@@ -87,13 +90,14 @@ car_number = 1
 car_name = "Max Verstappen"
 
 [node name="BotCar2" parent="CarsHolder" index="2" instance=ExtResource("5_emhaf")]
-position = Vector2(15832.001, 33387)
-rotation = -3.778644
+position = Vector2(15856.996, 33361)
+rotation = 2.5025296
 collision_layer = 1
 collision_mask = 1
 skill_level = 0.9
 max_speed = 4800.0
 min_speed = 2700.0
+debug = false
 coast_friction = 0.9999
 car_texture = ExtResource("8_73ro7")
 car_wing_texture = ExtResource("9_gwr62")
@@ -101,13 +105,14 @@ car_number = 2
 car_name = "Lando Norris"
 
 [node name="BotCar3" parent="CarsHolder" index="3" instance=ExtResource("5_emhaf")]
-position = Vector2(15555.003, 33000.004)
-rotation = -3.778644
+position = Vector2(15566.995, 32989)
+rotation = 2.5175312
 collision_layer = 1
 collision_mask = 1
-skill_level = 0.6
+skill_level = 0.7
 max_speed = 4600.0
 min_speed = 2500.0
+debug = false
 coast_friction = 0.9999
 car_texture = ExtResource("10_tn6o3")
 car_wing_texture = ExtResource("11_ndj32")
@@ -115,13 +120,15 @@ car_number = 3
 car_name = "George Russel"
 
 [node name="BotCar4" parent="CarsHolder" index="4" instance=ExtResource("5_emhaf")]
-position = Vector2(16062.002, 32632.002)
-rotation = -3.778644
+position = Vector2(16346.996, 33009)
+rotation = 2.5280955
+scale = Vector2(0.99999994, 0.99999994)
 collision_layer = 1
 collision_mask = 1
 skill_level = 0.6
 max_speed = 4600.0
 min_speed = 2450.0
+debug = false
 coast_friction = 0.9999
 car_texture = ExtResource("12_mcpiw")
 car_wing_texture = ExtResource("13_4gchg")
@@ -129,13 +136,14 @@ car_number = 4
 car_name = "Fernando Alonso"
 
 [node name="BotCar5" parent="CarsHolder" index="5" instance=ExtResource("5_emhaf")]
-position = Vector2(16339.002, 33018)
-rotation = -3.778644
+position = Vector2(16059.997, 32625.998)
+rotation = 2.520813
 collision_layer = 1
 collision_mask = 1
 skill_level = 0.3
 max_speed = 4400.0
 min_speed = 2550.0
+debug = false
 coast_friction = 0.9999
 car_texture = ExtResource("14_5sla6")
 car_wing_texture = ExtResource("15_rew0c")
@@ -143,12 +151,14 @@ car_number = 5
 car_name = "Estaban Ocon"
 
 [node name="BotCar6" parent="CarsHolder" index="6" instance=ExtResource("5_emhaf")]
-position = Vector2(16784.998, 32699)
-rotation = -3.778644
+position = Vector2(16517, 32305.998)
+rotation = 2.5329876
+scale = Vector2(0.99999994, 0.99999994)
 collision_layer = 1
 collision_mask = 1
 max_speed = 4400.0
 min_speed = 2400.0
+debug = false
 coast_friction = 0.9999
 car_texture = ExtResource("16_jcuaa")
 car_wing_texture = ExtResource("17_gfoc8")
@@ -157,3 +167,6 @@ car_name = "Pierre Gasly"
 
 [node name="GameUi" parent="Ui" index="1"]
 table_font = ExtResource("20_u1kmv")
+table_font_size = 24
+delta_display_duration = 3.0
+max_off_track_time = 10.0
