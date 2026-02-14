@@ -6,16 +6,21 @@
     <a href="https://godotengine.org/"><strong>Godot 4.5 Engine »</strong></a>
 </div>
 
+<br>
+<br>
 
 <div align="center">
-    <img src="assets/imgs/Screenshot 2026-02-13 234257.png" alt="gif1" width="300" style="padding: 10px;">
-    <img src="assets/imgs/Screenshot 2026-02-13 235355 - Copy.png" alt="gif2" width="300" style="padding: 10px;">
+    <img src="assets/imgs/Screenshot 2026-02-13 234257.png" alt="img1" width="300" style="padding: 10px;">
+    <img src="assets/imgs/Screenshot 2026-02-13 235355 - Copy.png" alt="img2" width="300" style="padding: 10px;">
 </div>
+
+<br>
+<br>
 
 <div align="center" style="margin-top: 50px;">
     <p style="margin-bottom: 0; font-size: 14px; color: #666; letter-spacing: 2px; text-transform: uppercase;">Made by</p>
-    <h2 style="margin-top: 5px; font-size: 32px; background: linear-gradient(to right, #ffffff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-      Tomasz Dziób
+    <p style="margin-top: 5px; font-size: 32px; background: linear-gradient(to right, #ffffff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      <strong>Tomasz Dziób</strong>
     </h2>
   </div>
 </div>
@@ -89,8 +94,8 @@
 - Best lap time recorded for future comparison
 
 <div align="center">
-    <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-14 000713.png" alt="gif1" width="300" style="padding: 10px;">
-        <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-13 235043.png" alt="gif1" width="450" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-14 000713.png" alt="img3" width="300" style="padding: 10px;">
+        <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-13 235043.png" alt="img4" width="450" style="padding: 10px;">
 </div>
 <div align="center">
 
@@ -105,8 +110,8 @@
 
 
 <div align="center">
-    <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-14 000311.png" alt="gif1" width="300" style="padding: 10px;">
-    <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-13 235355.png" alt="gif2" width="300" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-14 000311.png" alt="img5" width="300" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-13 235355.png" alt="img6" width="300" style="padding: 10px;">
 </div>
 
 ## Game Mechanics
@@ -121,28 +126,17 @@ The penalty system enforces strict adherence to track boundaries:
 - **Disqualification**: >15 seconds total off-track time results in race being over
 
 <div align="center">
-    <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-13 234326.png" alt="gif1" width="300" style="padding: 10px;">
-    <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-13 234356.png"alt="gif2" width="300" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-13 234326.png" alt="img7" width="300" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-13 234356.png"alt="img8" width="300" style="padding: 10px;">
 </div>
 
 ### Lap Timing
 
-
-<table border="0" cellspacing="0" cellpadding="20" align="center">
-  <tr>
-    <td align="left" style="border: none;">
-      <ul>
-        <li>Real-time lap timer with millisecond precision</li>
-        <li>Sector split timing for performance analysis</li>
-        <li>Automatic lap detection via waypoint system</li>
-        <li>Best lap tracking across multiple sessions</li>
-      </ul>
-    </td>
-    <td align="right" valign="top" style="border: none; padding-left: 100px;">
-      <img src="assets/imgs/Screenshot 2026-02-14 003829.png" width="150">
-    </td>
-  </tr>
-</table>
+- Real-time lap timer with millisecond precision
+- Sector split timing for performance analysis
+- Automatic lap detection via waypoint system
+- Best lap tracking across multiple sessions
+<div align="left"> <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-14 003829.png" alt="gif1" width="150" style="padding: 10px;"> <p></p> </div>
 
 
 
