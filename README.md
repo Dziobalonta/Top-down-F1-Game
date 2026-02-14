@@ -10,8 +10,8 @@
 <br>
 
 <div align="center">
-    <img src="assets/imgs/Screenshot 2026-02-13 234257.png" alt="img1" width="300" style="padding: 10px;">
-    <img src="assets/imgs/Screenshot 2026-02-13 235355 - Copy.png" alt="img2" width="300" style="padding: 10px;">
+    <img src="assets/imgs/Screenshot 2026-02-13 234257.png" alt="img1" width="300" style="padding: 50px;">
+    <img src="assets/imgs/Screenshot 2026-02-13 235355 - Copy.png" alt="img2" width="300" style="padding: 50px;">
 </div>
 
 <br>
@@ -94,8 +94,8 @@
 - Best lap time recorded for future comparison
 
 <div align="center">
-    <img align="center" src="assets\imgs\Screenshot 2026-02-14 000713.png" alt="img3" width="300" style="padding: 10px;">
-        <img align="center" src="C:\DaneTomka\Programming\Godot\f1-game\assets\imgs\Screenshot 2026-02-13 235043.png" alt="img4" width="450" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-14 000713.png" alt="img3" width="300" style="padding: 50px;">
+        <img align="center" src="assets\imgs\Screenshot 2026-02-13 235043.png" alt="img4" width="450" style="padding: 50px;">
 </div>
 <div align="center">
 
@@ -110,8 +110,8 @@
 
 
 <div align="center">
-    <img align="center" src="assets\imgs\Screenshot 2026-02-14 000311.png" alt="img5" width="300" style="padding: 10px;">
-    <img align="center" src="assets\imgs\Screenshot 2026-02-13 235355.png" alt="img6" width="300" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-14 000311.png" alt="img5" width="300" style="padding: 50px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-13 235355.png" alt="img6" width="300" style="padding: 50px;">
 </div>
 
 ## Game Mechanics
@@ -126,8 +126,8 @@ The penalty system enforces strict adherence to track boundaries:
 - **Disqualification**: >15 seconds total off-track time results in race being over
 
 <div align="center">
-    <img align="center" src="assets\imgs\Screenshot 2026-02-13 234326.png" alt="img7" width="300" style="padding: 10px;">
-    <img align="center" src="assets\imgs\Screenshot 2026-02-13 234356.png"alt="img8" width="300" style="padding: 10px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-13 234326.png" alt="img7" width="300" style="padding: 50px;">
+    <img align="center" src="assets\imgs\Screenshot 2026-02-13 234356.png"alt="img8" width="300" style="padding: 50px;">
 </div>
 
 ### Lap Timing
